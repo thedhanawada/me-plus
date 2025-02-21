@@ -89,296 +89,185 @@ function App() {
       <div className="noise" />
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 pointer-events-none opacity-20"
+        className="fixed inset-0 pointer-events-none opacity-40"
       />
-      <div className="grid-pattern" />
+      
+      {/* Enhanced cyberpunk background effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-purple-500/5 to-fuchsia-500/5" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-cyan-900/30 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-fuchsia-900/30 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+      </div>
+
+      {/* Animated lines */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent w-full"
+            style={{
+              top: `${25 + i * 25}%`,
+              left: '-100%'
+            }}
+            animate={{
+              x: ['0%', '200%']
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              ease: 'linear',
+              delay: i * 2
+            }}
+          />
+        ))}
+      </div>
 
       {/* Navigation */}
-      <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-sm border-b border-zinc-800/50">
+      <nav className="fixed w-full z-50 bg-black/40 backdrop-blur-md border-b border-cyan-500/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <a href="#" className="flex items-center space-x-2">
-              <Terminal className="w-8 h-8 text-fuchsia-500" />
-              <span className="text-xl font-bold glitch-text">N.R. Dhanawada</span>
+            <a href="#" className="group flex items-center space-x-3">
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                <Terminal className="relative w-8 h-8 text-cyan-400 group-hover:text-white transition-colors duration-300" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-light tracking-wider text-sm text-zinc-400">N.R.</span>
+                <span className="font-medium tracking-wide text-white">Dhanawada</span>
+              </div>
             </a>
+            
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#work" className="nav-link">/work</a>
-              <a href="#code" className="nav-link">/code</a>
-              <a href="#thoughts" className="nav-link">/thoughts</a>
+              <a href="/lab" className="nav-link group">
+                <span className="text-zinc-400 hover:text-white transition-colors duration-300 flex items-center space-x-1">
+                  <span>/</span>
+                  <span className="group-hover:text-cyan-400">lab</span>
+                </span>
+              </a>
+              <a href="/watch" className="nav-link group">
+                <span className="text-zinc-400 hover:text-white transition-colors duration-300 flex items-center space-x-1">
+                  <span>/</span>
+                  <span className="group-hover:text-cyan-400">watch</span>
+                </span>
+              </a>
+              <a href="/work" className="nav-link group">
+                <span className="text-zinc-400 hover:text-white transition-colors duration-300 flex items-center space-x-1">
+                  <span>/</span>
+                  <span className="group-hover:text-cyan-400">work</span>
+                </span>
+              </a>
+              <a 
+                href="https://github.com/thedhanawada/me-plus" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative px-4 py-2"
+              >
+                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+                <div className="relative flex items-center space-x-2">
+                  <svg className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-zinc-400 group-hover:text-white transition-colors duration-300">Source</span>
+                </div>
+              </a>
             </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-32 overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/50 via-black to-black opacity-80" />
-        
-        {/* Animated floating elements */}
-        <motion.div 
-          className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          {[...Array(30)].map((_, i) => (
+      <motion.section 
+        style={{ y, opacity }}
+        className="relative pt-32 pb-16 md:pt-40 md:pb-24"
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-3xl mx-auto">
             <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-white rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                opacity: 0.2,
-              }}
-              animate={{
-                y: [0, Math.random() * 50, 0],
-                opacity: [0.2, 0.5, 0.2],
-                scale: [1, Math.random() * 1.5 + 1, 1],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </motion.div>
-
-        {/* Main content */}
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <motion.div
-            style={{ y, opacity }}
-            className="space-y-12 text-center"
-          >
-            <motion.div 
-              className="space-y-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
             >
-              <motion.h1 
-                className="text-4xl md:text-6xl font-bold leading-tight tracking-tighter mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400">
-                  Nirmala Rao Dhanawada
+              <h1 className="text-5xl md:text-7xl font-light mb-12 relative inline-block">
+                <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-xl"></span>
+                <span className="relative">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-cyan-400 animate-text-shine">
+                    Solutions. For people.
+                  </span>
                 </span>
-              </motion.h1>
-
-              <motion.p
-                className="text-xl md:text-2xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-              >
-                Wandering through the realms of code and creativity, finding magic in the intersection of technology and imagination.
-              </motion.p>
+              </h1>
+              <div className="space-y-4 text-xl md:text-2xl text-zinc-400 font-extralight tracking-wide">
+                <p>Technology has incredible potential.</p>
+                <p>But only if it's built right.</p>
+                <p className="text-cyan-400 font-light">When you build it, build it right - for the people.</p>
+              </div>
             </motion.div>
+          </div>
+        </div>
+      </motion.section>
 
-            {/* Interests Grid */}
-            <div className="grid md:grid-cols-3 gap-8 mt-16">
-              {/* Fantasy & Literature */}
-              <motion.div
-                className="relative group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2 }}
-              >
-                <div className="relative overflow-hidden rounded-lg bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/50 p-6 transition-all duration-300 group-hover:border-fuchsia-500/50">
-                  <Book className="w-8 h-8 mb-4 text-fuchsia-500" />
-                  <h3 className="text-xl font-bold text-white mb-3">Fantasy & Lore</h3>
-                  <p className="text-zinc-400 text-sm">
-                    Lost in the depths of Middle-earth and the halls of Hogwarts, where every story weaves a new reality.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Music */}
-              <motion.div
-                className="relative group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.4 }}
-              >
-                <div className="relative overflow-hidden rounded-lg bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/50 p-6 transition-all duration-300 group-hover:border-fuchsia-500/50">
-                  <Music className="w-8 h-8 mb-4 text-fuchsia-500" />
-                  <h3 className="text-xl font-bold text-white mb-3">Melodic Journey</h3>
-                  <p className="text-zinc-400 text-sm">
-                    Finding harmony in the rhythms of life, where each note tells a story of its own.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Philosophy */}
-              <motion.div
-                className="relative group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.6 }}
-              >
-                <div className="relative overflow-hidden rounded-lg bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/50 p-6 transition-all duration-300 group-hover:border-fuchsia-500/50">
-                  <Sparkles className="w-8 h-8 mb-4 text-fuchsia-500" />
-                  <h3 className="text-xl font-bold text-white mb-3">Ancient Wisdom</h3>
-                  <p className="text-zinc-400 text-sm">
-                    Exploring the teachings of Marcus Aurelius and Indian philosophy, seeking timeless truths in ancient wisdom.
-                  </p>
-                </div>
-              </motion.div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Card 1 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="group relative"
+          >
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
+              <h3 className="text-2xl font-mono font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
+                Built Open, Built Better.
+              </h3>
+              <p className="text-zinc-400 leading-relaxed">
+                Open source is more than just a license; it's a philosophy of shared progress. Solutions built openly are inherently stronger and more transparent. When technology is built collaboratively, it truly belongs to the communities it aims to serve, fostering collective innovation and shared ownership.
+              </p>
             </div>
+          </motion.div>
 
-            {/* Quote */}
-            <motion.div
-              className="mt-16 max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.8 }}
-            >
-              <blockquote className="text-lg md:text-xl text-zinc-400 italic">
-                "All we have to decide is what to do with the time that is given us."
-                <span className="block text-sm text-zinc-500 mt-2">— J.R.R. Tolkien</span>
-              </blockquote>
-            </motion.div>
+          {/* Card 2 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="group relative"
+          >
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
+              <h3 className="text-2xl font-mono font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
+                Tech That Makes a Difference.
+              </h3>
+              <p className="text-zinc-400 leading-relaxed">
+                Technology's true value isn't in its complexity, but in its impact on the real world. Focusing on solutions that address tangible challenges and improve lives is paramount. Ultimately, technology should be measured by the positive change it creates for people and their communities.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Card 3 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="group relative"
+          >
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
+              <h3 className="text-2xl font-mono font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
+                Solutions Built to Last.
+              </h3>
+              <p className="text-zinc-400 leading-relaxed">
+                Lasting solutions require more than just quick fixes. A philosophy of sustainable technology prioritizes building for longevity and purpose. Thoughtful design and robust architectures ensure technology adapts to evolving needs, delivering enduring value and reliability for the future.
+              </p>
+            </div>
           </motion.div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-        >
-          <motion.div
-            className="w-6 h-10 border-2 border-zinc-500 rounded-full p-1"
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            <motion.div 
-              className="w-1 h-2 bg-fuchsia-500 rounded-full mx-auto"
-              animate={{ y: [0, 16, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Media Favorites Section */}
-      <section className="relative min-h-screen px-6 py-32 bg-gradient-to-b from-black to-purple-950/20">
-        <motion.div
-          className="max-w-7xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-500">
-              Cinematic & Musical Journey
-            </span>
-          </h2>
-
-          {/* Movies Grid */}
-          <div className="mb-20">
-            <h3 className="flex items-center text-2xl font-bold mb-8">
-              <Film className="w-6 h-6 mr-2 text-fuchsia-500" />
-              Favorite Films
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: "The Lord of the Rings Trilogy",
-                  image: "https://images.unsplash.com/photo-1500964757637-c85e8a162699?q=80",
-                  description: "An epic journey that shaped my imagination and love for fantasy.",
-                  year: "2001-2003"
-                },
-                {
-                  title: "The Hobbit Trilogy",
-                  image: "https://images.unsplash.com/photo-1518709766631-a6c7f7856bc3?q=80",
-                  description: "Another masterpiece in Middle-earth that captures the spirit of adventure.",
-                  year: "2012-2014"
-                },
-                {
-                  title: "Your Other Favorite",
-                  image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80",
-                  description: "Add another favorite movie here.",
-                  year: "YYYY"
-                }
-              ].map((movie, index) => (
-                <motion.div
-                  key={index}
-                  className="project-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={movie.image} 
-                      alt={movie.title}
-                      className="object-cover w-full h-full transform hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                  </div>
-                  <div className="p-6">
-                    <h4 className="text-xl font-bold mb-2">{movie.title}</h4>
-                    <p className="text-sm text-zinc-400 mb-3">{movie.description}</p>
-                    <span className="text-xs text-fuchsia-500">{movie.year}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Music Section */}
-          <div>
-            <h3 className="flex items-center text-2xl font-bold mb-8">
-              <Music className="w-6 h-6 mr-2 text-fuchsia-500" />
-              Musical Universe
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                {
-                  type: "Soundtrack",
-                  items: [
-                    "The Lord of the Rings Symphony",
-                    "Add your favorite soundtracks"
-                  ]
-                },
-                {
-                  type: "Artists",
-                  items: [
-                    "Add your favorite artists",
-                    "More artists here"
-                  ]
-                }
-              ].map((category, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-zinc-900/30 backdrop-blur-sm border border-zinc-800/50 rounded-lg p-6"
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <h4 className="text-xl font-bold mb-4">{category.type}</h4>
-                  <ul className="space-y-3">
-                    {category.items.map((item, i) => (
-                      <li key={i} className="flex items-center text-zinc-400 hover:text-fuchsia-500 transition-colors">
-                        <Play className="w-4 h-4 mr-2" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </section>
+      </div>
     </div>
   );
 }
