@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
 import Watchlist from './pages/Watch';
 import Lab from './pages/Lab';
+import Work from './pages/Work';
 import Footer from './components/Footer';
 
 // Define valid routes
@@ -307,6 +308,7 @@ function App() {
           } />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/lab" element={<Lab />} />
+          <Route path="/work" element={<Work />} />
           {/* Add more routes as needed */}
         </Routes>
         <Footer />
