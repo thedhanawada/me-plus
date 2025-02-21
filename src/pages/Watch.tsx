@@ -30,27 +30,31 @@ const Watchlist = () => {
   // Media IDs with their types
   const FAVORITE_MEDIA = [
     // Currently Watching
-    { id: 95396, type: 'tv' },   // Severance
-    { id: 125988, type: 'tv' },  // Silo
-    { id: 124364, type: 'tv' },  // FROM
+    { id: 95396, type: 'tv', category: 'current' },   // Severance
+
+    // Waiting for Next Season
+    { id: 125988, type: 'tv', category: 'waiting' },  // Silo
+    { id: 124364, type: 'tv', category: 'waiting' },  // FROM
+
+    // Dinner & Lunch Rewatch Shows
+    { id: 1421, type: 'tv', category: 'rewatch' },   // Modern Family
+    { id: 62649, type: 'tv', category: 'rewatch' },  // Superstore
+    { id: 1418, type: 'tv', category: 'rewatch' },  // TBBT
+    { id: 49011, type: 'tv', category: 'rewatch' },  // Mom
 
     // All-time Favorites
-    { id: 120, type: 'movie' }, // LOTR: Fellowship
-    { id: 121, type: 'movie' }, // LOTR: Two Towers
-    { id: 122, type: 'movie' }, // LOTR: Return of the King
-    { id: 62560, type: 'tv' },  // Mr. Robot
-    { id: 4607, type: 'tv' },   // Lost
-    { id: 1668, type: 'tv' },   // Friends
-    { id: 1100, type: 'tv' },   // HIMYM
-    { id: 1421, type: 'tv' },   // Modern Family
-    { id: 62649, type: 'tv' },  // Superstore
-    { id: 49011, type: 'tv' },  // Mom
-    { id: 672, type: 'movie' }, // Harry Potter Chamber of Secrets
-    { id: 63675, type: 'movie' }, 
-    { id: 26910, type: 'movie' }, 
-    { id: 7508, type: 'movie' }, 
-    { id: 268660, type: 'movie' }, 
-
+    { id: 120, type: 'movie', category: 'favorite' }, // LOTR: Fellowship
+    { id: 121, type: 'movie', category: 'favorite' }, // LOTR: Two Towers
+    { id: 122, type: 'movie', category: 'favorite' }, // LOTR: Return of the King
+    { id: 62560, type: 'tv', category: 'favorite' },  // Mr. Robot
+    { id: 4607, type: 'tv', category: 'favorite' },   // Lost
+    { id: 1668, type: 'tv', category: 'favorite' },   // Friends
+    { id: 1100, type: 'tv', category: 'favorite' },   // HIMYM
+    { id: 672, type: 'movie', category: 'favorite' }, // Harry Potter Chamber of Secrets
+    { id: 63675, type: 'movie', category: 'favorite' },
+    { id: 26910, type: 'movie', category: 'favorite' },
+    { id: 7508, type: 'movie', category: 'favorite' },
+    { id: 268660, type: 'movie', category: 'favorite' },
   ];
 
   useEffect(() => {
@@ -81,17 +85,22 @@ const Watchlist = () => {
 
         const validFavorites = favorites.filter((item): item is Media => item !== null);
 
-        // Currently watching IDs
-        const currentlyWatchingIds = [95396, 125988, 124364]; // Severance, Silo, FROM
-
         setSections([
           {
             title: "Currently Watching",
-            items: validFavorites.filter(m => currentlyWatchingIds.includes(m.id)),
+            items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'current'),
+          },
+          {
+            title: "Dinner & Lunch Rewatch Shows",
+            items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'rewatch'),
+          },
+          {
+            title: "Waiting for Next Season",
+            items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'waiting'),
           },
           {
             title: "All Time Favorites",
-            items: validFavorites.filter(m => !currentlyWatchingIds.includes(m.id)),
+            items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'favorite'),
           },
         ]);
         setLoading(false);
@@ -155,75 +164,78 @@ const Watchlist = () => {
             </motion.a>
           </div>
 
-          {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-cyan-500"></div>
-            </div>
-          ) : (
-            <div className="space-y-16">
-              {sections.map((section, index) => (
-                <motion.div
-                  key={section.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  className="space-y-6"
-                >
-                  <h2 className="text-2xl font-light text-white flex items-center space-x-3">
-                    <span>{section.title}</span>
-                    <span className="h-px flex-1 bg-gradient-to-r from-cyan-500/20 to-transparent"></span>
-                  </h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                    {section.items.map((item) => (
-                      <motion.a
-                        key={item.id}
-                        href={`https://www.themoviedb.org/${item.media_type}/${item.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group relative block"
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-                        <div className="relative bg-black/80 backdrop-blur-sm rounded-lg overflow-hidden border border-cyan-500/20 group-hover:border-fuchsia-500/50 transition-colors">
-                          {item.poster_path ? (
-                            <div className="aspect-[2/3] overflow-hidden">
-                              <img
-                                src={`${TMDB_IMAGE_BASE}${item.poster_path}`}
-                                alt={item.title}
-                                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                              />
-                            </div>
-                          ) : (
-                            <div className="aspect-[2/3] bg-zinc-900 flex items-center justify-center">
-                              {item.media_type === 'movie' ? (
-                                <Film className="w-12 h-12 text-zinc-700" />
-                              ) : (
-                                <Tv className="w-12 h-12 text-zinc-700" />
-                              )}
-                            </div>
-                          )}
-                          <div className="p-3">
-                            <div className="flex items-start justify-between gap-2">
-                              <h3 className="text-sm font-medium text-white leading-tight group-hover:text-cyan-400 transition-colors">
-                                {item.title}
-                              </h3>
-                              <span className="text-[10px] text-zinc-500 uppercase shrink-0 bg-zinc-900/50 px-1.5 py-0.5 rounded-full">
-                                {item.media_type}
+          <div className="p-6">
+            {loading ? (
+              <div className="flex justify-center items-center min-h-[60vh]">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+              </div>
+            ) : error ? (
+              <div className="text-red-500 text-center">{error}</div>
+            ) : (
+              <div className="space-y-8">
+                {sections.map((section) => (
+                  <div key={section.title} className="space-y-4">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+                      {section.title}
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                      {section.items.map((item) => (
+                        <motion.div
+                          key={item.id}
+                          onClick={() => window.open(`https://www.themoviedb.org/${item.media_type}/${item.id}`, '_blank')}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                        >
+                          <div className="relative">
+                            <img
+                              src={`${TMDB_IMAGE_BASE}${item.poster_path}`}
+                              alt={item.title}
+                              className="w-full h-[300px] object-cover"
+                            />
+                          </div>
+                          <div className="p-4">
+                            <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white line-clamp-2">
+                              {item.title}
+                            </h3>
+                            <div className="flex items-center space-x-2 mb-3">
+                              <span className="text-sm text-gray-600 dark:text-gray-300">
+                                {new Date(item.release_date || '').getFullYear()}
                               </span>
                             </div>
-                            {item.release_date && (
-                              <p className="text-xs text-zinc-400 mt-1">{item.release_date.split('-')[0]}</p>
-                            )}
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <span className="text-sm text-gray-600 dark:text-gray-300">
+                                  {item.vote_average.toFixed(1)}
+                                </span>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                {item.media_type === 'tv' ? (
+                                  <div className="flex items-center space-x-1 text-blue-600 dark:text-blue-400">
+                                    <Tv className="w-4 h-4" />
+                                    <span className="text-xs font-medium">TV Series</span>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center space-x-1 text-purple-600 dark:text-purple-400">
+                                    <Film className="w-4 h-4" />
+                                    <span className="text-xs font-medium">Movie</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </motion.a>
-                    ))}
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
