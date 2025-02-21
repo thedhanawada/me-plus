@@ -232,11 +232,11 @@ function App() {
                       <p>Technology has incredible <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-400 font-normal animate-pulse">potential</span>.</p>
                       <p>But only if it's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">built right</span>.</p>
                       <p className="text-cyan-400 font-light">
-                        When you build it, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">build it right</span> - 
+                        When you build it, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">build it right</span> – 
                         <span className="relative inline-block ml-2">
                           <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-sm"></span>
-                          <span className="relative text-white font-normal">for the people</span>
-                        </span>.
+                          <span className="relative text-white font-normal">with <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal animate-pulse">purpose</span></span>
+                        </span>
                       </p>
                     </div>
                   </motion.div>
