@@ -3,6 +3,7 @@ import { Terminal, Book, Music, Sparkles, Film, Heart, Play } from 'lucide-react
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
 import Watchlist from './pages/Watch';
+import Lab from './pages/Lab';
 import Footer from './components/Footer';
 
 // Define valid routes
@@ -227,9 +228,15 @@ function App() {
                       </span>
                     </h1>
                     <div className="space-y-4 text-xl md:text-2xl text-zinc-400 font-extralight tracking-wide">
-                      <p>Technology has incredible potential.</p>
-                      <p>But only if it's built right.</p>
-                      <p className="text-cyan-400 font-light">When you build it, build it right - for the people.</p>
+                      <p>Technology has incredible <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-400 font-normal animate-pulse">potential</span>.</p>
+                      <p>But only if it's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">built right</span>.</p>
+                      <p className="text-cyan-400 font-light">
+                        When you build it, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">build it right</span> - 
+                        <span className="relative inline-block ml-2">
+                          <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-sm"></span>
+                          <span className="relative text-white font-normal">for the people</span>
+                        </span>.
+                      </p>
                     </div>
                   </motion.div>
                 </div>
@@ -299,6 +306,7 @@ function App() {
             </motion.section>
           } />
           <Route path="/watchlist" element={<Watchlist />} />
+          <Route path="/lab" element={<Lab />} />
           {/* Add more routes as needed */}
         </Routes>
         <Footer />
