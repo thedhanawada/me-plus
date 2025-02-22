@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Terminal, Book, Music, Sparkles, Film, Heart, Play } from 'lucide-react';
+import { Terminal, Book, Music, Sparkles, Film, Heart, Play, Globe, Code2, Repeat, MessageSquare, Lock, Network, Users, ArrowRight, Quote } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
 import Watchlist from './pages/Watch';
@@ -208,110 +208,382 @@ function App() {
 
         <Routes>
           <Route path="/" element={
-            <motion.section 
-              style={{ y, opacity }}
-              className="relative pt-32 pb-16 md:pt-40 md:pb-24"
-            >
-              <div className="max-w-7xl mx-auto px-6">
-                <div className="max-w-3xl mx-auto">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="text-center mb-16"
-                  >
-                    <h1 className="text-5xl md:text-7xl font-light mb-12 relative inline-block">
-                      <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-xl"></span>
-                      <span className="relative">
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-cyan-400 animate-text-shine">
-                          Solutions. For people.
+            <>
+              <motion.section 
+                className="relative pt-32 pb-16 md:pt-40 md:pb-24"
+              >
+                <div className="max-w-7xl mx-auto px-6">
+                  <div className="max-w-3xl mx-auto">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8 }}
+                      className="text-center mb-16"
+                    >
+                      <h1 className="text-5xl md:text-7xl font-light mb-12 relative inline-block">
+                        <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-xl"></span>
+                        <span className="relative">
+                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-cyan-400 animate-text-shine">
+                            Solutions. For people.
+                          </span>
                         </span>
-                      </span>
-                    </h1>
-                    <div className="space-y-4 text-xl md:text-2xl text-zinc-400 font-extralight tracking-wide">
-                      <p>Technology has incredible <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-400 font-normal animate-pulse">potential</span>.</p>
-                      <p>But only if it's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">built right</span>.</p>
-                      <p className="text-cyan-400 font-light">
-                        When you build it, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">build it right</span> – 
-                        <span className="relative inline-block ml-2">
-                          <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-sm"></span>
-                          <span className="relative text-white font-normal">with <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal animate-pulse">purpose</span></span>
-                        </span>
-                      </p>
-                    </div>
-                  </motion.div>
+                      </h1>
+                      <div className="space-y-4 text-xl md:text-2xl text-zinc-400 font-extralight tracking-wide">
+                        <p>Technology has incredible <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-400 font-normal animate-pulse">potential</span>.</p>
+                        <p>But only if it's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">built right</span>.</p>
+                        <p className="text-cyan-400 font-light">
+                          When you build it, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">build it right</span> – 
+                          <span className="relative inline-block ml-2">
+                            <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-sm"></span>
+                            <span className="relative text-white font-normal">with <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal animate-pulse">purpose</span></span>
+                          </span>
+                        </p>
+                      </div>
+                    </motion.div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Cards Section */}
-              <div className="max-w-7xl mx-auto px-6 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {/* Card 1 */}
+                {/* Cards Section */}
+                <div className="max-w-7xl mx-auto px-6 py-16">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {/* Card 1 */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5 }}
+                      className="group relative"
+                    >
+                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                      <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
+                        <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
+                          Built Open, Built Better
+                        </h3>
+                        <p className="text-zinc-400 leading-relaxed">
+                          Open source is more than just a license; it's a philosophy of shared progress. Solutions built openly are inherently stronger and more transparent. When technology is built collaboratively, it truly belongs to the communities it aims to serve.
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    {/* Card 2 */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="group relative"
+                    >
+                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                      <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
+                        <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
+                          Tech That Makes a Difference
+                        </h3>
+                        <p className="text-zinc-400 leading-relaxed">
+                          Technology's true value isn't in its complexity, but in its impact on the real world. Focusing on solutions that address tangible challenges and improve lives is paramount. Technology should be measured by the positive change it creates.
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    {/* Card 3 */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.4 }}
+                      className="group relative"
+                    >
+                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                      <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
+                        <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
+                          Solutions Built to Last
+                        </h3>
+                        <p className="text-zinc-400 leading-relaxed">
+                          Lasting solutions require more than just quick fixes. A philosophy of sustainable technology prioritizes building for longevity and purpose. Thoughtful design and robust architectures ensure technology adapts to evolving needs.
+                        </p>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+
+                {/* Personal Philosophy Section */}
+                <div className="max-w-7xl mx-auto px-6 py-24">
                   <motion.div 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="max-w-3xl mx-auto text-center mb-16"
+                  >
+                    <h2 className="text-4xl md:text-5xl font-light mb-6">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                        A Simple Philosophy
+                      </span>
+                    </h2>
+                    <p className="text-xl text-zinc-400 font-light">
+                      Here's what I believe about building technology
+                    </p>
+                  </motion.div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    {/* Principle 1: Problem Discovery */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5 }}
+                      className="group relative"
+                    >
+                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                      <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors h-full">
+                        <div className="flex items-center space-x-4 mb-6">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                            <Heart className="w-6 h-6 text-cyan-400" />
+                          </div>
+                          <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                            Hidden Pain Points
+                          </h3>
+                        </div>
+                        <p className="text-zinc-400 leading-relaxed mb-6">
+                          Real problems often hide in plain sight. The key is observing behavioral adaptations - the small workarounds people create to deal with friction in their daily lives.
+                        </p>
+                        <div className="space-y-4 text-sm">
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-cyan-400">01</span>
+                            </div>
+                            <p className="text-zinc-400">Look for <span className="text-cyan-400">repetitive tasks</span> that people have accepted as "normal" but shouldn't be</p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-fuchsia-400">02</span>
+                            </div>
+                            <p className="text-zinc-400">Study <span className="text-fuchsia-400">behavioral patterns</span> across different contexts and cultures</p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-cyan-400">03</span>
+                            </div>
+                            <p className="text-zinc-400">Focus on <span className="text-cyan-400">friction points</span> where people pause, hesitate, or show signs of stress</p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Principle 2: Solution Design */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.1 }}
+                      className="group relative"
+                    >
+                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                      <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors h-full">
+                        <div className="flex items-center space-x-4 mb-6">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                            <Sparkles className="w-6 h-6 text-fuchsia-400" />
+                          </div>
+                          <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                            Elegant Solutions
+                          </h3>
+                        </div>
+                        <p className="text-zinc-400 leading-relaxed mb-6">
+                          The best solutions often emerge from understanding the core essence of a problem. They should feel inevitable - as if they were always meant to exist that way.
+                        </p>
+                        <div className="space-y-4 text-sm">
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-cyan-400">01</span>
+                            </div>
+                            <p className="text-zinc-400">Find the <span className="text-cyan-400">underlying patterns</span> beneath surface-level symptoms</p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-fuchsia-400">02</span>
+                            </div>
+                            <p className="text-zinc-400">Design for <span className="text-fuchsia-400">cognitive flow</span> - solutions should feel natural and intuitive</p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-cyan-400">03</span>
+                            </div>
+                            <p className="text-zinc-400">Embrace <span className="text-cyan-400">contextual constraints</span> as creative catalysts</p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Principle 3: Implementation */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="group relative"
+                    >
+                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                      <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors h-full">
+                        <div className="flex items-center space-x-4 mb-6">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                            <Play className="w-6 h-6 text-cyan-400" />
+                          </div>
+                          <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                            Thoughtful Execution
+                          </h3>
+                        </div>
+                        <p className="text-zinc-400 leading-relaxed mb-6">
+                          Implementation is where philosophy meets reality. Every decision in the building process should align with the core purpose of solving human problems.
+                        </p>
+                        <div className="space-y-4 text-sm">
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-cyan-400">01</span>
+                            </div>
+                            <p className="text-zinc-400">Build with <span className="text-cyan-400">progressive enhancement</span> - start with the core experience</p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-fuchsia-400">02</span>
+                            </div>
+                            <p className="text-zinc-400">Consider <span className="text-fuchsia-400">cognitive load</span> in every interaction</p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-cyan-400">03</span>
+                            </div>
+                            <p className="text-zinc-400">Create <span className="text-cyan-400">feedback loops</span> that inform continuous improvement</p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Principle 4: Evolution */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.3 }}
+                      className="group relative"
+                    >
+                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                      <div className="relative bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors h-full">
+                        <div className="flex items-center space-x-4 mb-6">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                            <Book className="w-6 h-6 text-fuchsia-400" />
+                          </div>
+                          <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                            Adaptive Growth
+                          </h3>
+                        </div>
+                        <p className="text-zinc-400 leading-relaxed mb-6">
+                          Solutions should evolve with their users. Understanding how people adapt and modify your solution reveals opportunities for meaningful innovation.
+                        </p>
+                        <div className="space-y-4 text-sm">
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-cyan-400">01</span>
+                            </div>
+                            <p className="text-zinc-400">Study <span className="text-cyan-400">emergent behaviors</span> in how people use your solution</p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-fuchsia-400">02</span>
+                            </div>
+                            <p className="text-zinc-400">Build <span className="text-fuchsia-400">extensible systems</span> that grow with user needs</p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                              <span className="text-xs text-cyan-400">03</span>
+                            </div>
+                            <p className="text-zinc-400">Maintain <span className="text-cyan-400">solution integrity</span> while allowing for organic evolution</p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+
+                {/* Featured Organization Section */}
+                <div className="max-w-7xl mx-auto px-6 py-24">
+                  <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                     className="group relative"
                   >
-                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                    <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
-                      <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
-                        Built Open, Built Better
-                      </h3>
-                      <p className="text-zinc-400 leading-relaxed">
-                        Open source is more than just a license; it's a philosophy of shared progress. Solutions built openly are inherently stronger and more transparent. When technology is built collaboratively, it truly belongs to the communities it aims to serve.
-                      </p>
-                    </div>
-                  </motion.div>
-
-                  {/* Card 2 */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="group relative"
-                  >
-                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                    <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
-                      <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
-                        Tech That Makes a Difference
-                      </h3>
-                      <p className="text-zinc-400 leading-relaxed">
-                        Technology's true value isn't in its complexity, but in its impact on the real world. Focusing on solutions that address tangible challenges and improve lives is paramount. Technology should be measured by the positive change it creates.
-                      </p>
-                    </div>
-                  </motion.div>
-
-                  {/* Card 3 */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="group relative"
-                  >
-                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                    <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
-                      <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
-                        Solutions Built to Last
-                      </h3>
-                      <p className="text-zinc-400 leading-relaxed">
-                        Lasting solutions require more than just quick fixes. A philosophy of sustainable technology prioritizes building for longevity and purpose. Thoughtful design and robust architectures ensure technology adapts to evolving needs.
-                      </p>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+                    <div className="relative bg-black/80 backdrop-blur-sm rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors overflow-hidden">
+                      <div className="absolute top-6 right-6">
+                        <div className="px-4 py-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-full">
+                          <p className="text-xs font-medium text-white">Featured Organization</p>
+                        </div>
+                      </div>
+                      
+                      <div className="p-8 md:p-12">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                          <div className="space-y-6">
+                            <div className="flex items-center space-x-4">
+                              <div className="w-16 h-16 rounded-xl bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                                <MessageSquare className="w-8 h-8 text-fuchsia-400" />
+                              </div>
+                              <div>
+                                <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                                  Matrix.org
+                                </h3>
+                                <p className="text-zinc-400">
+                                  Technology in Service of Freedom
+                                </p>
+                              </div>
+                            </div>
+                            <p className="text-zinc-300 leading-relaxed text-lg">
+                              Matrix.org shows us what's possible when we put people first. They're not just building a messaging platform—they're creating digital infrastructure that protects privacy, promotes freedom, and puts control back in the hands of users.
+                            </p>
+                            <div className="pt-4">
+                              <a 
+                                href="https://matrix.org" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center space-x-2 text-fuchsia-400 hover:text-fuchsia-300 transition-colors"
+                              >
+                                <span>Learn about their mission</span>
+                                <ArrowRight className="w-4 h-4" />
+                              </a>
+                            </div>
+                          </div>
+                          <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10 rounded-xl"></div>
+                            <div className="relative bg-gradient-to-r from-cyan-500/5 to-fuchsia-500/5 rounded-xl p-8">
+                              <div className="space-y-6">
+                                <p className="text-zinc-300 italic text-lg">
+                                  "In a world where digital communication is increasingly controlled by mega-corporations, we're building a future where communities own their conversations."
+                                </p>
+                                <div className="flex items-center space-x-4">
+                                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 flex items-center justify-center">
+                                    <Quote className="w-6 h-6 text-fuchsia-400" />
+                                  </div>
+                                  <div>
+                                    <p className="text-zinc-300 font-medium">Matrix.org Team</p>
+                                    <p className="text-zinc-500 text-sm">Digital Freedom Advocates</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 </div>
-              </div>
-            </motion.section>
+              </motion.section>
+              <Footer />
+            </>
           } />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/lab" element={<Lab />} />
           <Route path="/work" element={<Work />} />
           {/* Add more routes as needed */}
         </Routes>
-        <Footer />
       </div>
     </Router>
   );
