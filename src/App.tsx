@@ -5,17 +5,19 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react
 import Watchlist from './pages/Watch';
 import Lab from './pages/Lab';
 import Work from './pages/Work';
+import Art from './pages/Art';
 import Footer from './components/Footer';
 
 // Define valid routes
-type ValidRoutes = '/' | '/watchlist' | '/lab' | '/work';
+type ValidRoutes = '/' | '/watchlist' | '/lab' | '/work' | '/art';
 
 // Page title mapping
 const PAGE_TITLES: Record<ValidRoutes, string> = {
   '/': 'N.R Dhanawada - Home',
   '/watchlist': 'N.R Dhanawada - Watchlist',
   '/lab': 'N.R Dhanawada - Lab',
-  '/work': 'N.R Dhanawada - Work'
+  '/work': 'N.R Dhanawada - Work',
+  '/art': 'N.R Dhanawada - Photography'
 };
 
 // Title updater component
@@ -185,6 +187,12 @@ function App() {
                   <span className="text-zinc-400 hover:text-white transition-colors duration-300 flex items-center space-x-1">
                     <span>/</span>
                     <span className="group-hover:text-cyan-400">work</span>
+                  </span>
+                </Link>
+                <Link to="/art" className="nav-link group">
+                  <span className="text-zinc-400 hover:text-white transition-colors duration-300 flex items-center space-x-1">
+                    <span>/</span>
+                    <span className="group-hover:text-cyan-400">art</span>
                   </span>
                 </Link>
                 <a 
@@ -582,6 +590,7 @@ function App() {
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/lab" element={<Lab />} />
           <Route path="/work" element={<Work />} />
+          <Route path="/art" element={<Art />} />
           {/* Add more routes as needed */}
         </Routes>
       </div>

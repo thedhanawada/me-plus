@@ -8,6 +8,7 @@ const Footer = () => {
     { name: 'Tailwind CSS', url: 'https://tailwindcss.com' },
     { name: 'Framer Motion', url: 'https://www.framer.com/motion' },
     { name: 'TMDB API', url: 'https://www.themoviedb.org' },
+    { name: 'Cloudinary', url: 'https://cloudinary.com' },
   ];
 
   return (
