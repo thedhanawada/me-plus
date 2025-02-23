@@ -232,18 +232,18 @@ function App() {
                         <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-xl"></span>
                         <span className="relative">
                           <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-cyan-400 animate-text-shine">
-                            Solutions. For people.
+                            Engineering with Purpose
                           </span>
                         </span>
                       </h1>
                       <div className="space-y-4 text-xl md:text-2xl text-zinc-400 font-extralight tracking-wide">
-                        <p>Technology has incredible <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-400 font-normal animate-pulse">potential</span>.</p>
-                        <p>But only if it's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">built right</span>.</p>
+                        <p>Software is <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-400 font-normal animate-pulse">architecture</span> in motion.</p>
+                        <p>Every system choice shapes <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">tomorrow's possibilities</span>.</p>
                         <p className="text-cyan-400 font-light">
-                          When you build it, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">build it right</span> – 
+                          Build systems that <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal">evolve</span> – 
                           <span className="relative inline-block ml-2">
                             <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-sm"></span>
-                            <span className="relative text-white font-normal">with <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal animate-pulse">purpose</span></span>
+                            <span className="relative text-white font-normal">not just <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-normal animate-pulse">scale</span></span>
                           </span>
                         </p>
                       </div>
@@ -265,10 +265,10 @@ function App() {
                       <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                       <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
                         <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
-                          Built Open, Built Better
+                          First Principles
                         </h3>
                         <p className="text-zinc-400 leading-relaxed">
-                          Open source is more than just a license; it's a philosophy of shared progress. Solutions built openly are inherently stronger and more transparent. When technology is built collaboratively, it truly belongs to the communities it aims to serve.
+                          Great software starts with fundamental truths, not assumptions. Break down complex problems into their core components. Build up from these foundations with clear reasoning and purpose.
                         </p>
                       </div>
                     </motion.div>
@@ -303,10 +303,10 @@ function App() {
                       <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                       <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
                         <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
-                          Solutions Built to Last
+                          Composable Systems
                         </h3>
                         <p className="text-zinc-400 leading-relaxed">
-                          Lasting solutions require more than just quick fixes. A philosophy of sustainable technology prioritizes building for longevity and purpose. Thoughtful design and robust architectures ensure technology adapts to evolving needs.
+                          Software should be built from small, well-defined pieces that can be understood in isolation. These components should combine cleanly to create more powerful abstractions. Complexity emerges from the composition of simple parts.
                         </p>
                       </div>
                     </motion.div>

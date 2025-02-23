@@ -59,19 +59,8 @@ const Art = () => {
               </span>
             </span>
           </h1>
-          <p className="text-xl text-zinc-400 font-light mb-2">
+          <p className="text-xl text-zinc-400 font-light">
             A collection of moments
-          </p>
-          <p className="text-sm text-zinc-500 font-light">
-            Images served through{' '}
-            <a 
-              href="https://cloudinary.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300 transition-colors"
-            >
-              Cloudinary API
-            </a>
           </p>
         </motion.div>
 
