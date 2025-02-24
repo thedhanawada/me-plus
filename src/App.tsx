@@ -8,10 +8,8 @@ import Work from './pages/Work';
 import Art from './pages/Art';
 import Footer from './components/Footer';
 
-// Define valid routes
 type ValidRoutes = '/' | '/watchlist' | '/lab' | '/work' | '/art';
 
-// Page title mapping
 const PAGE_TITLES: Record<ValidRoutes, string> = {
   '/': 'N.R Dhanawada - Home',
   '/watchlist': 'N.R Dhanawada - Watchlist',
