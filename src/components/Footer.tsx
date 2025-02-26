@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 const Footer = () => {
   const technologies = [
@@ -7,42 +8,111 @@ const Footer = () => {
     { name: 'Vite', url: 'https://vitejs.dev' },
     { name: 'Tailwind CSS', url: 'https://tailwindcss.com' },
     { name: 'Framer Motion', url: 'https://www.framer.com/motion' },
-    { name: 'TMDB API', url: 'https://www.themoviedb.org' },
+  ];
+
+  const socialLinks = [
+    { 
+      name: 'GitHub',
+      icon: <Github size={18} />,
+      url: 'https://github.com/thedhanawada',
+      color: 'group-hover:text-white'
+    },
+    { 
+      name: 'LinkedIn',
+      icon: <Linkedin size={18} />,
+      url: 'https://linkedin.com/in/thedhanawada',
+      color: 'group-hover:text-blue-400'
+    },
+    { 
+      name: 'Email',
+      icon: <Mail size={18} />,
+      url: 'mailto:nirmal@dhanawada.org',
+      color: 'group-hover:text-fuchsia-400'
+    },
   ];
 
   return (
-    <footer className="relative mt-auto py-12 px-6 border-t border-cyan-500/10">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center">
-          <motion.h3 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-lg font-light text-zinc-400 mb-6"
-          >
-            Built with
-          </motion.h3>
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-3"
-          >
-            {technologies.map((tech, index) => (
-              <a
-                key={tech.name}
-                href={tech.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative px-4 py-2"
-              >
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                <span className="relative text-sm text-zinc-400 group-hover:text-white transition-colors duration-300">
-                  {tech.name}
+    <footer className="relative mt-auto backdrop-blur-sm">
+      {/* Animated Gradient Line */}
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-20 animate-pulse" />
+
+      <div className="relative py-12 px-6">
+        {/* Modern Grid Background */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-950/30 via-black to-black" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+
+        <div className="max-w-7xl mx-auto relative">
+          {/* Main Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Tech Stack */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
+            >
+              <h3 className="text-lg font-light">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                  Built with
                 </span>
-              </a>
-            ))}
-          </motion.div>
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {technologies.map((tech) => (
+                  <motion.a
+                    key={tech.name}
+                    href={tech.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  >
+                    <div className="relative px-4 py-2 bg-black/50 rounded-full border border-cyan-500/20 group-hover:border-fuchsia-500/50 transition-colors">
+                      <span className="text-sm text-zinc-400 group-hover:text-white transition-colors duration-300">
+                        {tech.name}
+                      </span>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-6"
+            >
+              <h3 className="text-lg font-light">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                  Connect
+                </span>
+              </h3>
+              <div className="flex gap-4">
+                {socialLinks.map((link) => (
+                  <motion.a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  >
+                    <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
+                    <div className="relative p-3 rounded-xl bg-black/50 border border-cyan-500/20 group-hover:border-fuchsia-500/50 transition-all duration-300">
+                      <span className={`text-zinc-400 transition-colors duration-300 ${link.color}`}>
+                        {link.icon}
+                      </span>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </footer>
