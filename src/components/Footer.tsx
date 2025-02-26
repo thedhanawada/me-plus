@@ -42,6 +42,67 @@ const Footer = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
 
         <div className="max-w-7xl mx-auto relative">
+          {/* Name Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16 relative group"
+          >
+            {/* Background glow effect */}
+            <div className="absolute -inset-x-4 -inset-y-8 bg-gradient-to-r from-cyan-500/10 via-fuchsia-500/10 to-cyan-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            
+            {/* Full Name */}
+            <motion.h2 
+              className="text-4xl md:text-5xl font-light mb-4 relative"
+              initial={{ letterSpacing: "0.1em" }}
+              whileHover={{ letterSpacing: "0.15em" }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="relative">
+                <span className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-md" />
+                <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-fuchsia-500 animate-text-shine">
+                  Nirmala Rao Dhanawada
+                </span>
+              </span>
+            </motion.h2>
+
+            {/* Stylized Initials */}
+            <motion.div
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="flex items-center justify-center space-x-1"
+            >
+              <div className="flex items-center">
+                <motion.span 
+                  className="text-lg text-cyan-400 font-medium"
+                  whileHover={{ scale: 1.2 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  N
+                </motion.span>
+                <span className="text-zinc-500 mx-0.5">.</span>
+                <motion.span 
+                  className="text-lg text-fuchsia-400 font-medium"
+                  whileHover={{ scale: 1.2 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  R
+                </motion.span>
+                <span className="text-zinc-500 mx-0.5">.</span>
+              </div>
+              <motion.span 
+                className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500"
+                whileHover={{ letterSpacing: "0.1em" }}
+                transition={{ duration: 0.3 }}
+              >
+                Dhanawada
+              </motion.span>
+            </motion.div>
+          </motion.div>
+
           {/* Main Content */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Tech Stack */}

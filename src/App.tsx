@@ -163,8 +163,15 @@ function App() {
                   <Terminal className="relative w-8 h-8 text-cyan-400 group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-light tracking-wider text-sm text-zinc-400">N.R.</span>
-                  <span className="font-medium tracking-wide text-white">Dhanawada</span>
+                  <span className="font-light tracking-[0.2em] text-sm text-zinc-400">
+                    <span className="text-cyan-400">N</span>
+                    <span className="text-zinc-500">.</span>
+                    <span className="text-fuchsia-400">R</span>
+                    <span className="text-zinc-500">.</span>
+                  </span>
+                  <span className="font-medium tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
+                    Dhanawada
+                  </span>
                 </div>
               </Link>
               
