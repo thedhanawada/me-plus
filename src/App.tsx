@@ -582,15 +582,15 @@ function App() {
                   </motion.div>
                 </div>
               </motion.section>
-              <Footer />
             </>
           } />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/lab" element={<Lab />} />
           <Route path="/work" element={<Work />} />
           <Route path="/art" element={<Art />} />
-          {/* Add more routes as needed */}
         </Routes>
+
+        <Footer />
       </div>
     </Router>
   );
