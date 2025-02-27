@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Menu, X, ChevronRight, ExternalLink } from 'lucide-react';
+import { Terminal, Menu, X, ChevronRight, ExternalLink, Github, Code } from 'lucide-react';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -89,35 +89,25 @@ const Header = () => {
                 >
                   {isActive && (
                     <motion.div
-                      layoutId="activeNavIndicator"
+                      layoutId="activeTab"
                       className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10 rounded-md"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      transition={{ type: "spring", duration: 0.6 }}
                     />
                   )}
-                  <div className="relative z-10 flex items-center">
-                    <span 
-                      className={`text-sm transition-colors duration-300 ${
-                        isActive 
-                          ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium' 
-                          : 'text-zinc-400 group-hover:text-white'
-                      }`}
-                    >
-                      {item.name}
-                    </span>
-                    {isActive && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="ml-1.5 w-1 h-1 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500"
-                      />
-                    )}
-                  </div>
+                  <span 
+                    className={`relative z-10 text-sm ${
+                      isActive 
+                        ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium' 
+                        : 'text-zinc-400 group-hover:text-white transition-colors'
+                    }`}
+                  >
+                    {item.name}
+                  </span>
                 </Link>
               );
             })}
             
-            {/* CTA Button */}
+            {/* Source Code Link - Modern Version */}
             <motion.a
               href="https://github.com/thedhanawada"
               target="_blank"
@@ -126,12 +116,10 @@ const Header = () => {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-md blur opacity-25 group-hover:opacity-75 transition duration-500" />
-              <div className="relative px-4 py-2 bg-black/50 rounded-md border border-cyan-500/30 group-hover:border-fuchsia-500/50 transition-colors">
-                <div className="flex items-center space-x-1.5">
-                  <span className="text-sm text-white">GitHub</span>
-                  <ExternalLink size={14} className="text-cyan-400 group-hover:text-fuchsia-400 transition-colors" />
-                </div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative flex items-center space-x-2 px-3 py-1.5 bg-black/50 rounded-full border border-cyan-500/30 group-hover:border-fuchsia-500/50 transition-colors">
+                <Code size={14} className="text-cyan-400 group-hover:text-white transition-colors" />
+                <span className="text-xs text-zinc-400 group-hover:text-white transition-colors">Source</span>
               </div>
             </motion.a>
           </nav>
@@ -198,16 +186,16 @@ const Header = () => {
                   );
                 })}
                 
-                {/* Mobile CTA */}
+                {/* Mobile Source Link - Modern Version */}
                 <a
                   href="https://github.com/thedhanawada"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 p-3 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-md border border-cyan-500/30 hover:border-fuchsia-500/50 transition-colors"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-white">GitHub</span>
-                    <ExternalLink size={16} className="text-cyan-400" />
+                  <div className="flex items-center space-x-3">
+                    <Github size={16} className="text-cyan-400" />
+                    <span className="text-sm text-white">View Source</span>
                   </div>
                 </a>
               </nav>
