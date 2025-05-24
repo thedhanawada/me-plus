@@ -55,6 +55,8 @@ const Watchlist = () => {
     { id: 26910, type: 'movie', category: 'favorite' },
     { id: 7508, type: 'movie', category: 'favorite' },
     { id: 268660, type: 'movie', category: 'favorite' },
+    { id: 70523, type: 'tv', category: 'favorite' },    // Dark
+    { id: 62320, type: 'tv', category: 'favorite' },    // Grace and Frankie
   ];
 
   useEffect(() => {
