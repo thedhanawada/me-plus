@@ -30,11 +30,12 @@ const Watchlist = () => {
   // Media IDs with their types
   const FAVORITE_MEDIA = [
     // Currently Watching
-    { id: 95396, type: 'tv', category: 'current' },   // Severance
+    { id: 70523, type: 'tv', category: 'current' },   // Dark (rewatching)
 
     // Waiting for Next Season
     { id: 125988, type: 'tv', category: 'waiting' },  // Silo
     { id: 124364, type: 'tv', category: 'waiting' },  // FROM
+    { id: 95396, type: 'tv', category: 'waiting' },   // Severance
 
     // Dinner & Lunch Rewatch Shows
     { id: 1421, type: 'tv', category: 'rewatch' },   // Modern Family
@@ -57,6 +58,7 @@ const Watchlist = () => {
     { id: 268660, type: 'movie', category: 'favorite' },
     { id: 70523, type: 'tv', category: 'favorite' },    // Dark
     { id: 62320, type: 'tv', category: 'favorite' },    // Grace and Frankie
+    { id: 198277, type: 'movie', category: 'favorite' }, // Begin Again
   ];
 
   useEffect(() => {
