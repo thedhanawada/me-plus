@@ -97,10 +97,13 @@ const Lab = () => {
                           href={project.links.live}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-600 hover:text-gray-900"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
                           title="Live Demo"
                         >
-                          <ExternalLink size={20} />
+                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white">
+                            <ExternalLink size={20} />
+                          </span>
                         </a>
                       )}
                       {project.links.github && (
@@ -108,10 +111,13 @@ const Lab = () => {
                           href={project.links.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-600 hover:text-gray-900"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
                           title="GitHub"
                         >
-                          <Github size={20} />
+                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white">
+                            <Github size={20} />
+                          </span>
                         </a>
                       )}
                       {project.links.npm && (
@@ -119,10 +125,13 @@ const Lab = () => {
                           href={project.links.npm}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-600 hover:text-gray-900"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
                           title="NPM"
                         >
-                          <Package size={20} />
+                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white">
+                            <Package size={20} />
+                          </span>
                         </a>
                       )}
                       {project.links.firefox && (
@@ -130,10 +139,13 @@ const Lab = () => {
                           href={project.links.firefox}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-600 hover:text-gray-900"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
                           title="Firefox Add-on"
                         >
-                          <Palette size={20} />
+                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white">
+                            <Palette size={20} />
+                          </span>
                         </a>
                       )}
                     </div>

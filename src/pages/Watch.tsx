@@ -143,9 +143,10 @@ const Watchlist = () => {
                 href="https://www.themoviedb.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:no-underline"
+                className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
               >
-                TMDB
+                <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                <span className="relative z-10 group-hover:text-white">[TMDB]</span>
               </a>
             </p>
           </div>

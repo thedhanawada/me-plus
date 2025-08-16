@@ -125,19 +125,31 @@ function App() {
                   <div className="space-y-4">
                     <div>
                       <span className="text-gray-600">projects: </span>
-                      <a href="/lab" className="underline hover:no-underline">lab</a>
+                      <a href="/lab" className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black">
+                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                        <span className="relative z-10 group-hover:text-white">[lab]</span>
+                      </a>
                     </div>
                     <div>
                       <span className="text-gray-600">experience: </span>
-                      <a href="/work" className="underline hover:no-underline">work</a>
+                      <a href="/work" className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black">
+                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                        <span className="relative z-10 group-hover:text-white">[work]</span>
+                      </a>
                     </div>
                     <div>
                       <span className="text-gray-600">photography: </span>
-                      <a href="/art" className="underline hover:no-underline">art</a>
+                      <a href="/art" className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black">
+                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                        <span className="relative z-10 group-hover:text-white">[art]</span>
+                      </a>
                     </div>
                     <div>
                       <span className="text-gray-600">recommendations: </span>
-                      <a href="/watchlist" className="underline hover:no-underline">watchlist</a>
+                      <a href="/watchlist" className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black">
+                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                        <span className="relative z-10 group-hover:text-white">[watchlist]</span>
+                      </a>
                     </div>
                   </div>
                 </section>
