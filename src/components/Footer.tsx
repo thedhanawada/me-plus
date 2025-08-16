@@ -97,19 +97,23 @@ const Footer = () => {
         </div>
         <p className="text-xs text-gray-400">
           Handcrafted with{' '}
-          <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">
-            React
+          <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black">
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="relative z-10 group-hover:text-white">React</span>
           </a>,{' '}
-          <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">
-            TypeScript
+          <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black">
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="relative z-10 group-hover:text-white">TypeScript</span>
           </a>, and{' '}
-          <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">
-            Tailwind CSS
+          <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black">
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="relative z-10 group-hover:text-white">Tailwind CSS</span>
           </a>.
           <br />
           Quotes from{' '}
-          <a href="https://the-one-api.dev/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">
-            The One API
+          <a href="https://the-one-api.dev/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black">
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="relative z-10 group-hover:text-white">The One API</span>
           </a>.
         </p>
       </div>
