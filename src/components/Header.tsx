@@ -40,7 +40,7 @@ const Header = ({ toggleTheme, theme }) => {
                     to={item.path}
                     className={`relative px-4 py-2 text-sm font-mono transition-all duration-300 group ${
                       isActive 
-                        ? 'text-white bg-black' 
+                        ? 'text-white bg-black dark:text-black dark:bg-white' 
                         : 'text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
                     }`}
                   >
