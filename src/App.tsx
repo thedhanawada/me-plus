@@ -45,7 +45,7 @@ function App() {
                     N.R Dhanawada
                   </h1>
                   <div className="text-xl md:text-2xl text-gray-600 space-y-6 leading-relaxed">
-                    <p>I design and build service delivery platforms that create real impact.</p>
+                    <p>I design and build platforms that help organizations serve people better.</p>
                     <p>Architecture. Integration. Scale. Purpose.</p>
                   </div>
                 </section>
