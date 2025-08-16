@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Film, Tv } from 'lucide-react';
 
@@ -120,129 +119,82 @@ const Watchlist = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-red-500 text-center">
+      <main className="max-w-4xl mx-auto px-6 py-16">
+        <div className="text-red-600 text-center">
           <p>{error}</p>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black">
-      <div className="noise" />
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-purple-500/5 to-fuchsia-500/5" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-cyan-900/30 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-      </div>
-
-      <div className="relative pt-32 pb-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-2"
-            >
-              <h1 className="text-4xl md:text-5xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-                Watchlist
-              </h1>
-              <p className="text-zinc-400 text-sm md:text-base">My curated collection of movies and TV shows</p>
-            </motion.div>
-            <motion.a
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              href="https://www.themoviedb.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 md:mt-0 flex items-center space-x-2 text-sm text-zinc-400 hover:text-white transition-colors"
-            >
-              <img 
-                src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
-                alt="TMDB Logo"
-                className="h-4"
-              />
-              <span>Powered by TMDB API</span>
-            </motion.a>
+    <main className="max-w-4xl mx-auto px-6 py-16">
+      <div className="space-y-16">
+        {/* Header */}
+        <section>
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+            Watchlist
+          </h1>
+          <div className="space-y-4 text-xl text-gray-600">
+            <p>Movies and TV shows I watch and rewatch.</p>
+            <p className="text-sm text-gray-500">
+              Data from{' '}
+              <a 
+                href="https://www.themoviedb.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:no-underline"
+              >
+                TMDB
+              </a>
+            </p>
           </div>
+        </section>
 
-          <div className="p-6">
-            {loading ? (
-              <div className="flex justify-center items-center min-h-[60vh]">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-              </div>
-            ) : error ? (
-              <div className="text-red-500 text-center">{error}</div>
-            ) : (
-              <div className="space-y-8">
-                {sections.map((section) => (
-                  <div key={section.title} className="space-y-4">
-                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-                      {section.title}
-                    </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                      {section.items.map((item) => (
-                        <motion.div
-                          key={item.id}
-                          onClick={() => window.open(`https://www.themoviedb.org/${item.media_type}/${item.id}`, '_blank')}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
-                        >
-                          <div className="relative">
-                            <img
-                              src={`${TMDB_IMAGE_BASE}${item.poster_path}`}
-                              alt={item.title}
-                              className="w-full h-[300px] object-cover"
-                            />
+        {loading ? (
+          <div className="flex justify-center items-center min-h-[40vh]">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+        ) : (
+          <div className="space-y-12">
+            {sections.map((section) => (
+              <section key={section.title} className="border-t border-gray-200 pt-8 first:border-t-0 first:pt-0">
+                <h2 className="text-2xl font-bold mb-6">{section.title}</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {section.items.map((item) => (
+                    <div
+                      key={item.id}
+                      onClick={() => window.open(`https://www.themoviedb.org/${item.media_type}/${item.id}`, '_blank')}
+                      className="cursor-pointer group"
+                    >
+                      <div className="aspect-[2/3] relative overflow-hidden rounded-lg bg-gray-100">
+                        <img
+                          src={`${TMDB_IMAGE_BASE}${item.poster_path}`}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        />
+                      </div>
+                      <div className="mt-2 space-y-1">
+                        <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
+                          {item.title}
+                        </h3>
+                        <div className="flex items-center justify-between text-xs text-gray-500">
+                          <span>{new Date(item.release_date || '').getFullYear()}</span>
+                          <div className="flex items-center gap-1">
+                            {item.media_type === 'tv' ? <Tv className="w-3 h-3" /> : <Film className="w-3 h-3" />}
+                            <span>★ {item.vote_average.toFixed(1)}</span>
                           </div>
-                          <div className="p-4">
-                            <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white line-clamp-2">
-                              {item.title}
-                            </h3>
-                            <div className="flex items-center space-x-2 mb-3">
-                              <span className="text-sm text-gray-600 dark:text-gray-300">
-                                {new Date(item.release_date || '').getFullYear()}
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center space-x-2">
-                                <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                                <span className="text-sm text-gray-600 dark:text-gray-300">
-                                  {item.vote_average.toFixed(1)}
-                                </span>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                {item.media_type === 'tv' ? (
-                                  <div className="flex items-center space-x-1 text-blue-600 dark:text-blue-400">
-                                    <Tv className="w-4 h-4" />
-                                    <span className="text-xs font-medium">TV Series</span>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-center space-x-1 text-purple-600 dark:text-purple-400">
-                                    <Film className="w-4 h-4" />
-                                    <span className="text-xs font-medium">Movie</span>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </motion.div>
-                      ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
-        </div>
+        )}
       </div>
-    </div>
+    </main>
   );
 };
 

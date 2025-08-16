@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Image as CloudinaryImage } from 'cloudinary-react';
 
 interface CloudinaryResource {
@@ -38,79 +37,43 @@ const Art = () => {
     setLoading(false);
   }, []);
   return (
-    <motion.section 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="relative pt-32 pb-16 md:pt-40 md:pb-24"
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-5xl md:text-7xl font-light mb-12 relative inline-block">
-            <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-xl"></span>
-            <span className="relative">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-cyan-400 animate-text-shine">
-                Photography
-              </span>
-            </span>
+    <main className="max-w-4xl mx-auto px-6 py-16">
+      <div className="space-y-16">
+        {/* Header */}
+        <section>
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+            Photography
           </h1>
-          <p className="text-xl text-zinc-400 font-light">
-            A collection of moments
-          </p>
-        </motion.div>
-
-        {/* Art Gallery Wall */}
-        <div className="max-w-[2000px] mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 lg:gap-12">
-          {loading ? (
-            <div className="col-span-full text-center text-zinc-400">Loading photos...</div>
-          ) : photos.length === 0 ? (
-            <div className="col-span-full text-center text-zinc-400">No photos found</div>
-          ) : photos.map((photoId, index) => (
-            <motion.div
-              key={photoId}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 1.2, delay: index * 0.1 }}
-              className="relative"
-            >
-              <div className="relative bg-zinc-900/50 p-4 rounded-lg backdrop-blur-sm">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-50 rounded-lg"></div>
-                <div className="relative">
-                  {/* Frame effect */}
-                  <div className="absolute inset-0 border border-white/10 rounded-lg"></div>
-                  <div className="absolute inset-[2px] border border-black/50 rounded-lg"></div>
-                  <CloudinaryImage
-                    cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}
-                    publicId={photoId}
-                    className="w-full rounded-lg shadow-xl"
-                    loading="lazy"
-                    width="800"
-                    crop="fill"
-                    quality="auto"
-                    fetchFormat="auto"
-                  />
-                  {/* Subtle shadow overlay */}
-                  <div className="absolute inset-0 rounded-lg shadow-inner pointer-events-none"></div>
-                </div>
-                {/* Caption area - can be used for photo details later */}
-                <div className="mt-3 px-1">
-                  <div className="h-1 w-12 bg-gradient-to-r from-white/10 to-transparent rounded-full"></div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-          {/* Loading and error states handled above */}
+          <div className="text-xl text-gray-600">
+            <p>A collection of moments.</p>
           </div>
-        </div>
+        </section>
+
+        {/* Photo Grid */}
+        <section>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {loading ? (
+              <div className="col-span-full text-center text-gray-500">Loading photos...</div>
+            ) : photos.length === 0 ? (
+              <div className="col-span-full text-center text-gray-500">No photos found</div>
+            ) : photos.map((photoId, index) => (
+              <div key={photoId} className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+                <CloudinaryImage
+                  cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}
+                  publicId={photoId}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+                  loading="lazy"
+                  width="800"
+                  crop="fill"
+                  quality="auto"
+                  fetchFormat="auto"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
-    </motion.section>
+    </main>
   );
 };
 

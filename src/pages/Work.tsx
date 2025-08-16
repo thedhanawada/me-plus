@@ -1,12 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Award, GraduationCap, MapPin, Calendar, ChevronRight, 
-  Code, Cloud, Database, GitBranch, Box, Globe, Shield,
-  ChevronDown, Server, Layout, Workflow, Briefcase,
-  Building2, Trophy, Users, FileText, Zap, BookOpen,
-  Link as LinkIcon, FileText as ArticleIcon, Users as AuthorsIcon
-} from 'lucide-react';
+import React from 'react';
+import { MapPin, Calendar, Award, GraduationCap, Briefcase, Building2, BookOpen } from 'lucide-react';
 
 interface Education {
   university: string;
@@ -337,513 +330,168 @@ const publications: Publication[] = [
 ];
 
 const Work = () => {
-  const [selectedEdu, setSelectedEdu] = useState<string | null>(null);
-  const [hoveredCourse, setHoveredCourse] = useState<string | null>(null);
-  const [expandedSkills, setExpandedSkills] = useState<Set<string>>(new Set());
-  const [selectedExp, setSelectedExp] = useState<string | null>(null);
-  const [expandedPublication, setExpandedPublication] = useState<string | null>(null);
-
-  const toggleSkill = (skillName: string) => {
-    const newExpanded = new Set(expandedSkills);
-    if (newExpanded.has(skillName)) {
-      newExpanded.delete(skillName);
-    } else {
-      newExpanded.add(skillName);
-    }
-    setExpandedSkills(newExpanded);
-  };
-
   return (
-    <div className="min-h-screen pt-32 pb-16">
-      <div className="max-w-7xl mx-auto px-6">
+    <main className="max-w-4xl mx-auto px-6 py-16">
+      <div className="space-y-16">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-light mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-              Education & Background
-            </span>
+        <section>
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+            Work & Experience
           </h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto"
-          >
-          </motion.p>
-        </motion.div>
+          <p className="text-xl text-gray-600">
+            Building systems that solve real problems.
+          </p>
+        </section>
 
-        {/* Interactive Education Display */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {/* Left Panel - University Selection */}
-          <div className="space-y-6">
+        {/* Education */}
+        <section className="border-t border-gray-200 pt-16">
+          <h2 className="text-2xl font-bold mb-8">Education</h2>
+          <div className="space-y-8">
             {education.map((edu) => (
-              <motion.div
-                key={edu.university}
-                className={`relative group cursor-pointer ${
-                  selectedEdu === edu.university ? 'scale-105' : ''
-                }`}
-                onClick={() => setSelectedEdu(edu.university)}
-                whileHover={{ scale: selectedEdu === edu.university ? 1 : 1.02 }}
-              >
-                <div className={`absolute -inset-1 bg-gradient-to-r ${edu.color} rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000`}></div>
-                <div className="relative p-6 bg-black/80 backdrop-blur-sm rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <h3 className={`text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r ${edu.color}`}>
-                        {edu.university}
-                      </h3>
-                      <div className="flex items-center gap-4 mt-2 text-sm text-zinc-400">
-                        <span className="flex items-center gap-1">
-                          <MapPin size={14} />
-                          {edu.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar size={14} />
-                          {edu.period}
-                        </span>
-                      </div>
+              <div key={edu.university} className="space-y-4">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold">{edu.university}</h3>
+                    <p className="text-gray-600">{edu.degree} - {edu.program}</p>
+                  </div>
+                  <div className="text-sm text-gray-500 space-y-1 md:text-right">
+                    <div className="flex items-center gap-1 md:justify-end">
+                      <MapPin size={14} />
+                      {edu.location}
                     </div>
-                    <ChevronRight 
-                      size={20} 
-                      className={`text-zinc-600 transform transition-transform ${
-                        selectedEdu === edu.university ? 'rotate-90' : 'group-hover:translate-x-1'
-                      }`}
-                    />
+                    <div className="flex items-center gap-1 md:justify-end">
+                      <Calendar size={14} />
+                      {edu.period}
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Right Panel - Details View */}
-          <div className="relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25"></div>
-            <div className="relative min-h-[400px] bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20">
-              <AnimatePresence mode="wait">
-                {selectedEdu ? (
-                  <motion.div
-                    key={selectedEdu}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="space-y-8"
-                  >
-                    {education.find(edu => edu.university === selectedEdu) && (
-                      <>
-                        <div>
-                          <div className="flex items-center gap-3 mb-4">
-                            <GraduationCap size={24} className="text-cyan-400" />
-                            <div>
-                              <h4 className="text-xl text-zinc-200">{education.find(edu => edu.university === selectedEdu)?.degree}</h4>
-                              <p className="text-zinc-400">{education.find(edu => edu.university === selectedEdu)?.program}</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        {education.find(edu => edu.university === selectedEdu)?.achievements && (
-                          <div>
-                            <h4 className="text-lg font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
-                              Achievements
-                            </h4>
-                            <div className="space-y-3">
-                              {education.find(edu => edu.university === selectedEdu)?.achievements?.map((achievement, i) => (
-                                <motion.div
-                                  key={i}
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: i * 0.1 }}
-                                  className="flex items-start gap-2"
-                                >
-                                  <Award size={16} className="text-cyan-400 mt-1 flex-shrink-0" />
-                                  <span className="text-zinc-400">{achievement}</span>
-                                </motion.div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                        <div>
-                          <h4 className="text-lg font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-4">
-                            Key Courses
-                          </h4>
-                          <div className="grid grid-cols-2 gap-3">
-                            {education.find(edu => edu.university === selectedEdu)?.courses.map((course, i) => (
-                              <motion.div
-                                key={course}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: i * 0.1 }}
-                                onHoverStart={() => setHoveredCourse(course)}
-                                onHoverEnd={() => setHoveredCourse(null)}
-                                className="relative group"
-                              >
-                                <div className={`absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-lg blur opacity-25 transition-opacity duration-300 ${
-                                  hoveredCourse === course ? 'opacity-75' : 'group-hover:opacity-50'
-                                }`}></div>
-                                <div className="relative p-3 rounded-lg bg-black/50 border border-cyan-500/20 group-hover:border-fuchsia-500/50 transition-colors">
-                                  <p className="text-sm text-zinc-400 group-hover:text-zinc-200 transition-colors">{course}</p>
-                                </div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center justify-center h-full text-zinc-500"
-                  >
-                    <p>Select a university to view details</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-
-        {/* Technical Competencies Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-24"
-        >
-          <h2 className="text-4xl md:text-5xl font-light mb-12 text-center">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-              Technical Competencies
-            </span>
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {technicalCompetencies.map((category, index) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative group"
-              >
-                <div className={`absolute -inset-1 bg-gradient-to-r ${category.color} rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000`}></div>
-                <div className="relative bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className={`p-2 rounded-lg bg-gradient-to-r ${category.color} bg-opacity-10`}>
-                      {category.icon}
-                    </div>
-                    <h3 className={`text-xl font-light text-transparent bg-clip-text bg-gradient-to-r ${category.color}`}>
-                      {category.name}
-                    </h3>
+                
+                {edu.achievements && (
+                  <div>
+                    <h4 className="font-semibold mb-2">Achievements</h4>
+                    <ul className="space-y-1 text-gray-600">
+                      {edu.achievements.map((achievement, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <Award size={16} className="text-gray-400 mt-0.5 flex-shrink-0" />
+                          {achievement}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-
-                  <div className="space-y-3">
-                    {category.skills.map((skill) => (
-                      <div key={skill.name}>
-                        <button
-                          onClick={() => skill.details && toggleSkill(skill.name)}
-                          className={`w-full text-left p-2 rounded-lg bg-black/50 border border-cyan-500/10 
-                            hover:border-fuchsia-500/30 transition-colors flex items-center justify-between
-                            ${skill.details ? 'cursor-pointer' : 'cursor-default'}`}
-                        >
-                          <span className="text-zinc-300">{skill.name}</span>
-                          {skill.details && (
-                            <ChevronDown
-                              size={16}
-                              className={`text-zinc-500 transform transition-transform ${
-                                expandedSkills.has(skill.name) ? 'rotate-180' : ''
-                              }`}
-                            />
-                          )}
-                        </button>
-
-                        <AnimatePresence>
-                          {skill.details && expandedSkills.has(skill.name) && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.3 }}
-                              className="overflow-hidden"
-                            >
-                              <div className="p-3 space-y-3">
-                                {Object.entries(skill.details).map(([key, value]) => (
-                                  <div key={key} className="space-y-2">
-                                    <h4 className="text-sm text-zinc-400">{key}</h4>
-                                    <ul className="space-y-1">
-                                      {(Array.isArray(value) ? value : Object.values(value).flat()).map((item, i) => (
-                                        <motion.li
-                                          key={i}
-                                          initial={{ opacity: 0, x: -10 }}
-                                          animate={{ opacity: 1, x: 0 }}
-                                          transition={{ delay: i * 0.1 }}
-                                          className="text-sm text-zinc-500 pl-3 border-l border-zinc-800"
-                                        >
-                                          {item}
-                                        </motion.li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                ))}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
+                )}
+                
+                <div>
+                  <h4 className="font-semibold mb-2">Key Courses</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {edu.courses.map((course) => (
+                      <span key={course} className="text-sm bg-gray-100 px-3 py-1 rounded">
+                        {course}
+                      </span>
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </section>
 
-        {/* Professional Experience Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-24"
-        >
-          <h2 className="text-4xl md:text-5xl font-light mb-12 text-center">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-              Professional Experience
-            </span>
-          </h2>
-
+        {/* Experience */}
+        <section className="border-t border-gray-200 pt-16">
+          <h2 className="text-2xl font-bold mb-8">Experience</h2>
           <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <motion.div
-                key={exp.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`relative group ${selectedExp === exp.title ? 'z-10' : 'z-0'}`}
-              >
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                <div className="relative bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
-                  {/* Header */}
-                  <div 
-                    className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 cursor-pointer"
-                    onClick={() => setSelectedExp(selectedExp === exp.title ? null : exp.title)}
-                  >
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <Briefcase className="w-6 h-6 text-cyan-400" />
-                        <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-                          {exp.title}
-                        </h3>
-                      </div>
-                      <div className="flex flex-wrap gap-4 mt-2 text-sm text-zinc-400">
-                        <span className="flex items-center gap-1">
-                          <Building2 size={14} />
-                          {exp.company}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin size={14} />
-                          {exp.location}
-                        </span>
+            {experiences.map((exp) => (
+              <div key={exp.title} className="space-y-4">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold">{exp.title}</h3>
+                    <p className="text-gray-600 flex items-center gap-1">
+                      <Building2 size={16} />
+                      {exp.company}
+                    </p>
+                  </div>
+                  <div className="text-sm text-gray-500 space-y-1 md:text-right">
+                    <div className="flex items-center gap-1 md:justify-end">
+                      <MapPin size={14} />
+                      {exp.location}
+                    </div>
+                    <div className="flex items-center gap-1 md:justify-end">
+                      <Calendar size={14} />
+                      {exp.period}
+                    </div>
+                  </div>
+                </div>
+
+                {exp.award && (
+                  <p className="text-sm text-gray-600 font-medium">
+                    🏆 {exp.award}
+                  </p>
+                )}
+
+                <div className="space-y-3">
+                  {exp.highlights.map((highlight) => (
+                    <div key={highlight.title} className="border-l-2 border-gray-200 pl-4">
+                      <h4 className="font-semibold text-gray-900">{highlight.title}</h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {highlight.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Publications */}
+        <section className="border-t border-gray-200 pt-16">
+          <h2 className="text-2xl font-bold mb-8">Publications</h2>
+          <div className="space-y-6">
+            {publications.map((pub) => (
+              <div key={pub.title} className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <BookOpen className="w-6 h-6 text-gray-400 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      {pub.title}
+                    </h3>
+                    
+                    <div className="space-y-2 text-sm text-gray-600">
+                      <div className="flex flex-wrap gap-4">
                         <span className="flex items-center gap-1">
                           <Calendar size={14} />
-                          {exp.period}
+                          {pub.date}
                         </span>
+                        <span>Article {pub.articleNo}</span>
+                        <span>Pages {pub.pages}</span>
                       </div>
-                      {exp.award && (
-                        <div className="flex items-center gap-2 mt-2 text-sm">
-                          <Trophy size={14} className="text-yellow-500" />
-                          <span className="text-yellow-500">{exp.award}</span>
-                        </div>
-                      )}
+                      
+                      <div>
+                        <strong>Authors:</strong> {pub.authors.join(', ')}
+                      </div>
+                      
+                      <div>
+                        <strong>Conference:</strong> {pub.conference}
+                      </div>
                     </div>
-                    <ChevronDown 
-                      size={20} 
-                      className={`text-zinc-500 transform transition-transform ${
-                        selectedExp === exp.title ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </div>
-
-                  {/* Expandable Content */}
-                  <AnimatePresence>
-                    {selectedExp === exp.title && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
+                    
+                    <div className="mt-3">
+                      <a
+                        href={pub.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-gray-600 hover:text-gray-900 underline"
                       >
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                          {exp.highlights.map((highlight, i) => (
-                            <motion.div
-                              key={highlight.title}
-                              initial={{ opacity: 0, x: -20 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: i * 0.1 }}
-                              className="relative group"
-                            >
-                              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
-                              <div className="relative p-4 rounded-lg bg-black/50 border border-cyan-500/10 group-hover:border-fuchsia-500/30">
-                                <div className="flex items-center gap-3 mb-2">
-                                  <div className="p-2 rounded-lg bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10">
-                                    {highlight.icon}
-                                  </div>
-                                  <h4 className="text-lg text-zinc-300">{highlight.title}</h4>
-                                </div>
-                                <p className="text-sm text-zinc-400 leading-relaxed">
-                                  {highlight.description}
-                                </p>
-                              </div>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Publications Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-24"
-        >
-          <h2 className="text-4xl md:text-5xl font-light mb-12 text-center">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-              Research Publications
-            </span>
-          </h2>
-
-          <div className="space-y-8">
-            {publications.map((pub, index) => (
-              <motion.div
-                key={pub.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative group"
-              >
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                <div className="relative bg-black/80 backdrop-blur-sm p-6 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
-                  <div 
-                    className="cursor-pointer"
-                    onClick={() => setExpandedPublication(expandedPublication === pub.title ? null : pub.title)}
-                  >
-                    {/* Header */}
-                    <div className="flex items-start gap-4">
-                      <div className="p-2 rounded-lg bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10">
-                        <BookOpen className="w-6 h-6 text-cyan-400" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 mb-2">
-                          {pub.title}
-                        </h3>
-                        <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
-                          <span className="flex items-center gap-1">
-                            <Calendar size={14} />
-                            {pub.date}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <ArticleIcon size={14} />
-                            Article {pub.articleNo}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <FileText size={14} />
-                            Pages {pub.pages}
-                          </span>
-                        </div>
-                      </div>
-                      <ChevronDown 
-                        size={20} 
-                        className={`text-zinc-500 transform transition-transform flex-shrink-0 ${
-                          expandedPublication === pub.title ? 'rotate-180' : ''
-                        }`}
-                      />
+                        View Publication →
+                      </a>
                     </div>
-
-                    {/* Expandable Content */}
-                    <AnimatePresence>
-                      {expandedPublication === pub.title && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mt-6 space-y-4">
-                            {/* Authors */}
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-2 text-zinc-300">
-                                <AuthorsIcon size={16} className="text-cyan-400" />
-                                <h4>Authors</h4>
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                {pub.authors.map((author, i) => (
-                                  <motion.span
-                                    key={author}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: i * 0.1 }}
-                                    className={`px-3 py-1 text-sm rounded-full 
-                                      ${author === "Nirmala Rao Dhanawada" 
-                                        ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30" 
-                                        : "bg-zinc-800/50 text-zinc-400 border border-zinc-700"}`}
-                                  >
-                                    {author}
-                                  </motion.span>
-                                ))}
-                              </div>
-                            </div>
-
-                            {/* Conference */}
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-2 text-zinc-300">
-                                <Building2 size={16} className="text-cyan-400" />
-                                <h4>Conference</h4>
-                              </div>
-                              <p className="text-sm text-zinc-400 leading-relaxed">
-                                {pub.conference}
-                              </p>
-                            </div>
-
-                            {/* Link */}
-                            <div className="pt-2">
-                              <a
-                                href={pub.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10 
-                                  border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors text-sm text-cyan-400 hover:text-fuchsia-400"
-                              >
-                                <LinkIcon size={14} />
-                                View Publication
-                              </a>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 
