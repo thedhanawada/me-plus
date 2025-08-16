@@ -45,8 +45,8 @@ function App() {
                     N.R Dhanawada
                   </h1>
                   <div className="text-xl md:text-2xl text-gray-600 space-y-6 leading-relaxed">
-                    <p>Software engineer who believes in building things that matter.</p>
-                    <p>Write code. Solve problems. Keep it simple.</p>
+                    <p>I design and build service delivery platforms that create real impact.</p>
+                    <p>Architecture. Integration. Scale. Purpose.</p>
                   </div>
                 </section>
 
@@ -94,18 +94,27 @@ function App() {
                   <h2 className="text-2xl font-bold mb-8">What I Do</h2>
                   <div className="space-y-6 text-gray-600 leading-relaxed">
                     <p>
-                      I build software systems that solve real problems. 
-                      Focus on fundamentals: clean code, solid architecture, 
-                      and tools that make developers' lives better.
+                      I design, build, and integrate service delivery platforms for education, 
+                      employment, and social support organizations. My work centers on architecting 
+                      robust systems that handle complex workflows while remaining accessible 
+                      to the people who depend on them.
                     </p>
                     <p>
-                      Currently working on distributed systems, developer tooling, 
-                      and anything that makes complex problems simpler to understand and solve.
+                      Core expertise spans end-to-end data management — ETL processes, database design, 
+                      and system integrations — often leveraging Salesforce ecosystems, custom development 
+                      with Apex and Lightning Web Components, Node.js, and MongoDB. I build platforms 
+                      that scale from hundreds to thousands of users while maintaining reliability.
                     </p>
                     <p>
-                      Inspired by the Unix philosophy: do one thing well, 
-                      make programs work together, and handle text streams because 
-                      that's a universal interface.
+                      Recent work includes student management systems supporting nearly 5,000 users, 
+                      automated reporting pipelines, data integration architectures, and internal tools 
+                      that enhance operational efficiency. Each system is designed with the Unix principle: 
+                      do one thing exceptionally well, then compose those pieces into something powerful.
+                    </p>
+                    <p>
+                      Technology should amplify human potential, not complicate it. 
+                      Every system I build asks: does this make someone's work easier, 
+                      their outcomes better, their mission more achievable?
                     </p>
                   </div>
                 </section>
