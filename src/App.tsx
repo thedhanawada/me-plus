@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Database, Briefcase, Zap, Users } from 'lucide-react';
 import Watchlist from './pages/Watch';
 import Lab from './pages/Lab';
 import Work from './pages/Work';
@@ -32,24 +31,20 @@ const TitleUpdater = () => {
 
 const whatIDo = [
   {
-    icon: <Database size={24} />,
-    title: 'Platform Architecture',
-    description: 'I design and build robust, scalable service delivery platforms for education, employment, and social support organizations.'
+    title: 'I build service delivery platforms.',
+    description: 'The goal is simple: make them robust, scalable, and actually useful for the people who depend on them. No fluff.'
   },
   {
-    icon: <Zap size={24} />,
-    title: 'Data Integration',
-    description: 'I have expertise in end-to-end data management, including ETL processes, database design, and system integrations with Salesforce, Marketo, and more.'
+    title: 'I handle the whole stack.',
+    description: 'From ETL and data modeling to the final application logic. I use tools that work, like Salesforce, Node.js, and MongoDB. The right tool for the job.'
   },
   {
-    icon: <Briefcase size={24} />,
-    title: 'Salesforce Development',
-    description: 'I specialize in custom development with Apex, Lightning Web Components, and Visualforce to create tailored solutions that meet specific business needs.'
+    title: 'My code has a real-world impact.',
+    description: "I've built systems that support thousands of users, managing everything from student data to automated reporting."
   },
   {
-    icon: <Users size={24} />,
-    title: 'User-Centric Solutions',
-    description: 'I build platforms that scale from hundreds to thousands of users while maintaining reliability and a focus on the user experience.'
+    title: 'I focus on no-nonsense development.',
+    description: 'Clean architecture and efficient code are my priorities. I build systems that are easy to understand, maintain, and that last.'
   }
 ];
 
@@ -95,43 +90,11 @@ function App() {
                   <h2 className="text-2xl font-bold mb-8">What I Do</h2>
                   <div className="grid gap-8 md:grid-cols-2">
                     {whatIDo.map((item) => (
-                      <div key={item.title} className="flex items-start gap-4">
-                        <div className="text-gray-600">{item.icon}</div>
-                        <div>
-                          <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                          <p className="text-gray-600 leading-relaxed">{item.description}</p>
-                        </div>
+                      <div key={item.title}>
+                        <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                        <p className="text-gray-600 leading-relaxed">{item.description}</p>
                       </div>
                     ))}
-                  </div>
-                </motion.section>
-
-                {/* Links Section */}
-                <motion.section
-                  variants={sectionVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className="border-t border-gray-200 pt-16"
-                >
-                  <h2 className="text-2xl font-bold mb-8">Links</h2>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <a href="/work" className="block p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                      <h3 className="text-lg font-semibold mb-2">Work Experience</h3>
-                      <p className="text-gray-600">Details about my professional background and skills.</p>
-                    </a>
-                    <a href="/lab" className="block p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                      <h3 className="text-lg font-semibold mb-2">Lab</h3>
-                      <p className="text-gray-600">A collection of my personal projects and experiments.</p>
-                    </a>
-                    <a href="/art" className="block p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                      <h3 className="text-lg font-semibold mb-2">Photography</h3>
-                      <p className="text-gray-600">A collection of moments I've captured.</p>
-                    </a>
-                    <a href="/watchlist" className="block p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                      <h3 className="text-lg font-semibold mb-2">Watchlist</h3>
-                      <p className="text-gray-600">A list of movies and TV shows I enjoy.</p>
-                    </a>
                   </div>
                 </motion.section>
 
