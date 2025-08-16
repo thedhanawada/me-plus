@@ -65,15 +65,15 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="border-t border-gray-200 mt-16">
+    <footer className="border-t border-gray-200 mt-16 dark:border-gray-700">
       <div className="max-w-4xl mx-auto px-6 py-12 text-center">
         <div className="min-h-[6rem] flex flex-col justify-center">
           {loading && <div className="loader"></div>}
           {error && <p className="text-red-500 text-sm">Error: {error}</p>}
           {!loading && !error && (
-            <blockquote className="text-gray-600 italic max-w-2xl mx-auto fade-in">
+            <blockquote className="text-gray-600 italic max-w-2xl mx-auto fade-in dark:text-gray-400">
               <p>"{quote}"</p>
-              <cite className="mt-2 block text-right not-italic text-sm text-gray-500">— {character}</cite>
+              <cite className="mt-2 block text-right not-italic text-sm text-gray-500 dark:text-gray-400">— {character}</cite>
             </blockquote>
           )}
         </div>
@@ -82,38 +82,38 @@ const Footer = () => {
             href="https://github.com/thedhanawada"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+            className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-black"
           >
-            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            <span className="relative z-10 group-hover:text-white">[github]</span>
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 dark:bg-white"></span>
+            <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[github]</span>
           </a>
           <a
             href="mailto:nirmal@dhanawada.org"
-            className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+            className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-black"
           >
-            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            <span className="relative z-10 group-hover:text-white">[email]</span>
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 dark:bg-white"></span>
+            <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[email]</span>
           </a>
         </div>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-gray-400 dark:text-gray-500">
           Handcrafted with{' '}
-          <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black">
-            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            <span className="relative z-10 group-hover:text-white">React</span>
+          <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-black">
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 dark:bg-white"></span>
+            <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">React</span>
           </a>,{' '}
-          <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black">
-            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            <span className="relative z-10 group-hover:text-white">TypeScript</span>
+          <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-black">
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 dark:bg-white"></span>
+            <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">TypeScript</span>
           </a>, and{' '}
-          <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black">
-            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            <span className="relative z-10 group-hover:text-white">Tailwind CSS</span>
+          <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-black">
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 dark:bg-white"></span>
+            <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">Tailwind CSS</span>
           </a>.
           <br />
           Quotes from{' '}
-          <a href="https://the-one-api.dev/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black">
-            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            <span className="relative z-10 group-hover:text-white">The One API</span>
+          <a href="https://the-one-api.dev/" target="_blank" rel="noopener noreferrer" className="relative px-1 transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-black">
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 dark:bg-white"></span>
+            <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">The One API</span>
           </a>.
         </p>
       </div>
