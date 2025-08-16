@@ -71,7 +71,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-white text-gray-900 font-mono dark:bg-gray-900 dark:text-gray-100">
+      <div className="min-h-screen bg-white text-gray-900 font-mono dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
         <TitleUpdater />
         <Header toggleTheme={toggleTheme} theme={theme} />
         
