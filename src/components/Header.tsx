@@ -58,9 +58,10 @@ const Header = () => {
                 href="https://github.com/thedhanawada"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ml-8 text-xs text-gray-400 hover:text-gray-600 font-mono border-l border-gray-300 pl-4"
+                className="relative px-4 py-2 text-sm font-mono transition-all duration-300 group text-gray-700 hover:text-black ml-8 border-l border-gray-300 pl-4"
               >
-                github
+                <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                <span className="relative z-10 group-hover:text-white">[github]</span>
               </a>
             </div>
           </nav>
