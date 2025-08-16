@@ -1,5 +1,24 @@
 import React from 'react';
-import { MapPin, Calendar, Award, GraduationCap, Briefcase, Building2, BookOpen } from 'lucide-react';
+import { 
+  MapPin, 
+  Calendar, 
+  Award, 
+  GraduationCap, 
+  Briefcase, 
+  Building2, 
+  BookOpen,
+  Users,
+  Database,
+  Globe,
+  Shield,
+  Zap,
+  FileText,
+  Code,
+  Cloud,
+  Layout,
+  Server,
+  Workflow
+} from 'lucide-react';
 
 interface Education {
   university: string;

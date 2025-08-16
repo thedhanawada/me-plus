@@ -59,7 +59,7 @@ const Art = () => {
             ) : photos.map((photoId, index) => (
               <div key={photoId} className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
                 <CloudinaryImage
-                  cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}
+                  cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'demo'}
                   publicId={photoId}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                   loading="lazy"
