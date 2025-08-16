@@ -77,12 +77,22 @@ const Footer = () => {
             </blockquote>
           )}
         </div>
-        <div className="flex justify-center space-x-6 text-sm mb-4 mt-6">
-          <a href="https://github.com/thedhanawada" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">
-            github
+        <div className="flex justify-center space-x-8 text-sm mb-4 mt-6">
+          <a
+            href="https://github.com/thedhanawada"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+          >
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="relative z-10 group-hover:text-white">[github]</span>
           </a>
-          <a href="mailto:nirmal@dhanawada.org" className="text-gray-600 hover:text-gray-900">
-            email
+          <a
+            href="mailto:nirmal@dhanawada.org"
+            className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+          >
+            <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+            <span className="relative z-10 group-hover:text-white">[email]</span>
           </a>
         </div>
         <p className="text-xs text-gray-400">
