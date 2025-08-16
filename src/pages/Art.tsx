@@ -57,7 +57,7 @@ const Art = () => {
             ) : photos.length === 0 ? (
               <div className="col-span-full text-center text-gray-500 dark:text-gray-400">No photos found</div>
             ) : photos.map((photoId, index) => (
-              <div key={photoId} className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
+              <div key={photoId} className="relative aspect-square overflow-hidden rounded-lg p-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg dark:shadow-xl hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-300">
                 <CloudinaryImage
                   cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'demo'}
                   publicId={photoId}
