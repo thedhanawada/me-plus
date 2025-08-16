@@ -68,10 +68,10 @@ const Footer = () => {
     <footer className="border-t border-gray-200 mt-16">
       <div className="max-w-4xl mx-auto px-6 py-12 text-center">
         <div className="min-h-[6rem] flex flex-col justify-center">
-          {loading && <p className="text-gray-500 text-sm">Fetching a quote...</p>}
+          {loading && <div className="loader"></div>}
           {error && <p className="text-red-500 text-sm">Error: {error}</p>}
           {!loading && !error && (
-            <blockquote className="text-gray-600 italic max-w-2xl mx-auto">
+            <blockquote className="text-gray-600 italic max-w-2xl mx-auto fade-in">
               <p>"{quote}"</p>
               <cite className="mt-2 block text-right not-italic text-sm text-gray-500">— {character}</cite>
             </blockquote>
