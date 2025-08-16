@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Database, Briefcase, Zap, Users } from 'lucide-react';
 import Watchlist from './pages/Watch';
 import Lab from './pages/Lab';
 import Work from './pages/Work';
@@ -28,6 +30,34 @@ const TitleUpdater = () => {
   return null;
 };
 
+const whatIDo = [
+  {
+    icon: <Database size={24} />,
+    title: 'Platform Architecture',
+    description: 'I design and build robust, scalable service delivery platforms for education, employment, and social support organizations.'
+  },
+  {
+    icon: <Zap size={24} />,
+    title: 'Data Integration',
+    description: 'I have expertise in end-to-end data management, including ETL processes, database design, and system integrations with Salesforce, Marketo, and more.'
+  },
+  {
+    icon: <Briefcase size={24} />,
+    title: 'Salesforce Development',
+    description: 'I specialize in custom development with Apex, Lightning Web Components, and Visualforce to create tailored solutions that meet specific business needs.'
+  },
+  {
+    icon: <Users size={24} />,
+    title: 'User-Centric Solutions',
+    description: 'I build platforms that scale from hundreds to thousands of users while maintaining reliability and a focus on the user experience.'
+  }
+];
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+};
+
 function App() {
   return (
     <Router>
@@ -40,7 +70,11 @@ function App() {
             <main className="max-w-4xl mx-auto px-6 py-16">
               <div className="space-y-16">
                 {/* Hero Section */}
-                <section>
+                <motion.section
+                  variants={sectionVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
                   <h1 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
                     N.R Dhanawada
                   </h1>
@@ -48,10 +82,67 @@ function App() {
                     <p>I design and build platforms that help organizations serve people better.</p>
                     <p>Architecture. Integration. Scale. Purpose.</p>
                   </div>
-                </section>
+                </motion.section>
+
+                {/* What I Do Section */}
+                <motion.section
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="border-t border-gray-200 pt-16"
+                >
+                  <h2 className="text-2xl font-bold mb-8">What I Do</h2>
+                  <div className="grid gap-8 md:grid-cols-2">
+                    {whatIDo.map((item) => (
+                      <div key={item.title} className="flex items-start gap-4">
+                        <div className="text-gray-600">{item.icon}</div>
+                        <div>
+                          <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                          <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.section>
+
+                {/* Links Section */}
+                <motion.section
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="border-t border-gray-200 pt-16"
+                >
+                  <h2 className="text-2xl font-bold mb-8">Links</h2>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <a href="/work" className="block p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <h3 className="text-lg font-semibold mb-2">Work Experience</h3>
+                      <p className="text-gray-600">Details about my professional background and skills.</p>
+                    </a>
+                    <a href="/lab" className="block p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <h3 className="text-lg font-semibold mb-2">Lab</h3>
+                      <p className="text-gray-600">A collection of my personal projects and experiments.</p>
+                    </a>
+                    <a href="/art" className="block p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <h3 className="text-lg font-semibold mb-2">Photography</h3>
+                      <p className="text-gray-600">A collection of moments I've captured.</p>
+                    </a>
+                    <a href="/watchlist" className="block p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <h3 className="text-lg font-semibold mb-2">Watchlist</h3>
+                      <p className="text-gray-600">A list of movies and TV shows I enjoy.</p>
+                    </a>
+                  </div>
+                </motion.section>
 
                 {/* Philosophy Section */}
-                <section className="border-t border-gray-200 pt-16">
+                <motion.section
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="border-t border-gray-200 pt-16"
+                >
                   <h2 className="text-2xl font-bold mb-8">Philosophy</h2>
                   <div className="grid gap-8 md:grid-cols-2">
                     <div>
@@ -87,72 +178,7 @@ function App() {
                       </p>
                     </div>
                   </div>
-                </section>
-
-                {/* What I Do Section */}
-                <section className="border-t border-gray-200 pt-16">
-                  <h2 className="text-2xl font-bold mb-8">What I Do</h2>
-                  <div className="space-y-6 text-gray-600 leading-relaxed">
-                    <p>
-                      I design, build, and integrate service delivery platforms for education, 
-                      employment, and social support organizations. My work centers on architecting 
-                      robust systems that handle complex workflows while remaining accessible 
-                      to the people who depend on them.
-                    </p>
-                    <p>
-                      Core expertise spans end-to-end data management — ETL processes, database design, 
-                      and system integrations — often leveraging Salesforce ecosystems, custom development 
-                      with Apex and Lightning Web Components, Node.js, and MongoDB. I build platforms 
-                      that scale from hundreds to thousands of users while maintaining reliability.
-                    </p>
-                    <p>
-                      Recent work includes student management systems supporting nearly 5,000 users, 
-                      automated reporting pipelines, data integration architectures, and internal tools 
-                      that enhance operational efficiency. Each system is designed with the Unix principle: 
-                      do one thing exceptionally well, then compose those pieces into something powerful.
-                    </p>
-                    <p>
-                      Technology should amplify human potential, not complicate it. 
-                      Every system I build asks: does this make someone's work easier, 
-                      their outcomes better, their mission more achievable?
-                    </p>
-                  </div>
-                </section>
-
-                {/* Links Section */}
-                <section className="border-t border-gray-200 pt-16">
-                  <h2 className="text-2xl font-bold mb-8">Links</h2>
-                  <div className="space-y-4">
-                    <div>
-                      <span className="text-gray-600">projects: </span>
-                      <a href="/lab" className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black">
-                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                        <span className="relative z-10 group-hover:text-white">[lab]</span>
-                      </a>
-                    </div>
-                    <div>
-                      <span className="text-gray-600">experience: </span>
-                      <a href="/work" className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black">
-                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                        <span className="relative z-10 group-hover:text-white">[work]</span>
-                      </a>
-                    </div>
-                    <div>
-                      <span className="text-gray-600">photography: </span>
-                      <a href="/art" className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black">
-                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                        <span className="relative z-10 group-hover:text-white">[art]</span>
-                      </a>
-                    </div>
-                    <div>
-                      <span className="text-gray-600">recommendations: </span>
-                      <a href="/watchlist" className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black">
-                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                        <span className="relative z-10 group-hover:text-white">[watchlist]</span>
-                      </a>
-                    </div>
-                  </div>
-                </section>
+                </motion.section>
               </div>
             </main>
           } />
