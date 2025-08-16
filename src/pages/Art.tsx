@@ -37,14 +37,14 @@ const Art = () => {
     setLoading(false);
   }, []);
   return (
-    <main className="max-w-4xl mx-auto px-6 py-16">
+    <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100">
       <div className="space-y-16">
         {/* Header */}
         <section>
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight dark:text-gray-100">
             Photography
           </h1>
-          <div className="text-xl text-gray-600">
+          <div className="text-xl text-gray-600 dark:text-gray-300">
             <p>A collection of moments.</p>
           </div>
         </section>
@@ -53,11 +53,11 @@ const Art = () => {
         <section>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {loading ? (
-              <div className="col-span-full text-center text-gray-500">Loading photos...</div>
+              <div className="col-span-full text-center text-gray-500 dark:text-gray-400">Loading photos...</div>
             ) : photos.length === 0 ? (
-              <div className="col-span-full text-center text-gray-500">No photos found</div>
+              <div className="col-span-full text-center text-gray-500 dark:text-gray-400">No photos found</div>
             ) : photos.map((photoId, index) => (
-              <div key={photoId} className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+              <div key={photoId} className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
                 <CloudinaryImage
                   cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'demo'}
                   publicId={photoId}
