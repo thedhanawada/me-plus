@@ -96,7 +96,21 @@ const Footer = () => {
           </a>
         </div>
         <p className="text-xs text-gray-400">
-          Powered by: React, TypeScript, Tailwind & The One API
+          Handcrafted with{' '}
+          <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">
+            React
+          </a>,{' '}
+          <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">
+            TypeScript
+          </a>, and{' '}
+          <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">
+            Tailwind CSS
+          </a>.
+          <br />
+          Quotes from{' '}
+          <a href="https://the-one-api.dev/" target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600">
+            The One API
+          </a>.
         </p>
       </div>
     </footer>
