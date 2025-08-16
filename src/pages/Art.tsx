@@ -30,6 +30,7 @@ const Art = () => {
 
       { id: '469586787_18052479011494713_5751425294506957218_n_17924592792000832_ilangx', aspectRatio: '4/3' },
       { id: 'IMG_3973_wvbdt9', aspectRatio: '4/3' },
+      { id: 'IMG_4023_t0ow4l', aspectRatio: '4/3' },
 
     ];
     
