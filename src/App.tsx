@@ -70,9 +70,7 @@ function App() {
                   initial="hidden"
                   animate="visible"
                 >
-                  <h1 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
-                    N.R Dhanawada
-                  </h1>
+                  
                   <div className="text-xl md:text-2xl text-gray-600 space-y-6 leading-relaxed">
                     <p>I design and build platforms that help organizations serve people better.</p>
                     <p>Architecture. Integration. Scale. Purpose.</p>
