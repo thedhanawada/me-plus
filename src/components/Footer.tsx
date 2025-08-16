@@ -29,7 +29,6 @@ const Footer = () => {
             
             <div className="text-xs text-gray-500">
               <p>Built with React, TypeScript, and Tailwind</p>
-              <p className="mt-2">© {new Date().getFullYear()} N.R Dhanawada</p>
             </div>
           </div>
         </div>
