@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { ExternalLink, Github, Package, Palette } from 'lucide-react';
 
 interface Project {
@@ -65,145 +64,118 @@ const projects: Project[] = [
 
 const Lab = () => {
   return (
-    <div className="min-h-screen pt-32 pb-16">
-      <div className="max-w-7xl mx-auto px-6">
+    <main className="max-w-4xl mx-auto px-6 py-16 transition-colors duration-500">
+      <div className="space-y-16">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-light mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-              The Lab
-            </span>
+        <section>
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+            Lab
           </h1>
-          <p className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto">
-            A collection of hobby projects and experiments. Everything here is{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium">
-              open source
-            </span>{' '}
-            and built with ❤️ in my spare time.
-          </p>
-        </motion.div>
-
-        {/* Open Source Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative mb-12 group"
-        >
-          <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-          <div className="relative p-8 rounded-xl bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10 border border-cyan-500/20">
-            <h2 className="text-2xl font-light mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-              Why Open Source?
-            </h2>
-            <p className="text-zinc-400 leading-relaxed">
-              These projects are more than just code, they're a commitment to the open-source community. 
-              Each one is freely available, open for collaboration, and built with the belief that 
-              technology should be accessible to everyone. Feel free to use, modify or contribute!
-            </p>
+          <div className="space-y-4 text-xl text-gray-600">
+            <p>Hobby projects and experiments.</p>
+            <p>Everything here is open source.</p>
           </div>
-        </motion.div>
+        </section>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="group relative"
-            >
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-              <div className="relative h-full bg-black/80 backdrop-blur-sm p-8 rounded-xl border border-cyan-500/20 hover:border-fuchsia-500/50 transition-colors">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500">
-                      {project.title}
-                    </h3>
-                    <span className="inline-block mt-2 text-sm text-zinc-500">
-                      Hobby Project • Open Source
-                    </span>
+        {/* Projects */}
+        <section>
+          <div className="space-y-12">
+            {projects.map((project) => (
+              <div key={project.title} className="border-t border-gray-200 pt-8 first:border-t-0 first:pt-0">
+                <div className="space-y-4">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                    <div>
+                      <h3 className="text-2xl font-bold">{project.title}</h3>
+                      <p className="text-gray-600 text-sm mt-1">
+                        Open Source • {project.type === 'library' ? 'Library' : project.type === 'theme' ? 'Theme' : 'Tool'}
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      {project.links.live && (
+                        <a
+                          href={project.links.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                          title="Live Demo"
+                        >
+                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white">
+                            <ExternalLink size={20} />
+                          </span>
+                        </a>
+                      )}
+                      {project.links.github && (
+                        <a
+                          href={project.links.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                          title="GitHub"
+                        >
+                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white">
+                            <Github size={20} />
+                          </span>
+                        </a>
+                      )}
+                      {project.links.npm && (
+                        <a
+                          href={project.links.npm}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                          title="NPM"
+                        >
+                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white">
+                            <Package size={20} />
+                          </span>
+                        </a>
+                      )}
+                      {project.links.firefox && (
+                        <a
+                          href={project.links.firefox}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                          title="Firefox Add-on"
+                        >
+                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white">
+                            <Palette size={20} />
+                          </span>
+                        </a>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    {project.links.live && (
-                      <a
-                        href={project.links.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-zinc-400 hover:text-cyan-400 transition-colors"
-                        title="Live Demo"
+                  
+                  <p className="text-gray-600 leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-sm bg-gray-100 px-3 py-1 rounded"
                       >
-                        <ExternalLink size={20} />
-                      </a>
-                    )}
-                    {project.links.github && (
-                      <a
-                        href={project.links.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-zinc-400 hover:text-cyan-400 transition-colors"
-                        title="GitHub Repository"
-                      >
-                        <Github size={20} />
-                      </a>
-                    )}
-                    {project.links.npm && (
-                      <a
-                        href={project.links.npm}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-zinc-400 hover:text-cyan-400 transition-colors"
-                        title="NPM Package"
-                      >
-                        <Package size={20} />
-                      </a>
-                    )}
-                    {project.links.firefox && (
-                      <a
-                        href={project.links.firefox}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-zinc-400 hover:text-cyan-400 transition-colors"
-                        title="Firefox Add-on"
-                      >
-                        <Palette size={20} />
-                      </a>
-                    )}
+                        {tech}
+                      </span>
+                    ))}
                   </div>
-                </div>
-                <p className="text-zinc-400 leading-relaxed mb-6">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 text-sm rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex items-center px-3 py-1 text-sm rounded-full bg-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/20">
-                    {project.status === 'active' ? '🔥 Active Development' : '✨ Completed'}
-                  </span>
-                  <span className="inline-flex items-center px-3 py-1 text-sm rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                    {project.type === 'library' ? '📚 Library' : project.type === 'theme' ? '🎨 Theme' : '🛠️ Tool'}
-                  </span>
+                  
+                  <div className="text-sm text-gray-500">
+                    Status: {project.status === 'active' ? 'Active Development' : 'Completed'}
+                  </div>
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

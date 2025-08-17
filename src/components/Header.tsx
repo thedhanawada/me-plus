@@ -1,211 +1,134 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Menu, X, ChevronRight, ExternalLink, Github, Code } from 'lucide-react';
 
-const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+const Header = ({ toggleTheme, theme }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Work', path: '/work' },
-    { name: 'Lab', path: '/lab' },
-    { name: 'Art', path: '/art' },
-    { name: 'Watchlist', path: '/watchlist' },
+    { name: 'work', path: '/work' },
+    { name: 'lab', path: '/lab' },
+    { name: 'art', path: '/art' },
+    { name: 'watch', path: '/watchlist' },
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    // Close mobile menu when route changes
     setMobileMenuOpen(false);
   }, [location]);
 
   return (
-    <header 
-      className={`fixed w-full z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'py-3 bg-black/60 backdrop-blur-lg border-b border-cyan-500/20' 
-          : 'py-5 bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="group relative z-10">
-            <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="flex items-center space-x-3 relative">
-              <div className="relative">
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-fuchsia-500 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-500" />
-                <div className="relative bg-black/80 p-2 rounded-full border border-cyan-500/30 group-hover:border-fuchsia-500/50 transition-colors">
-                  <Terminal className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors duration-300" />
-                </div>
-              </div>
-              
-              <div className="flex flex-col">
-                <motion.div 
-                  className="flex items-center"
-                  initial={{ opacity: 0, x: -5 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <span className="text-xs tracking-[0.2em] text-zinc-400">
-                    <span className="text-cyan-400">N</span>
-                    <span className="text-zinc-500">.</span>
-                    <span className="text-fuchsia-400">R</span>
-                    <span className="text-zinc-500">.</span>
-                  </span>
-                </motion.div>
-                <motion.span 
-                  className="text-sm font-medium tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  Dhanawada
-                </motion.span>
-              </div>
-            </div>
-          </Link>
+    <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 transition-colors duration-500">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="py-12 border-b border-gray-900 dark:border-gray-700 transition-colors duration-500">
+          {/* Name */}
+          <div className="mb-8">
+            <Link to="/" className="block">
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-none transition-colors duration-500">
+                N.R DHANAWADA
+              </h1>
+            </Link>
+          </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => {
-              const isActive = location.pathname === item.path;
-              return (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className="relative group px-4 py-2"
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10 rounded-md"
-                      transition={{ type: "spring", duration: 0.6 }}
-                    />
-                  )}
-                  <span 
-                    className={`relative z-10 text-sm ${
+          {/* Navigation - Desktop */}
+          <nav className="hidden md:block">
+            <div className="flex items-center space-x-8">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`relative px-4 py-2 text-sm font-mono transition-all duration-500 group ${
                       isActive 
-                        ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium' 
-                        : 'text-zinc-400 group-hover:text-white transition-colors'
+                        ? 'text-white bg-black dark:text-black dark:bg-white' 
+                        : 'text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
                     }`}
                   >
-                    {item.name}
-                  </span>
-                </Link>
-              );
-            })}
-            
-            {/* Source Code Link - Modern Version */}
-            <motion.a
-              href="https://github.com/thedhanawada"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative group ml-2"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative flex items-center space-x-2 px-3 py-1.5 bg-black/50 rounded-full border border-cyan-500/30 group-hover:border-fuchsia-500/50 transition-colors">
-                <Code size={14} className="text-cyan-400 group-hover:text-white transition-colors" />
-                <span className="text-xs text-zinc-400 group-hover:text-white transition-colors">Source</span>
-              </div>
-            </motion.a>
+                    {!isActive && (
+                      <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                    )}
+                    <span className={`relative z-10 ${!isActive ? 'group-hover:text-white dark:group-hover:text-black' : ''}`}>
+                      [{item.name}]
+                    </span>
+                  </Link>
+                );
+              })}
+              
+              <a
+                href="https://github.com/thedhanawada/me-plus"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative px-4 py-2 text-sm font-mono transition-all duration-500 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white ml-8 border-l border-gray-300 dark:border-gray-700 pl-4"
+              >
+                <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[source code]</span>
+              </a>
+
+              <button
+                onClick={toggleTheme}
+                className="relative px-4 py-2 text-sm font-mono transition-all duration-500 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white border-l border-gray-300 dark:border-gray-700 pl-4"
+              >
+                <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[{theme === 'light' ? 'dark' : 'light'} mode]</span>
+              </button>
+            </div>
           </nav>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <motion.button
+            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="relative p-2 rounded-md bg-black/50 border border-cyan-500/30 hover:border-fuchsia-500/50 transition-colors group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="text-gray-600 hover:text-gray-900 font-mono text-sm dark:text-gray-400 dark:hover:text-white transition-colors duration-500"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-md blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              {mobileMenuOpen ? (
-                <X size={20} className="text-zinc-400 group-hover:text-white transition-colors" />
-              ) : (
-                <Menu size={20} className="text-zinc-400 group-hover:text-white transition-colors" />
-              )}
-            </motion.button>
+              {mobileMenuOpen ? '[close]' : '[menu]'}
+            </button>
           </div>
-        </div>
-      </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden"
-          >
-            <div className="px-6 py-4 mt-2 bg-black/80 backdrop-blur-lg border-t border-b border-cyan-500/20">
-              <nav className="flex flex-col space-y-1">
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <nav className="md:hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500">
+              <div className="space-y-4">
                 {navItems.map((item) => {
                   const isActive = location.pathname === item.path;
                   return (
                     <Link
                       key={item.name}
                       to={item.path}
-                      className={`relative group p-3 rounded-md ${
-                        isActive ? 'bg-gradient-to-r from-cyan-500/10 to-fuchsia-500/10' : ''
+                      className={`block text-lg font-mono transition-colors duration-500 ${
+                        isActive 
+                          ? 'text-white bg-black dark:text-black dark:bg-white' 
+                          : 'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white'
                       }`}
                     >
-                      <div className="flex items-center justify-between">
-                        <span 
-                          className={`text-sm ${
-                            isActive 
-                              ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-500 font-medium' 
-                              : 'text-zinc-400 group-hover:text-white'
-                          }`}
-                        >
-                          {item.name}
-                        </span>
-                        <ChevronRight 
-                          size={16} 
-                          className={`transition-colors ${
-                            isActive ? 'text-fuchsia-400' : 'text-zinc-600 group-hover:text-zinc-400'
-                          }`} 
-                        />
-                      </div>
+                      [{item.name}]
                     </Link>
                   );
                 })}
                 
-                {/* Mobile Source Link - Modern Version */}
-                <a
-                  href="https://github.com/thedhanawada"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 p-3 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 rounded-md border border-cyan-500/30 hover:border-fuchsia-500/50 transition-colors"
-                >
-                  <div className="flex items-center space-x-3">
-                    <Github size={16} className="text-cyan-400" />
-                    <span className="text-sm text-white">View Source</span>
-                  </div>
-                </a>
-              </nav>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500">
+                  <a
+                    href="https://github.com/thedhanawada/me-plus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-gray-400 font-mono dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-500"
+                  >
+                    source code
+                  </a>
+                </div>
 
-      {/* Animated Gradient Line */}
-      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-30 animate-pulse" />
+                <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500">
+                  <button
+                    onClick={toggleTheme}
+                    className="text-sm text-gray-400 font-mono dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-500"
+                  >
+                    [{theme === 'light' ? 'dark' : 'light'} mode]
+                  </button>
+                </div>
+              </div>
+            </nav>
+          )}
+        </div>
+      </div>
     </header>
   );
 };

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Image as CloudinaryImage } from 'cloudinary-react';
 
 interface CloudinaryResource {
@@ -16,101 +15,58 @@ const Art = () => {
     // that would securely fetch this list from Cloudinary
     const photos = [
       { id: '22', aspectRatio: '4/3' },
-      { id: '471848228_634245685604604_5320794688258876057_n_17913369978050780_wjnueu', aspectRatio: '4/3' },
+      { id: '472007649_1653285385584310_7880930838952272566_n_18050182676011288_qh9ysx', aspectRatio: '4/3' },
+      { id: '471870504_470471162449468_1301845703334164529_n_18057795115760805_qk7ij7', aspectRatio: '4/3' },
+      { id: '472028752_677524267977881_7782810903216877222_n_18052829000068831_kzj7dl', aspectRatio: '4/3' },
       { id: '471961629_1305187030687139_5087451783665427063_n_17962354376837477_pr1g66', aspectRatio: '4/3' },
+      { id: '471848228_634245685604604_5320794688258876057_n_17913369978050780_wjnueu', aspectRatio: '4/3' },
       { id: '471507008_962068528601656_6075539269720940501_n_18052370966481944_kbj6gd', aspectRatio: '4/3' },
-      { id: '471472709_27990740777239594_6469774170371940177_n_18033254411524063_dpeexs', aspectRatio: '4/3' },
-      { id: '470975125_1280941889820214_1268483907759615960_n_18262480012265170_mdjkkz', aspectRatio: '4/3' },
-      { id: '470974844_859495799459959_3787070871998235827_n_18368639380138075_tnawnv', aspectRatio: '4/3' },
-      { id: '470684195_18053453462494713_8166586720672144739_n_18080153713584429_obf9h1', aspectRatio: '4/3' },
-      { id: '470684195_18053453462494713_8166586720672144739_n_17962651307717004_kghomk', aspectRatio: '4/3' },
-      { id: '472123967_507389138437295_7147050760239808910_n_18056923354780192_d1vvn3', aspectRatio: '4/3' },
-      { id: 'IMG_3993_knzvrb', aspectRatio: '4/3' },
-      { id: '469592455_18052571543494713_1260971431337253769_n_17963527553830419_ovs4lq', aspectRatio: '4/3' },
-      { id: '469592455_18052571543494713_1260971431337253769_n_17884397715179153_n8wl07', aspectRatio: '4/3' },
-
-      { id: '469586787_18052479011494713_5751425294506957218_n_17924592792000832_ilangx', aspectRatio: '4/3' },
-      { id: 'IMG_3973_wvbdt9', aspectRatio: '4/3' },
-
+      { id: '471703857_2377874515912198_12434465591510404_n_17994608639727968_jahs5j', aspectRatio: '4/3' },
+      { id: '471553046_1104895781177670_5300287396742135585_n_18066609328796010_d32nyy', aspectRatio: '4/3' },
+      { id: '470305537_18053173805494713_1713032142419250645_n_17845625373372790_akqc6s', aspectRatio: '4/3' },
     ];
     
     setPhotos(photos.map(p => p.id));
     setLoading(false);
   }, []);
   return (
-    <motion.section 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-      className="relative pt-32 pb-16 md:pt-40 md:pb-24"
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-5xl md:text-7xl font-light mb-12 relative inline-block">
-            <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 blur-xl"></span>
-            <span className="relative">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-cyan-400 animate-text-shine">
-                Photography
-              </span>
-            </span>
+    <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+      <div className="space-y-16">
+        {/* Header */}
+        <section>
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight dark:text-gray-100">
+            Photography
           </h1>
-          <p className="text-xl text-zinc-400 font-light">
-            A collection of moments
-          </p>
-        </motion.div>
-
-        {/* Art Gallery Wall */}
-        <div className="max-w-[2000px] mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 lg:gap-12">
-          {loading ? (
-            <div className="col-span-full text-center text-zinc-400">Loading photos...</div>
-          ) : photos.length === 0 ? (
-            <div className="col-span-full text-center text-zinc-400">No photos found</div>
-          ) : photos.map((photoId, index) => (
-            <motion.div
-              key={photoId}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 1.2, delay: index * 0.1 }}
-              className="relative"
-            >
-              <div className="relative bg-zinc-900/50 p-4 rounded-lg backdrop-blur-sm">
-                <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-50 rounded-lg"></div>
-                <div className="relative">
-                  {/* Frame effect */}
-                  <div className="absolute inset-0 border border-white/10 rounded-lg"></div>
-                  <div className="absolute inset-[2px] border border-black/50 rounded-lg"></div>
-                  <CloudinaryImage
-                    cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}
-                    publicId={photoId}
-                    className="w-full rounded-lg shadow-xl"
-                    loading="lazy"
-                    width="800"
-                    crop="fill"
-                    quality="auto"
-                    fetchFormat="auto"
-                  />
-                  {/* Subtle shadow overlay */}
-                  <div className="absolute inset-0 rounded-lg shadow-inner pointer-events-none"></div>
-                </div>
-                {/* Caption area - can be used for photo details later */}
-                <div className="mt-3 px-1">
-                  <div className="h-1 w-12 bg-gradient-to-r from-white/10 to-transparent rounded-full"></div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-          {/* Loading and error states handled above */}
+          <div className="text-xl text-gray-600 dark:text-gray-300">
+            <p>A collection of moments.</p>
           </div>
-        </div>
+        </section>
+
+        {/* Photo Grid */}
+        <section>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {loading ? (
+              <div className="col-span-full text-center text-gray-500 dark:text-gray-400">Loading photos...</div>
+            ) : photos.length === 0 ? (
+              <div className="col-span-full text-center text-gray-500 dark:text-gray-400">No photos found</div>
+            ) : photos.map((photoId, index) => (
+              <div key={photoId} className="relative aspect-square overflow-hidden rounded-lg p-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg dark:shadow-xl hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-300">
+                <CloudinaryImage
+                  cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'demo'}
+                  publicId={photoId}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+                  loading="lazy"
+                  width="800"
+                  crop="fill"
+                  quality="auto"
+                  fetchFormat="auto"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
-    </motion.section>
+    </main>
   );
 };
 
