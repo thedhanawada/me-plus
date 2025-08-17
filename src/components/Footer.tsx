@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { RotateCcw } from 'lucide-react';
 
 const Footer = () => {
   const [quote, setQuote] = useState('');
@@ -6,75 +7,86 @@ const Footer = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const apiKey = import.meta.env.VITE_THE_ONE_API_KEY;
-        if (!apiKey) {
-          throw new Error("API key not found.");
-        }
-
-        // Fetch all quotes
-        const quoteResponse = await fetch('https://the-one-api.dev/v2/quote', {
-          headers: {
-            'Authorization': `Bearer ${apiKey}`
-          }
-        });
-
-        if (!quoteResponse.ok) {
-          throw new Error('Failed to fetch quotes.');
-        }
-
-        const quoteData = await quoteResponse.json();
-        const quotes = quoteData.docs;
-
-        if (quotes.length === 0) {
-          throw new Error("No quotes found.");
-        }
-
-        // Pick a random quote
-        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-        setQuote(randomQuote.dialog);
-
-        // Fetch the character name
-        const characterResponse = await fetch(`https://the-one-api.dev/v2/character/${randomQuote.character}`, {
-          headers: {
-            'Authorization': `Bearer ${apiKey}`
-          }
-        });
-
-        if (!characterResponse.ok) {
-          throw new Error('Failed to fetch character.');
-        }
-
-        const characterData = await characterResponse.json();
-        setCharacter(characterData.docs[0].name);
-
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred.");
-        }
-      } finally {
-        setLoading(false);
+  const fetchQuote = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const apiKey = import.meta.env.VITE_THE_ONE_API_KEY;
+      if (!apiKey) {
+        throw new Error("API key not found.");
       }
-    };
 
+      // Fetch all quotes
+      const quoteResponse = await fetch('https://the-one-api.dev/v2/quote', {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`
+        }
+      });
+
+      if (!quoteResponse.ok) {
+        throw new Error('Failed to fetch quotes.');
+      }
+
+      const quoteData = await quoteResponse.json();
+      const quotes = quoteData.docs;
+
+      if (quotes.length === 0) {
+        throw new Error("No quotes found.");
+      }
+
+      // Pick a random quote
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      setQuote(randomQuote.dialog);
+
+      // Fetch the character name
+      const characterResponse = await fetch(`https://the-one-api.dev/v2/character/${randomQuote.character}`, {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`
+        }
+      });
+
+      if (!characterResponse.ok) {
+        throw new Error('Failed to fetch character.');
+      }
+
+      const characterData = await characterResponse.json();
+      setCharacter(characterData.docs[0].name);
+
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchQuote();
   }, []);
 
   return (
     <footer className="border-t border-gray-200 mt-16 dark:border-gray-700">
       <div className="max-w-4xl mx-auto px-6 py-12 text-center">
-        <div className="min-h-[6rem] flex flex-col justify-center">
+        <div className="min-h-[6rem] flex flex-col justify-center relative">
           {loading && <div className="loader"></div>}
           {error && <p className="text-red-500 text-sm">Error: {error}</p>}
           {!loading && !error && (
-            <blockquote className="text-gray-600 italic max-w-2xl mx-auto fade-in dark:text-gray-400">
-              <p>"{quote}"</p>
-              <cite className="mt-2 block text-right not-italic text-sm text-gray-500 dark:text-gray-400">— {character}</cite>
-            </blockquote>
+            <div className="relative">
+              <blockquote className="text-gray-600 italic max-w-2xl mx-auto fade-in dark:text-gray-400">
+                <p>"{quote}"</p>
+                <cite className="mt-2 block text-right not-italic text-sm text-gray-500 dark:text-gray-400">— {character}</cite>
+              </blockquote>
+              <button
+                onClick={fetchQuote}
+                className="absolute -top-1 -right-1 p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-all duration-200 hover:rotate-180 transform"
+                title="Refresh quote"
+              >
+                <RotateCcw size={16} />
+              </button>
+            </div>
           )}
         </div>
         <div className="flex justify-center space-x-8 text-sm mb-4 mt-6">
