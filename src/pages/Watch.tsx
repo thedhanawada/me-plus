@@ -42,6 +42,8 @@ const Watchlist = () => {
     { id: 62649, type: 'tv', category: 'rewatch' },  // Superstore
     { id: 1418, type: 'tv', category: 'rewatch' },  // TBBT
     { id: 49011, type: 'tv', category: 'rewatch' },  // Mom
+    { id: 2691, type: 'tv', category: 'rewatch' },   // Two and a Half Men
+    { id: 1668, type: 'tv', category: 'rewatch' },   // Friends
 
     // All-time Favorites
     { id: 120, type: 'movie', category: 'favorite' }, // LOTR: Fellowship
