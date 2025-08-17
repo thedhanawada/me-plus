@@ -30,6 +30,7 @@ const Watchlist = () => {
   const FAVORITE_MEDIA = [
     // Currently Watching
     { id: 70523, type: 'tv', category: 'current' },   // Dark (rewatching)
+    { id: 72844, type: 'tv', category: 'current' },   // The Haunting of Hill House
 
     // Waiting for Next Season
     { id: 125988, type: 'tv', category: 'waiting' },  // Silo
@@ -55,7 +56,7 @@ const Watchlist = () => {
     { id: 26910, type: 'movie', category: 'favorite' },
     { id: 7508, type: 'movie', category: 'favorite' },
     { id: 268660, type: 'movie', category: 'favorite' },
-    { id: 70523, type: 'tv', category: 'favorite' },    // Dark
+    { id: 550, type: 'movie', category: 'favorite' },    // Fight Club
     { id: 62320, type: 'tv', category: 'favorite' },    // Grace and Frankie
     { id: 198277, type: 'movie', category: 'favorite' }, // Begin Again
   ];
