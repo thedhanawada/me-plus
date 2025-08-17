@@ -36,7 +36,7 @@ const whatIDo = [
   },
   {
     title: 'I handle the whole stack.',
-    description: 'From ETL and data modeling to the final application logic. I use tools that work, like Salesforce, Node.js, and MongoDB. The right tool for the job.'
+    description: 'From ETL and data modeling to the final application logic. I use tools that work, like Salesforce, Talend, MS SQL, and AWS. The right tool for the job.'
   },
   {
     title: 'My code has a real-world impact.',
