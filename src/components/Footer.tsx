@@ -68,20 +68,20 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="border-t border-gray-200 mt-16 dark:border-gray-700">
+    <footer className="border-t border-gray-200 mt-16 dark:border-gray-700 transition-colors duration-500">
       <div className="max-w-4xl mx-auto px-6 py-12 text-center">
         <div className="min-h-[6rem] flex flex-col justify-center relative">
           {loading && <div className="loader"></div>}
           {error && <p className="text-red-500 text-sm">Error: {error}</p>}
           {!loading && !error && (
             <div className="relative">
-              <blockquote className="text-gray-600 italic max-w-2xl mx-auto fade-in dark:text-gray-400">
+              <blockquote className="text-gray-600 italic max-w-2xl mx-auto fade-in dark:text-gray-400 transition-colors duration-500">
                 <p>"{quote}"</p>
-                <cite className="mt-2 block text-right not-italic text-sm text-gray-500 dark:text-gray-400">— {character}</cite>
+                <cite className="mt-2 block text-right not-italic text-sm text-gray-500 dark:text-gray-400 transition-colors duration-500">— {character}</cite>
               </blockquote>
               <button
                 onClick={fetchQuote}
-                className="absolute -top-1 -right-1 p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-all duration-200 hover:rotate-180 transform"
+                className="absolute -top-1 -right-1 p-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-all duration-500 hover:rotate-180 transform"
                 title="Refresh quote"
               >
                 <RotateCcw size={16} />

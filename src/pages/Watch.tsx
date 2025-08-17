@@ -119,7 +119,7 @@ const Watchlist = () => {
 
   if (error) {
     return (
-      <main className="max-w-4xl mx-auto px-6 py-16">
+      <main className="max-w-4xl mx-auto px-6 py-16 transition-colors duration-500">
         <div className="text-red-600 text-center">
           <p>{error}</p>
         </div>
@@ -128,7 +128,7 @@ const Watchlist = () => {
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-6 py-16">
+    <main className="max-w-4xl mx-auto px-6 py-16 transition-colors duration-500">
       <div className="space-y-16">
         {/* Header */}
         <section>
