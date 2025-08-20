@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
   MapPin, 
   Calendar, 
   Award, 
-  GraduationCap, 
-  Briefcase, 
   Building2, 
   BookOpen,
   Users,
@@ -17,7 +16,9 @@ import {
   Cloud,
   Layout,
   Server,
-  Workflow
+  Workflow,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 interface Education {
@@ -348,26 +349,62 @@ const publications: Publication[] = [
   }
 ];
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+};
+
 const Work = () => {
+  const [expandedSkills, setExpandedSkills] = useState<{[key: string]: boolean}>({});
+
+  const toggleSkillExpansion = (skillName: string) => {
+    setExpandedSkills(prev => ({
+      ...prev,
+      [skillName]: !prev[skillName]
+    }));
+  };
   return (
     <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
       <div className="space-y-16">
         {/* Header */}
-        <section>
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight dark:text-gray-100">
             Work & Experience
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300">
             Building systems that solve real problems.
           </p>
-        </section>
+        </motion.section>
 
         {/* Education */}
-        <section className="border-t border-gray-200 pt-16 dark:border-gray-700">
+        <motion.section
+          className="border-t border-gray-200 pt-16 dark:border-gray-700"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Education</h2>
           <div className="space-y-8">
-            {education.map((edu) => (
-              <div key={edu.university} className="space-y-4">
+            {education.map((edu, index) => (
+              <motion.div
+                key={edu.university}
+                className="space-y-4 p-6 border border-gray-100 rounded-lg hover:border-gray-200 transition-all duration-300 hover:shadow-sm dark:border-gray-800 dark:hover:border-gray-700"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div>
                     <h3 className="text-xl font-semibold dark:text-gray-100">{edu.university}</h3>
@@ -409,17 +446,105 @@ const Work = () => {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
+
+        {/* Technical Competencies */}
+        <motion.section
+          className="border-t border-gray-200 pt-16 dark:border-gray-700"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Technical Competencies</h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {technicalCompetencies.map((category, index) => (
+              <motion.div
+                key={category.name}
+                className="p-6 border border-gray-100 rounded-lg hover:border-gray-200 transition-all duration-300 hover:shadow-sm dark:border-gray-800 dark:hover:border-gray-700"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  {category.icon}
+                  <h3 className="font-semibold text-lg dark:text-gray-100">{category.name}</h3>
+                </div>
+                <div className="space-y-2">
+                  {category.skills.map((skill) => (
+                    <div key={skill.name}>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
+                        {skill.details && (
+                          <button
+                            onClick={() => toggleSkillExpansion(`${category.name}-${skill.name}`)}
+                            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                          >
+                            {expandedSkills[`${category.name}-${skill.name}`] ? 
+                              <ChevronUp size={16} /> : <ChevronDown size={16} />
+                            }
+                          </button>
+                        )}
+                      </div>
+                      {skill.details && expandedSkills[`${category.name}-${skill.name}`] && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mt-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700"
+                        >
+                          {Object.entries(skill.details).map(([key, values]) => (
+                            <div key={key} className="mb-2">
+                              <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                                {key}
+                              </div>
+                              <div className="flex flex-wrap gap-1 mt-1">
+                                {(Array.isArray(values) ? values : Object.values(values).flat()).map((value) => (
+                                  <span
+                                    key={value}
+                                    className="text-xs bg-gray-100 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-200"
+                                  >
+                                    {value}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
 
         {/* Experience */}
-        <section className="border-t border-gray-200 pt-16 dark:border-gray-700">
+        <motion.section
+          className="border-t border-gray-200 pt-16 dark:border-gray-700"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Experience</h2>
           <div className="space-y-8">
-            {experiences.map((exp) => (
-              <div key={exp.title} className="space-y-4">
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={exp.title}
+                className="space-y-4 p-6 border border-gray-100 rounded-lg hover:border-gray-200 transition-all duration-300 hover:shadow-sm dark:border-gray-800 dark:hover:border-gray-700"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div>
                     <h3 className="text-xl font-semibold dark:text-gray-100">{exp.title}</h3>
@@ -456,17 +581,31 @@ const Work = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Publications */}
-        <section className="border-t border-gray-200 pt-16 dark:border-gray-700">
+        <motion.section
+          className="border-t border-gray-200 pt-16 dark:border-gray-700"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Publications</h2>
           <div className="space-y-6">
-            {publications.map((pub) => (
-              <div key={pub.title} className="space-y-4">
+            {publications.map((pub, index) => (
+              <motion.div
+                key={pub.title}
+                className="space-y-4 p-6 border border-gray-100 rounded-lg hover:border-gray-200 transition-all duration-300 hover:shadow-sm dark:border-gray-800 dark:hover:border-gray-700"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
                 <div className="flex items-start gap-3">
                   <BookOpen className="w-6 h-6 text-gray-400 mt-1 dark:text-gray-500" />
                   <div className="flex-1">
@@ -506,10 +645,10 @@ const Work = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
       </div>
     </main>
   );
