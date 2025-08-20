@@ -1,25 +1,4 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  MapPin, 
-  Calendar, 
-  Award, 
-  Building2, 
-  BookOpen,
-  Users,
-  Database,
-  Globe,
-  Shield,
-  Zap,
-  FileText,
-  Code,
-  Cloud,
-  Layout,
-  Server,
-  Workflow,
-  ChevronDown,
-  ChevronUp
-} from 'lucide-react';
+import React from 'react';
 
 interface Education {
   university: string;
@@ -349,306 +328,91 @@ const publications: Publication[] = [
   }
 ];
 
-const sectionVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 15 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
-};
-
 const Work = () => {
-  const [expandedSkills, setExpandedSkills] = useState<{[key: string]: boolean}>({});
-
-  const toggleSkillExpansion = (skillName: string) => {
-    setExpandedSkills(prev => ({
-      ...prev,
-      [skillName]: !prev[skillName]
-    }));
-  };
   return (
     <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
       <div className="space-y-16">
         {/* Header */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight dark:text-gray-100">
-            Work & Experience
+        <section>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight dark:text-gray-100">
+            Work
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
-            Building systems that solve real problems.
-          </p>
-        </motion.section>
+        </section>
 
-        {/* Education */}
-        <motion.section
-          className="border-t border-gray-200 pt-16 dark:border-gray-700"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Education</h2>
-          <div className="space-y-8">
-            {education.map((edu, index) => (
-              <motion.div
-                key={edu.university}
-                className="space-y-4 p-6 border border-gray-100 rounded-lg hover:border-gray-200 transition-all duration-300 hover:shadow-sm dark:border-gray-800 dark:hover:border-gray-700"
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <h3 className="text-xl font-semibold dark:text-gray-100">{edu.university}</h3>
-                    <p className="text-gray-600 dark:text-gray-300">{edu.degree} - {edu.program}</p>
-                  </div>
-                  <div className="text-sm text-gray-500 space-y-1 md:text-right dark:text-gray-400">
-                    <div className="flex items-center gap-1 md:justify-end">
-                      <MapPin size={14} className="dark:text-gray-500" />
-                      {edu.location}
-                    </div>
-                    <div className="flex items-center gap-1 md:justify-end">
-                      <Calendar size={14} className="dark:text-gray-500" />
-                      {edu.period}
-                    </div>
-                  </div>
-                </div>
-                
-                {edu.achievements && (
-                  <div>
-                    <h4 className="font-semibold mb-2 dark:text-gray-100">Achievements</h4>
-                    <ul className="space-y-1 text-gray-600 dark:text-gray-300">
-                      {edu.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <Award size={16} className="text-gray-400 mt-0.5 flex-shrink-0 dark:text-gray-500" />
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                <div>
-                  <h4 className="font-semibold mb-2 dark:text-gray-100">Key Courses</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {edu.courses.map((course) => (
-                      <span key={course} className="text-sm bg-gray-100 px-3 py-1 rounded dark:bg-gray-700 dark:text-gray-200">
-                        {course}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+        {/* Skills */}
+        <section className="border-t border-gray-200 pt-8 dark:border-gray-700">
+          <h2 className="text-xl font-semibold mb-4 dark:text-gray-100">Technical Skills</h2>
+          <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+            <div><span className="font-medium">CRM & Integration:</span> Salesforce (Apex, Lightning, Visualforce), Marketo, AskNicely, FormAssembly, SMS Magic</div>
+            <div><span className="font-medium">Data & ETL:</span> Talend, MS SQL Server, Salesforce Data Loader</div>
+            <div><span className="font-medium">Development:</span> JavaScript, .NET, C#, Java, Python, SQL</div>
+            <div><span className="font-medium">Cloud & DevOps:</span> Azure, AWS, Docker, Git, GitHub Actions, Travis CI, Azure DevOps</div>
+            <div><span className="font-medium">Business Apps:</span> PowerApps, Power Automate, SharePoint</div>
+            <div><span className="font-medium">Web:</span> WordPress, Wiki.js, HTML/CSS/JS</div>
+            <div><span className="font-medium">Architecture:</span> TOGAF, ITIL, COBIT</div>
+            <div><span className="font-medium">Compliance:</span> Monsido (Web Accessibility), WCAG</div>
           </div>
-        </motion.section>
+        </section>
 
-        {/* Technical Competencies */}
-        <motion.section
-          className="border-t border-gray-200 pt-16 dark:border-gray-700"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Technical Competencies</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {technicalCompetencies.map((category, index) => (
-              <motion.div
-                key={category.name}
-                className="p-6 border border-gray-100 rounded-lg hover:border-gray-200 transition-all duration-300 hover:shadow-sm dark:border-gray-800 dark:hover:border-gray-700"
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  {category.icon}
-                  <h3 className="font-semibold text-lg dark:text-gray-100">{category.name}</h3>
-                </div>
-                <div className="space-y-2">
-                  {category.skills.map((skill) => (
-                    <div key={skill.name}>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
-                        {skill.details && (
-                          <button
-                            onClick={() => toggleSkillExpansion(`${category.name}-${skill.name}`)}
-                            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-                          >
-                            {expandedSkills[`${category.name}-${skill.name}`] ? 
-                              <ChevronUp size={16} /> : <ChevronDown size={16} />
-                            }
-                          </button>
-                        )}
-                      </div>
-                      {skill.details && expandedSkills[`${category.name}-${skill.name}`] && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="mt-2 pl-4 border-l-2 border-gray-200 dark:border-gray-700"
-                        >
-                          {Object.entries(skill.details).map(([key, values]) => (
-                            <div key={key} className="mb-2">
-                              <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-                                {key}
-                              </div>
-                              <div className="flex flex-wrap gap-1 mt-1">
-                                {(Array.isArray(values) ? values : Object.values(values).flat()).map((value) => (
-                                  <span
-                                    key={value}
-                                    className="text-xs bg-gray-100 px-2 py-1 rounded dark:bg-gray-700 dark:text-gray-200"
-                                  >
-                                    {value}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
 
         {/* Experience */}
-        <motion.section
-          className="border-t border-gray-200 pt-16 dark:border-gray-700"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Experience</h2>
-          <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <motion.div
-                key={exp.title}
-                className="space-y-4 p-6 border border-gray-100 rounded-lg hover:border-gray-200 transition-all duration-300 hover:shadow-sm dark:border-gray-800 dark:hover:border-gray-700"
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
+        <section className="border-t border-gray-200 pt-8 dark:border-gray-700">
+          <h2 className="text-xl font-semibold mb-4 dark:text-gray-100">Experience</h2>
+          <div className="space-y-6">
+            {experiences.map((exp) => (
+              <div key={exp.title} className="space-y-2">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div>
-                    <h3 className="text-xl font-semibold dark:text-gray-100">{exp.title}</h3>
-                    <p className="text-gray-600 flex items-center gap-1 dark:text-gray-300">
-                      <Building2 size={16} className="dark:text-gray-400" />
-                      {exp.company}
-                    </p>
+                    <h3 className="font-semibold dark:text-gray-100">{exp.title}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{exp.company}</p>
                   </div>
-                  <div className="text-sm text-gray-500 space-y-1 md:text-right dark:text-gray-400">
-                    <div className="flex items-center gap-1 md:justify-end">
-                      <MapPin size={14} className="dark:text-gray-500" />
-                      {exp.location}
-                    </div>
-                    <div className="flex items-center gap-1 md:justify-end">
-                      <Calendar size={14} className="dark:text-gray-500" />
-                      {exp.period}
-                    </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    {exp.location} • {exp.period}
                   </div>
                 </div>
-
                 {exp.award && (
-                  <p className="text-sm text-gray-600 font-medium dark:text-gray-300">
-                    🏆 {exp.award}
-                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">Award: {exp.award}</p>
                 )}
-
-                <div className="space-y-3">
-                  {exp.highlights.map((highlight) => (
-                    <div key={highlight.title} className="border-l-2 border-gray-200 pl-4 dark:border-gray-700">
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">{highlight.title}</h4>
-                      <p className="text-gray-600 text-sm leading-relaxed dark:text-gray-300">
-                        {highlight.description}
-                      </p>
+                <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                  {exp.highlights.map((highlight, i) => (
+                    <div key={i} className="mb-1">
+                      <span className="font-medium">{highlight.title}:</span> {highlight.description}
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
-        {/* Publications */}
-        <motion.section
-          className="border-t border-gray-200 pt-16 dark:border-gray-700"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Publications</h2>
-          <div className="space-y-6">
-            {publications.map((pub, index) => (
-              <motion.div
-                key={pub.title}
-                className="space-y-4 p-6 border border-gray-100 rounded-lg hover:border-gray-200 transition-all duration-300 hover:shadow-sm dark:border-gray-800 dark:hover:border-gray-700"
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="flex items-start gap-3">
-                  <BookOpen className="w-6 h-6 text-gray-400 mt-1 dark:text-gray-500" />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2 dark:text-gray-100">
-                      {pub.title}
-                    </h3>
-                    
-                    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                      <div className="flex flex-wrap gap-4">
-                        <span className="flex items-center gap-1">
-                          <Calendar size={14} className="dark:text-gray-500" />
-                          {pub.date}
-                        </span>
-                        <span>Article {pub.articleNo}</span>
-                        <span>Pages {pub.pages}</span>
-                      </div>
-                      
-                      <div>
-                        <strong>Authors:</strong> <span className="dark:text-gray-200">{pub.authors.join(', ')}</span>
-                      </div>
-                      
-                      <div>
-                        <strong>Conference:</strong> <span className="dark:text-gray-200">{pub.conference}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-3">
-                      <a
-                        href={pub.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black text-sm dark:text-gray-300 dark:hover:text-black"
-                      >
-                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 dark:bg-white"></span>
-                        <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[View Publication →]</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+        {/* Education & Publications */}
+        <section className="border-t border-gray-200 pt-8 dark:border-gray-700">
+          <h2 className="text-xl font-semibold mb-4 dark:text-gray-100">Education</h2>
+          <div className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+            <div>
+              <span className="font-medium">Master of Information Technology</span> - University of Melbourne (2020-2021)<br/>
+              Distinction, Dean's Honours List, Melbourne School of Engineering Scholarship
+            </div>
+            <div>
+              <span className="font-medium">Bachelor of Computer Science and Engineering</span> - Pondicherry University (2011-2015)
+            </div>
+          </div>
+          
+          <h2 className="text-xl font-semibold mb-4 mt-8 dark:text-gray-100">Publications</h2>
+          <div className="text-sm text-gray-700 dark:text-gray-300">
+            {publications.map((pub) => (
+              <div key={pub.title}>
+                <span className="font-medium">{pub.title}</span><br/>
+                {pub.authors.join(', ')}<br/>
+                {pub.conference}, {pub.date}<br/>
+                <a href={pub.link} target="_blank" rel="noopener noreferrer" 
+                   className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
+                  [View Publication]
+                </a>
+              </div>
             ))}
           </div>
-        </motion.section>
+        </section>
       </div>
     </main>
   );
