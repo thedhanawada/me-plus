@@ -92,6 +92,51 @@ function App() {
                   </div>
                 </motion.section>
 
+                {/* Philosophy Section */}
+                <motion.section
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  className="border-t border-gray-200 pt-16 dark:border-gray-700"
+                >
+                  <h2 className="text-2xl font-bold mb-8">Philosophy</h2>
+                  <div className="grid gap-8 md:grid-cols-2">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">First Principles</h3>
+                      <p className="text-gray-600 leading-relaxed dark:text-gray-400">
+                        Break complex problems down to their fundamentals.
+                        Build from the ground up with clear reasoning.
+                        Question assumptions, not conclusions.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Practical Impact</h3>
+                      <p className="text-gray-600 leading-relaxed dark:text-gray-400">
+                        Technology should solve real problems for real people.
+                        Complexity for its own sake is waste.
+                        Measure success by the problems you eliminate.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Simple Systems</h3>
+                      <p className="text-gray-600 leading-relaxed dark:text-gray-400">
+                        The best systems are composable and understandable.
+                        Small, well-defined pieces that work together.
+                        Complexity emerges from simplicity, not chaos.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4">Open Source</h3>
+                      <p className="text-gray-600 leading-relaxed dark:text-gray-400">
+                        Code should be shared, studied, and improved by everyone.
+                        Transparency builds trust. Collaboration builds better software.
+                        Stand on the shoulders of giants.
+                      </p>
+                    </div>
+                  </div>
+                </motion.section>
+
                 {/* What I Do Section */}
                 <motion.section
                   variants={sectionVariants}
@@ -108,51 +153,6 @@ function App() {
                         <p className="text-gray-600 leading-relaxed dark:text-gray-400">{item.description}</p>
                       </div>
                     ))}
-                  </div>
-                </motion.section>
-
-                {/* Philosophy Section */}
-                <motion.section
-                  variants={sectionVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className="border-t border-gray-200 pt-16 dark:border-gray-700"
-                >
-                  <h2 className="text-2xl font-bold mb-8">Philosophy</h2>
-                  <div className="grid gap-8 md:grid-cols-2">
-                    <div>
-                      <h3 className="text-lg font-semibold mb-4">First Principles</h3>
-                      <p className="text-gray-600 leading-relaxed dark:text-gray-400">
-                        Break complex problems down to their fundamentals. 
-                        Build from the ground up with clear reasoning. 
-                        Question assumptions, not conclusions.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-4">Practical Impact</h3>
-                      <p className="text-gray-600 leading-relaxed dark:text-gray-400">
-                        Technology should solve real problems for real people. 
-                        Complexity for its own sake is waste. 
-                        Measure success by the problems you eliminate.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-4">Simple Systems</h3>
-                      <p className="text-gray-600 leading-relaxed dark:text-gray-400">
-                        The best systems are composable and understandable. 
-                        Small, well-defined pieces that work together. 
-                        Complexity emerges from simplicity, not chaos.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-4">Open Source</h3>
-                      <p className="text-gray-600 leading-relaxed dark:text-gray-400">
-                        Code should be shared, studied, and improved by everyone. 
-                        Transparency builds trust. Collaboration builds better software. 
-                        Stand on the shoulders of giants.
-                      </p>
-                    </div>
                   </div>
                 </motion.section>
               </div>
