@@ -68,10 +68,10 @@ const Lab = () => {
       <div className="space-y-16">
         {/* Header */}
         <section>
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight dark:text-gray-100">
             Lab
           </h1>
-          <div className="space-y-4 text-xl text-gray-600">
+          <div className="space-y-4 text-xl text-gray-600 dark:text-gray-400">
             <p>Hobby projects and experiments.</p>
             <p>Everything here is open source.</p>
           </div>
@@ -81,12 +81,12 @@ const Lab = () => {
         <section>
           <div className="space-y-12">
             {projects.map((project) => (
-              <div key={project.title} className="border-t border-gray-200 pt-8 first:border-t-0 first:pt-0">
+              <div key={project.title} className="border-t border-gray-200 dark:border-gray-700 pt-8 first:border-t-0 first:pt-0">
                 <div className="space-y-4">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
-                      <h3 className="text-2xl font-bold">{project.title}</h3>
-                      <p className="text-gray-600 text-sm mt-1">
+                      <h3 className="text-2xl font-bold dark:text-gray-100">{project.title}</h3>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
                         Open Source • {project.type === 'library' ? 'Library' : project.type === 'theme' ? 'Theme' : 'Tool'}
                       </p>
                     </div>
@@ -97,11 +97,11 @@ const Lab = () => {
                           href={project.links.live}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
                           title="Live Demo"
                         >
-                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                          <span className="relative z-10 group-hover:text-white">
+                          <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
                             <ExternalLink size={20} />
                           </span>
                         </a>
@@ -111,11 +111,11 @@ const Lab = () => {
                           href={project.links.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
                           title="GitHub"
                         >
-                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                          <span className="relative z-10 group-hover:text-white">
+                          <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
                             <Github size={20} />
                           </span>
                         </a>
@@ -125,11 +125,11 @@ const Lab = () => {
                           href={project.links.npm}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
                           title="NPM"
                         >
-                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                          <span className="relative z-10 group-hover:text-white">
+                          <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
                             <Package size={20} />
                           </span>
                         </a>
@@ -139,11 +139,11 @@ const Lab = () => {
                           href={project.links.firefox}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
                           title="Firefox Add-on"
                         >
-                          <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                          <span className="relative z-10 group-hover:text-white">
+                          <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                          <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
                             <Palette size={20} />
                           </span>
                         </a>
@@ -151,22 +151,22 @@ const Lab = () => {
                     </div>
                   </div>
                   
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                     {project.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="text-sm bg-gray-100 px-3 py-1 rounded"
+                        className="text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-3 py-1 rounded"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                  
-                  <div className="text-sm text-gray-500">
+
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
                     Status: {project.status === 'active' ? 'Active Development' : 'Completed'}
                   </div>
                 </div>

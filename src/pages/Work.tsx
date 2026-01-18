@@ -218,8 +218,8 @@ const technicalCompetencies: TechCategory[] = [
 
 const experiences: Experience[] = [
   {
-    title: "Senior IT Solutions Analyst",
-    company: "MTC Australia",
+    title: "Solutions Architect",
+    company: "MTC FutureReady",
     location: "Sydney, NSW",
     period: "2022.02 - Present",
     award: "MTC Applause Award (2022)",

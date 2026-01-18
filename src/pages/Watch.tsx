@@ -135,21 +135,21 @@ const Watchlist = () => {
       <div className="space-y-16">
         {/* Header */}
         <section>
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight dark:text-gray-100">
             Watchlist
           </h1>
-          <div className="space-y-4 text-xl text-gray-600">
+          <div className="space-y-4 text-xl text-gray-600 dark:text-gray-400">
             <p>Movies and TV shows I watch and rewatch.</p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               Data from{' '}
-              <a 
+              <a
                 href="https://www.themoviedb.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black"
+                className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
               >
-                <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                <span className="relative z-10 group-hover:text-white">[TMDB]</span>
+                <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+                <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[TMDB]</span>
               </a>
             </p>
           </div>
@@ -157,13 +157,13 @@ const Watchlist = () => {
 
         {loading ? (
           <div className="flex justify-center items-center min-h-[40vh]">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 dark:border-gray-100"></div>
           </div>
         ) : (
           <div className="space-y-12">
             {sections.map((section) => (
-              <section key={section.title} className="border-t border-gray-200 pt-8 first:border-t-0 first:pt-0">
-                <h2 className="text-2xl font-bold mb-6">{section.title}</h2>
+              <section key={section.title} className="border-t border-gray-200 dark:border-gray-700 pt-8 first:border-t-0 first:pt-0">
+                <h2 className="text-2xl font-bold mb-6 dark:text-gray-100">{section.title}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {section.items.map((item) => (
                     <div
@@ -171,7 +171,7 @@ const Watchlist = () => {
                       onClick={() => window.open(`https://www.themoviedb.org/${item.media_type}/${item.id}`, '_blank')}
                       className="cursor-pointer group"
                     >
-                      <div className="aspect-[2/3] relative overflow-hidden rounded-lg bg-gray-100">
+                      <div className="aspect-[2/3] relative overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
                         <img
                           src={`${TMDB_IMAGE_BASE}${item.poster_path}`}
                           alt={item.title}
@@ -179,10 +179,10 @@ const Watchlist = () => {
                         />
                       </div>
                       <div className="mt-2 space-y-1">
-                        <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
+                        <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 line-clamp-2">
                           {item.title}
                         </h3>
-                        <div className="flex items-center justify-between text-xs text-gray-500">
+                        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                           <span>{new Date(item.release_date || '').getFullYear()}</span>
                           <div className="flex items-center gap-1">
                             {item.media_type === 'tv' ? <Tv className="w-3 h-3" /> : <Film className="w-3 h-3" />}
