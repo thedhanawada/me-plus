@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-const Header = ({ toggleTheme, theme }) => {
+interface HeaderProps {
+  toggleTheme: () => void;
+  theme: 'light' | 'dark';
+}
+
+const Header = ({ toggleTheme, theme }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
