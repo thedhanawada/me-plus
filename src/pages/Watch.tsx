@@ -61,7 +61,6 @@ const Watchlist = () => {
     { id: 122, type: 'movie', category: 'favorite' }, // LOTR: Return of the King
     { id: 62560, type: 'tv', category: 'favorite' },  // Mr. Robot
     { id: 4607, type: 'tv', category: 'favorite' },   // Lost
-    { id: 1668, type: 'tv', category: 'favorite' },   // Friends
     { id: 1100, type: 'tv', category: 'favorite' },   // HIMYM
     { id: 672, type: 'movie', category: 'favorite' }, // Harry Potter Chamber of Secrets
     { id: 63675, type: 'movie', category: 'favorite' },
