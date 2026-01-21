@@ -10,6 +10,8 @@ const Art = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+
   useEffect(() => {
     // For now, let's use a static list of photos
     // In a production environment, you would typically have a backend API
@@ -30,6 +32,17 @@ const Art = () => {
     setPhotos(photoList);
     setLoading(false);
   }, []);
+
+  if (!cloudName) {
+    return (
+      <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+        <div className="text-red-600 dark:text-red-400 text-center">
+          <p>Configuration error: Cloudinary cloud name is not configured.</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
       <div className="space-y-16">
@@ -53,7 +66,7 @@ const Art = () => {
             ) : photos.map((photo, index) => (
               <div key={photo.id} className="relative aspect-square overflow-hidden rounded-lg p-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg dark:shadow-xl hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-300">
                 <CloudinaryImage
-                  cloudName={import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'demo'}
+                  cloudName={cloudName}
                   publicId={photo.id}
                   alt={photo.alt}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"

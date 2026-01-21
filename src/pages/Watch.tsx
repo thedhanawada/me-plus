@@ -26,6 +26,16 @@ const Watchlist = () => {
   const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
   const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
+  if (!TMDB_API_KEY) {
+    return (
+      <main className="max-w-4xl mx-auto px-6 py-16 transition-colors duration-500">
+        <div className="text-red-600 dark:text-red-400 text-center">
+          <p>Configuration error: TMDB API key is not configured.</p>
+        </div>
+      </main>
+    );
+  }
+
   // Media IDs with their types
   const FAVORITE_MEDIA = [
     // Currently Watching
