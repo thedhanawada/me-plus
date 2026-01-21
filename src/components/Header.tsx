@@ -11,6 +11,7 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
   const location = useLocation();
 
   const navItems = [
+    { name: 'about', path: '/about' },
     { name: 'work', path: '/work' },
     { name: 'lab', path: '/lab' },
     { name: 'art', path: '/art' },
