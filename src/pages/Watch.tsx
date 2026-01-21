@@ -176,10 +176,12 @@ const Watchlist = () => {
                 <h2 className="text-2xl font-bold mb-6 dark:text-gray-100">{section.title}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {section.items.map((item) => (
-                    <div
+                    <a
                       key={item.id}
-                      onClick={() => window.open(`https://www.themoviedb.org/${item.media_type}/${item.id}`, '_blank')}
-                      className="cursor-pointer group"
+                      href={`https://www.themoviedb.org/${item.media_type}/${item.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-lg"
                     >
                       <div className="aspect-[2/3] relative overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
                         <img
@@ -200,7 +202,7 @@ const Watchlist = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
               </section>
