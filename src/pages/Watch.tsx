@@ -73,68 +73,76 @@ const Watchlist = () => {
     { id: 198277, type: 'movie', category: 'favorite' }, // Begin Again
   ];
 
-  useEffect(() => {
-    const fetchMedia = async () => {
-      try {
-        const favorites = await Promise.all(
-          FAVORITE_MEDIA.map(async ({ id, type }) => {
-            try {
-              const response = await fetch(
-                `https://api.themoviedb.org/3/${type}/${id}?api_key=${TMDB_API_KEY}`
-              );
-              if (!response.ok) {
-                throw new Error(`Failed to fetch ${type} with ID ${id}`);
-              }
-              const data = await response.json();
-              return {
-                ...data,
-                title: data.title || data.name,
-                release_date: data.release_date || data.first_air_date,
-                media_type: type
-              };
-            } catch (error) {
-              console.error(`Error fetching ${type} ${id}:`, error);
-              return null;
+  const fetchMedia = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const favorites = await Promise.all(
+        FAVORITE_MEDIA.map(async ({ id, type }) => {
+          try {
+            const response = await fetch(
+              `https://api.themoviedb.org/3/${type}/${id}?api_key=${TMDB_API_KEY}`
+            );
+            if (!response.ok) {
+              throw new Error(`Failed to fetch ${type} with ID ${id}`);
             }
-          })
-        );
+            const data = await response.json();
+            return {
+              ...data,
+              title: data.title || data.name,
+              release_date: data.release_date || data.first_air_date,
+              media_type: type
+            };
+          } catch (error) {
+            console.error(`Error fetching ${type} ${id}:`, error);
+            return null;
+          }
+        })
+      );
 
-        const validFavorites = favorites.filter((item): item is Media => item !== null);
+      const validFavorites = favorites.filter((item): item is Media => item !== null);
 
-        setSections([
-          {
-            title: "Currently Watching",
-            items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'current'),
-          },
-          {
-            title: "Dinner & Lunch Rewatch Shows",
-            items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'rewatch'),
-          },
-          {
-            title: "Waiting for Next Season",
-            items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'waiting'),
-          },
-          {
-            title: "All Time Favorites",
-            items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'favorite'),
-          },
-        ]);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching media:', error);
-        setError('Failed to load content. Please try again later.');
-        setLoading(false);
-      }
-    };
+      setSections([
+        {
+          title: "Currently Watching",
+          items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'current'),
+        },
+        {
+          title: "Dinner & Lunch Rewatch Shows",
+          items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'rewatch'),
+        },
+        {
+          title: "Waiting for Next Season",
+          items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'waiting'),
+        },
+        {
+          title: "All Time Favorites",
+          items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'favorite'),
+        },
+      ]);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching media:', error);
+      setError('Failed to load watchlist. Please check your connection and try again.');
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchMedia();
   }, []);
 
   if (error) {
     return (
       <main className="max-w-4xl mx-auto px-6 py-16 transition-colors duration-500">
-        <div className="text-red-600 text-center">
-          <p>{error}</p>
+        <div className="text-center space-y-4">
+          <p className="text-red-600 dark:text-red-400">{error}</p>
+          <button
+            onClick={fetchMedia}
+            className="px-4 py-2 text-sm font-mono bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-80 transition-opacity"
+          >
+            Try Again
+          </button>
         </div>
       </main>
     );
