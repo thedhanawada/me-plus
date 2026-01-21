@@ -28,7 +28,7 @@ const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
 const FAVORITE_MEDIA: MediaEntry[] = [
   // Currently Watching
-  { id: 64464, type: 'tv', category: 'current' },   // The Night Manager
+  { id: 61859, type: 'tv', category: 'current' },   // The Night Manager
 
   // Waiting for Next Season
   { id: 125988, type: 'tv', category: 'waiting' },  // Silo
