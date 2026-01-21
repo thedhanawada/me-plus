@@ -18,13 +18,55 @@ interface MediaSection {
   items: Media[];
 }
 
+interface MediaEntry {
+  id: number;
+  type: 'movie' | 'tv';
+  category: 'current' | 'waiting' | 'rewatch' | 'favorite';
+}
+
+const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
+
+const FAVORITE_MEDIA: MediaEntry[] = [
+  // Currently Watching
+  { id: 70523, type: 'tv', category: 'current' },   // Dark
+  { id: 72844, type: 'tv', category: 'current' },   // The Haunting of Hill House
+
+  // Waiting for Next Season
+  { id: 125988, type: 'tv', category: 'waiting' },  // Silo
+  { id: 124364, type: 'tv', category: 'waiting' },  // FROM
+  { id: 95396, type: 'tv', category: 'waiting' },   // Severance
+
+  // Dinner & Lunch Rewatch Shows
+  { id: 1421, type: 'tv', category: 'rewatch' },    // Modern Family
+  { id: 62649, type: 'tv', category: 'rewatch' },   // Superstore
+  { id: 1418, type: 'tv', category: 'rewatch' },    // TBBT
+  { id: 49011, type: 'tv', category: 'rewatch' },   // Mom
+  { id: 2691, type: 'tv', category: 'rewatch' },    // Two and a Half Men
+  { id: 1668, type: 'tv', category: 'rewatch' },    // Friends
+
+  // All-time Favorites
+  { id: 120, type: 'movie', category: 'favorite' },   // LOTR: Fellowship
+  { id: 121, type: 'movie', category: 'favorite' },   // LOTR: Two Towers
+  { id: 122, type: 'movie', category: 'favorite' },   // LOTR: Return of the King
+  { id: 62560, type: 'tv', category: 'favorite' },    // Mr. Robot
+  { id: 4607, type: 'tv', category: 'favorite' },     // Lost
+  { id: 1100, type: 'tv', category: 'favorite' },     // HIMYM
+  { id: 672, type: 'movie', category: 'favorite' },   // Harry Potter Chamber of Secrets
+  { id: 63675, type: 'movie', category: 'favorite' }, // TODO: identify this movie
+  { id: 26910, type: 'movie', category: 'favorite' }, // TODO: identify this movie
+  { id: 7508, type: 'movie', category: 'favorite' },  // TODO: identify this movie
+  { id: 268660, type: 'movie', category: 'favorite' },// TODO: identify this movie
+  { id: 550, type: 'movie', category: 'favorite' },   // Fight Club
+  { id: 62320, type: 'tv', category: 'favorite' },    // Grace and Frankie
+  { id: 198277, type: 'movie', category: 'favorite' },// Begin Again
+];
+
 const Watchlist = () => {
   const [sections, setSections] = useState<MediaSection[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-  const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
   if (!TMDB_API_KEY) {
     return (
@@ -35,42 +77,6 @@ const Watchlist = () => {
       </main>
     );
   }
-
-  // Media IDs with their types
-  const FAVORITE_MEDIA = [
-    // Currently Watching
-    { id: 70523, type: 'tv', category: 'current' },   // Dark (rewatching)
-    { id: 72844, type: 'tv', category: 'current' },   // The Haunting of Hill House
-
-    // Waiting for Next Season
-    { id: 125988, type: 'tv', category: 'waiting' },  // Silo
-    { id: 124364, type: 'tv', category: 'waiting' },  // FROM
-    { id: 95396, type: 'tv', category: 'waiting' },   // Severance
-
-    // Dinner & Lunch Rewatch Shows
-    { id: 1421, type: 'tv', category: 'rewatch' },   // Modern Family
-    { id: 62649, type: 'tv', category: 'rewatch' },  // Superstore
-    { id: 1418, type: 'tv', category: 'rewatch' },  // TBBT
-    { id: 49011, type: 'tv', category: 'rewatch' },  // Mom
-    { id: 2691, type: 'tv', category: 'rewatch' },   // Two and a Half Men
-    { id: 1668, type: 'tv', category: 'rewatch' },   // Friends
-
-    // All-time Favorites
-    { id: 120, type: 'movie', category: 'favorite' }, // LOTR: Fellowship
-    { id: 121, type: 'movie', category: 'favorite' }, // LOTR: Two Towers
-    { id: 122, type: 'movie', category: 'favorite' }, // LOTR: Return of the King
-    { id: 62560, type: 'tv', category: 'favorite' },  // Mr. Robot
-    { id: 4607, type: 'tv', category: 'favorite' },   // Lost
-    { id: 1100, type: 'tv', category: 'favorite' },   // HIMYM
-    { id: 672, type: 'movie', category: 'favorite' }, // Harry Potter Chamber of Secrets
-    { id: 63675, type: 'movie', category: 'favorite' },
-    { id: 26910, type: 'movie', category: 'favorite' },
-    { id: 7508, type: 'movie', category: 'favorite' },
-    { id: 268660, type: 'movie', category: 'favorite' },
-    { id: 550, type: 'movie', category: 'favorite' },    // Fight Club
-    { id: 62320, type: 'tv', category: 'favorite' },    // Grace and Frankie
-    { id: 198277, type: 'movie', category: 'favorite' }, // Begin Again
-  ];
 
   const fetchMedia = async () => {
     setLoading(true);
