@@ -8,6 +8,7 @@ const Watchlist = lazy(() => import('./pages/Watch'));
 const Lab = lazy(() => import('./pages/Lab'));
 const Work = lazy(() => import('./pages/Work'));
 const Art = lazy(() => import('./pages/Art'));
+const About = lazy(() => import('./pages/About'));
 
 const PageLoader = () => (
   <div className="flex justify-center items-center min-h-[50vh]">
@@ -15,10 +16,11 @@ const PageLoader = () => (
   </div>
 );
 
-type ValidRoutes = '/' | '/watchlist' | '/lab' | '/work' | '/art';
+type ValidRoutes = '/' | '/watchlist' | '/lab' | '/work' | '/art' | '/about';
 
 const PAGE_TITLES: Record<ValidRoutes, string> = {
   '/': 'N.R Dhanawada',
+  '/about': 'N.R Dhanawada - About',
   '/watchlist': 'N.R Dhanawada - Watchlist',
   '/lab': 'N.R Dhanawada - Lab',
   '/work': 'N.R Dhanawada - Work',
@@ -166,6 +168,7 @@ function App() {
               </div>
             </main>
           } />
+            <Route path="/about" element={<About />} />
             <Route path="/watchlist" element={<Watchlist />} />
             <Route path="/lab" element={<Lab />} />
             <Route path="/work" element={<Work />} />
