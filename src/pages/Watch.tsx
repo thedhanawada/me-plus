@@ -28,8 +28,7 @@ const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
 const FAVORITE_MEDIA: MediaEntry[] = [
   // Currently Watching
-  { id: 70523, type: 'tv', category: 'current' },   // Dark
-  { id: 72844, type: 'tv', category: 'current' },   // The Haunting of Hill House
+  { id: 64464, type: 'tv', category: 'current' },   // The Night Manager
 
   // Waiting for Next Season
   { id: 125988, type: 'tv', category: 'waiting' },  // Silo
@@ -43,6 +42,7 @@ const FAVORITE_MEDIA: MediaEntry[] = [
   { id: 49011, type: 'tv', category: 'rewatch' },   // Mom
   { id: 2691, type: 'tv', category: 'rewatch' },    // Two and a Half Men
   { id: 1668, type: 'tv', category: 'rewatch' },    // Friends
+  { id: 62320, type: 'tv', category: 'rewatch' },   // Grace and Frankie
 
   // All-time Favorites
   { id: 120, type: 'movie', category: 'favorite' },   // LOTR: Fellowship
@@ -52,12 +52,13 @@ const FAVORITE_MEDIA: MediaEntry[] = [
   { id: 4607, type: 'tv', category: 'favorite' },     // Lost
   { id: 1100, type: 'tv', category: 'favorite' },     // HIMYM
   { id: 672, type: 'movie', category: 'favorite' },   // Harry Potter Chamber of Secrets
+  { id: 70523, type: 'tv', category: 'favorite' },    // Dark
+  { id: 72844, type: 'tv', category: 'favorite' },    // The Haunting of Hill House
   { id: 63675, type: 'movie', category: 'favorite' }, // TODO: identify this movie
   { id: 26910, type: 'movie', category: 'favorite' }, // TODO: identify this movie
   { id: 7508, type: 'movie', category: 'favorite' },  // TODO: identify this movie
   { id: 268660, type: 'movie', category: 'favorite' },// TODO: identify this movie
   { id: 550, type: 'movie', category: 'favorite' },   // Fight Club
-  { id: 62320, type: 'tv', category: 'favorite' },    // Grace and Frankie
   { id: 198277, type: 'movie', category: 'favorite' },// Begin Again
 ];
 
@@ -197,7 +198,7 @@ const Watchlist = () => {
             Watchlist
           </h1>
           <div className="space-y-4 text-xl text-gray-600 dark:text-gray-400">
-            <p>Movies and TV shows I watch and rewatch.</p>
+            <p>Not everything I watch — just the ones that stuck.</p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Data from{' '}
               <a
