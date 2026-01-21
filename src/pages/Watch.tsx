@@ -78,9 +78,51 @@ const Watchlist = () => {
     );
   }
 
-  const fetchMedia = async () => {
+  const CACHE_KEY = 'watchlist_cache';
+  const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
+
+  const categoryMap = new Map(FAVORITE_MEDIA.map(f => [f.id, f.category]));
+
+  const buildSections = (mediaItems: Media[]): MediaSection[] => [
+    {
+      title: "Currently Watching",
+      items: mediaItems.filter(m => categoryMap.get(m.id) === 'current'),
+    },
+    {
+      title: "Dinner & Lunch Rewatch Shows",
+      items: mediaItems.filter(m => categoryMap.get(m.id) === 'rewatch'),
+    },
+    {
+      title: "Waiting for Next Season",
+      items: mediaItems.filter(m => categoryMap.get(m.id) === 'waiting'),
+    },
+    {
+      title: "All Time Favorites",
+      items: mediaItems.filter(m => categoryMap.get(m.id) === 'favorite'),
+    },
+  ];
+
+  const fetchMedia = async (useCache = true) => {
     setLoading(true);
     setError(null);
+
+    // Check cache first
+    if (useCache) {
+      try {
+        const cached = sessionStorage.getItem(CACHE_KEY);
+        if (cached) {
+          const { data, timestamp } = JSON.parse(cached);
+          if (Date.now() - timestamp < CACHE_DURATION) {
+            setSections(buildSections(data));
+            setLoading(false);
+            return;
+          }
+        }
+      } catch {
+        // Cache read failed, continue with fetch
+      }
+    }
+
     try {
       const favorites = await Promise.all(
         FAVORITE_MEDIA.map(async ({ id, type }) => {
@@ -107,24 +149,17 @@ const Watchlist = () => {
 
       const validFavorites = favorites.filter((item): item is Media => item !== null);
 
-      setSections([
-        {
-          title: "Currently Watching",
-          items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'current'),
-        },
-        {
-          title: "Dinner & Lunch Rewatch Shows",
-          items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'rewatch'),
-        },
-        {
-          title: "Waiting for Next Season",
-          items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'waiting'),
-        },
-        {
-          title: "All Time Favorites",
-          items: validFavorites.filter(m => FAVORITE_MEDIA.find(f => f.id === m.id)?.category === 'favorite'),
-        },
-      ]);
+      // Cache the results
+      try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+          data: validFavorites,
+          timestamp: Date.now()
+        }));
+      } catch {
+        // Cache write failed, continue without caching
+      }
+
+      setSections(buildSections(validFavorites));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching media:', error);
@@ -143,7 +178,7 @@ const Watchlist = () => {
         <div className="text-center space-y-4">
           <p className="text-red-600 dark:text-red-400">{error}</p>
           <button
-            onClick={fetchMedia}
+            onClick={() => fetchMedia(false)}
             className="px-4 py-2 text-sm font-mono bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-80 transition-opacity"
           >
             Try Again
