@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Watchlist from './pages/Watch';
-import Lab from './pages/Lab';
-import Work from './pages/Work';
-import Art from './pages/Art';
 import Footer from './components/Footer';
 import Header from './components/Header';
+
+const Watchlist = lazy(() => import('./pages/Watch'));
+const Lab = lazy(() => import('./pages/Lab'));
+const Work = lazy(() => import('./pages/Work'));
+const Art = lazy(() => import('./pages/Art'));
+
+const PageLoader = () => (
+  <div className="flex justify-center items-center min-h-[50vh]">
+    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 dark:border-gray-100"></div>
+  </div>
+);
 
 type ValidRoutes = '/' | '/watchlist' | '/lab' | '/work' | '/art';
 
@@ -75,8 +82,9 @@ function App() {
         <TitleUpdater />
         <Header toggleTheme={toggleTheme} theme={theme} />
         
-        <Routes>
-          <Route path="/" element={
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={
             <main className="max-w-4xl mx-auto px-6 py-16">
               <div className="space-y-16">
                 {/* Hero Section */}
@@ -158,11 +166,12 @@ function App() {
               </div>
             </main>
           } />
-          <Route path="/watchlist" element={<Watchlist />} />
-          <Route path="/lab" element={<Lab />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/art" element={<Art />} />
-        </Routes>
+            <Route path="/watchlist" element={<Watchlist />} />
+            <Route path="/lab" element={<Lab />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/art" element={<Art />} />
+          </Routes>
+        </Suspense>
 
         <Footer />
       </div>
