@@ -9,6 +9,7 @@ const Lab = lazy(() => import('./pages/Lab'));
 const Work = lazy(() => import('./pages/Work'));
 const Art = lazy(() => import('./pages/Art'));
 const About = lazy(() => import('./pages/About'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 const PageLoader = () => (
   <div className="flex justify-center items-center min-h-[50vh]">
@@ -173,6 +174,7 @@ function App() {
             <Route path="/lab" element={<Lab />} />
             <Route path="/work" element={<Work />} />
             <Route path="/art" element={<Art />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
 
