@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Film, Tv } from 'lucide-react';
+import HoverLink from '../components/HoverLink';
 
 interface Media {
   id: number;
@@ -201,15 +202,9 @@ const Watchlist = () => {
             <p>Not everything I watch — just the ones that stuck.</p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Data from{' '}
-              <a
-                href="https://www.themoviedb.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-              >
-                <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[TMDB]</span>
-              </a>
+              <HoverLink href="https://www.themoviedb.org/" external>
+                [TMDB]
+              </HoverLink>
             </p>
           </div>
         </section>

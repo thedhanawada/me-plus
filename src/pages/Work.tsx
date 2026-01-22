@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   MapPin,
   Calendar,
@@ -16,6 +15,7 @@ import {
   Server,
   Workflow
 } from 'lucide-react';
+import HoverLink from '../components/HoverLink';
 
 interface TechCategory {
   name: string;
@@ -388,15 +388,9 @@ const Work = () => {
                     </div>
                     
                     <div className="mt-3">
-                      <a
-                        href={pub.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black text-sm dark:text-gray-300 dark:hover:text-black"
-                      >
-                        <span className="absolute inset-0 bg-black scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 dark:bg-white"></span>
-                        <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[View Publication →]</span>
-                      </a>
+                      <HoverLink href={pub.link} external className="px-4 py-2 text-sm">
+                        [View Publication →]
+                      </HoverLink>
                     </div>
                   </div>
                 </div>

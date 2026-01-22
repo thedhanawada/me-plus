@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import HoverLink from '../components/HoverLink';
 
 const NotFound = () => {
   return (
@@ -9,15 +9,7 @@ const NotFound = () => {
           Page not found.
         </p>
         <div>
-          <Link
-            to="/"
-            className="relative px-4 py-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-          >
-            <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-            <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
-              [back to home]
-            </span>
-          </Link>
+          <HoverLink to="/">[back to home]</HoverLink>
         </div>
       </div>
     </main>

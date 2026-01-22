@@ -1,5 +1,5 @@
-import React from 'react';
 import { ExternalLink, Github, Package, Palette } from 'lucide-react';
+import HoverLink from '../components/HoverLink';
 
 interface Project {
   title: string;
@@ -90,67 +90,31 @@ const Lab = () => {
                         Open Source • {project.type === 'library' ? 'Library' : project.type === 'theme' ? 'Theme' : 'Tool'}
                       </p>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
                       {project.links.live && (
-                        <a
-                          href={project.links.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-                          title="Live Demo"
-                        >
-                          <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                          <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
-                            <ExternalLink size={20} />
-                          </span>
-                        </a>
+                        <HoverLink href={project.links.live} external className="p-2" title="Live Demo" ariaLabel="View live demo">
+                          <ExternalLink size={20} />
+                        </HoverLink>
                       )}
                       {project.links.github && (
-                        <a
-                          href={project.links.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-                          title="GitHub"
-                        >
-                          <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                          <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
-                            <Github size={20} />
-                          </span>
-                        </a>
+                        <HoverLink href={project.links.github} external className="p-2" title="GitHub" ariaLabel="View on GitHub">
+                          <Github size={20} />
+                        </HoverLink>
                       )}
                       {project.links.npm && (
-                        <a
-                          href={project.links.npm}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-                          title="NPM"
-                        >
-                          <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                          <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
-                            <Package size={20} />
-                          </span>
-                        </a>
+                        <HoverLink href={project.links.npm} external className="p-2" title="NPM" ariaLabel="View on NPM">
+                          <Package size={20} />
+                        </HoverLink>
                       )}
                       {project.links.firefox && (
-                        <a
-                          href={project.links.firefox}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative p-2 font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-                          title="Firefox Add-on"
-                        >
-                          <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                          <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
-                            <Palette size={20} />
-                          </span>
-                        </a>
+                        <HoverLink href={project.links.firefox} external className="p-2" title="Firefox Add-on" ariaLabel="View Firefox add-on">
+                          <Palette size={20} />
+                        </HoverLink>
                       )}
                     </div>
                   </div>
-                  
+
                   <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                     {project.description}
                   </p>
