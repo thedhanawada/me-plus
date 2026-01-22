@@ -71,7 +71,7 @@ const Watchlist = () => {
 
   if (!TMDB_API_KEY) {
     return (
-      <main className="max-w-4xl mx-auto px-6 py-16 transition-colors duration-500">
+      <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
         <div className="text-red-600 dark:text-red-400 text-center">
           <p>Configuration error: TMDB API key is not configured.</p>
         </div>
@@ -175,7 +175,7 @@ const Watchlist = () => {
 
   if (error) {
     return (
-      <main className="max-w-4xl mx-auto px-6 py-16 transition-colors duration-500">
+      <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
         <div className="text-center space-y-4">
           <p className="text-red-600 dark:text-red-400">{error}</p>
           <button
@@ -190,7 +190,7 @@ const Watchlist = () => {
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-6 py-16 transition-colors duration-500">
+    <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
       <div className="space-y-16">
         {/* Header */}
         <section>
