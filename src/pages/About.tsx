@@ -47,7 +47,7 @@ const education: Education[] = [
 
 const About = () => {
   return (
-    <main className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+    <main id="main-content" className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
       <div className="space-y-16">
         {/* Header */}
         <section>
