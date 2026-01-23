@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import HoverLink from './HoverLink';
 
 interface HeaderProps {
@@ -89,53 +90,75 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
           </div>
 
           {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <nav
-              id="mobile-menu"
-              aria-label="Mobile navigation"
-              className="lg:hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
-            >
-              <div className="space-y-4">
-                {navItems.map((item) => {
-                  const isActive = location.pathname === item.path;
-                  return (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className={`block text-lg font-mono transition-colors duration-500 ${
-                        isActive 
-                          ? 'text-white bg-black dark:text-black dark:bg-white' 
-                          : 'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white'
-                      }`}
-                    >
-                      [{item.name}]
-                    </Link>
-                  );
-                })}
-                
-                <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500">
-                  <a
-                    href="https://github.com/thedhanawada/me-plus"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-gray-400 font-mono dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-500"
-                  >
-                    source code
-                  </a>
-                </div>
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.nav
+                id="mobile-menu"
+                aria-label="Mobile navigation"
+                className="lg:hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500 overflow-hidden"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2, ease: 'easeInOut' }}
+              >
+                <div className="space-y-4">
+                  {navItems.map((item, index) => {
+                    const isActive = location.pathname === item.path;
+                    return (
+                      <motion.div
+                        key={item.name}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
+                        <Link
+                          to={item.path}
+                          className={`block text-lg font-mono transition-colors duration-500 ${
+                            isActive
+                              ? 'text-white bg-black dark:text-black dark:bg-white'
+                              : 'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white'
+                          }`}
+                        >
+                          [{item.name}]
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
 
-                <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500">
-                  <button
-                    onClick={toggleTheme}
-                    aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-                    className="text-sm text-gray-400 font-mono dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  <motion.div
+                    className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.25 }}
                   >
-                    [{theme === 'light' ? 'dark' : 'light'} mode]
-                  </button>
+                    <a
+                      href="https://github.com/thedhanawada/me-plus"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-gray-400 font-mono dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-500"
+                    >
+                      source code
+                    </a>
+                  </motion.div>
+
+                  <motion.div
+                    className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <button
+                      onClick={toggleTheme}
+                      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                      className="text-sm text-gray-400 font-mono dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    >
+                      [{theme === 'light' ? 'dark' : 'light'} mode]
+                    </button>
+                  </motion.div>
                 </div>
-              </div>
-            </nav>
-          )}
+              </motion.nav>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </header>
