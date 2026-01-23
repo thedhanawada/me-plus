@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import HoverLink from './HoverLink';
+import { useTheme } from '../hooks';
 
 const NAV_ITEMS = [
   { name: 'about', path: '/about' },
@@ -11,12 +12,8 @@ const NAV_ITEMS = [
   { name: 'watch', path: '/watchlist' },
 ] as const;
 
-interface HeaderProps {
-  toggleTheme: () => void;
-  theme: 'light' | 'dark';
-}
-
-const Header = ({ toggleTheme, theme }: HeaderProps) => {
+const Header = () => {
+  const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);

@@ -1,5 +1,6 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
@@ -40,42 +41,29 @@ const TitleUpdater = () => {
 };
 
 function App() {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
   return (
-    <Router>
-      <div className="min-h-screen bg-white text-gray-900 font-mono dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
-        <TitleUpdater />
-        <Header toggleTheme={toggleTheme} theme={theme} />
-        
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/watchlist" element={<Watchlist />} />
-            <Route path="/lab" element={<Lab />} />
-            <Route path="/work" element={<Work />} />
-            <Route path="/art" element={<Art />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+    <ThemeProvider>
+      <Router>
+        <div className="min-h-screen bg-white text-gray-900 font-mono dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+          <TitleUpdater />
+          <Header />
 
-        <Footer />
-      </div>
-    </Router>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/watchlist" element={<Watchlist />} />
+              <Route path="/lab" element={<Lab />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/art" element={<Art />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+
+          <Footer />
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 
