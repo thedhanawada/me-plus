@@ -19,11 +19,24 @@ interface HeaderProps {
 const Header = ({ toggleTheme, theme }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -117,10 +130,10 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
                 id="mobile-menu"
                 aria-label="Mobile navigation"
                 className="lg:hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500 overflow-hidden"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2, ease: 'easeInOut' }}
+                initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
+                exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: 'easeInOut' }}
               >
                 <div className="space-y-4">
                   {NAV_ITEMS.map((item, index) => {
@@ -128,9 +141,9 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
                     return (
                       <motion.div
                         key={item.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
+                        initial={prefersReducedMotion ? {} : { opacity: 0, x: -20 }}
+                        animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
+                        transition={prefersReducedMotion ? {} : { delay: index * 0.05 }}
                       >
                         <Link
                           to={item.path}
@@ -148,9 +161,9 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
 
                   <motion.div
                     className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.25 }}
+                    initial={prefersReducedMotion ? {} : { opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { opacity: 1 }}
+                    transition={prefersReducedMotion ? {} : { delay: 0.25 }}
                   >
                     <a
                       href="https://github.com/thedhanawada/me-plus"
@@ -164,9 +177,9 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
 
                   <motion.div
                     className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
+                    initial={prefersReducedMotion ? {} : { opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { opacity: 1 }}
+                    transition={prefersReducedMotion ? {} : { delay: 0.3 }}
                   >
                     <button
                       onClick={toggleTheme}

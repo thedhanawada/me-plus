@@ -31,7 +31,7 @@ const HoverLink = ({
     <span className="relative z-10">{children}</span>
   ) : (
     <>
-      <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+      <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 motion-reduce:transition-none motion-reduce:scale-x-100 motion-reduce:opacity-0 motion-reduce:group-hover:opacity-100"></span>
       <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
         {children}
       </span>
