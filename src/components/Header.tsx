@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import HoverLink from './HoverLink';
 
 interface HeaderProps {
   toggleTheme: () => void;
@@ -45,46 +46,32 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
           {/* Navigation - Desktop */}
           <nav className="hidden lg:block">
             <div className="flex items-center space-x-8">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={`relative px-4 py-2 text-sm font-mono transition-all duration-500 group ${
-                      isActive 
-                        ? 'text-white bg-black dark:text-black dark:bg-white' 
-                        : 'text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white'
-                    }`}
-                  >
-                    {!isActive && (
-                      <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                    )}
-                    <span className={`relative z-10 ${!isActive ? 'group-hover:text-white dark:group-hover:text-black' : ''}`}>
-                      [{item.name}]
-                    </span>
-                  </Link>
-                );
-              })}
+              {navItems.map((item) => (
+                <HoverLink
+                  key={item.name}
+                  to={item.path}
+                  active={location.pathname === item.path}
+                  className="px-4 py-2 text-sm"
+                >
+                  [{item.name}]
+                </HoverLink>
+              ))}
               
-              <a
+              <HoverLink
                 href="https://github.com/thedhanawada/me-plus"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative px-4 py-2 text-sm font-mono transition-all duration-500 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white ml-8 border-l border-gray-300 dark:border-gray-700 pl-4"
+                external
+                className="px-4 py-2 text-sm ml-8 border-l border-gray-300 dark:border-gray-700 pl-4"
               >
-                <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[source code]</span>
-              </a>
+                [source code]
+              </HoverLink>
 
-              <button
+              <HoverLink
                 onClick={toggleTheme}
-                aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-                className="relative px-4 py-2 text-sm font-mono transition-all duration-500 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white border-l border-gray-300 dark:border-gray-700 pl-4 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                ariaLabel={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                className="px-4 py-2 text-sm border-l border-gray-300 dark:border-gray-700 pl-4"
               >
-                <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-                <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">[{theme === 'light' ? 'dark' : 'light'} mode]</span>
-              </button>
+                [{theme === 'light' ? 'dark' : 'light'} mode]
+              </HoverLink>
             </div>
           </nav>
 
