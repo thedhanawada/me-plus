@@ -3,6 +3,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import HoverLink from './HoverLink';
 
+const NAV_ITEMS = [
+  { name: 'about', path: '/about' },
+  { name: 'work', path: '/work' },
+  { name: 'lab', path: '/lab' },
+  { name: 'art', path: '/art' },
+  { name: 'watch', path: '/watchlist' },
+] as const;
+
 interface HeaderProps {
   toggleTheme: () => void;
   theme: 'light' | 'dark';
@@ -11,14 +19,6 @@ interface HeaderProps {
 const Header = ({ toggleTheme, theme }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-
-  const navItems = [
-    { name: 'about', path: '/about' },
-    { name: 'work', path: '/work' },
-    { name: 'lab', path: '/lab' },
-    { name: 'art', path: '/art' },
-    { name: 'watch', path: '/watchlist' },
-  ];
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -47,7 +47,7 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
           {/* Navigation - Desktop */}
           <nav className="hidden lg:block">
             <div className="flex items-center space-x-8">
-              {navItems.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <HoverLink
                   key={item.name}
                   to={item.path}
@@ -102,7 +102,7 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
                 transition={{ duration: 0.2, ease: 'easeInOut' }}
               >
                 <div className="space-y-4">
-                  {navItems.map((item, index) => {
+                  {NAV_ITEMS.map((item, index) => {
                     const isActive = location.pathname === item.path;
                     return (
                       <motion.div
