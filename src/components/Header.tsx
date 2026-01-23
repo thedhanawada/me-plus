@@ -18,11 +18,21 @@ interface HeaderProps {
 
 const Header = ({ toggleTheme, theme }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -32,13 +42,13 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
       >
         Skip to main content
       </a>
-      <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 transition-colors duration-500">
+      <header className={`sticky top-0 z-50 bg-white dark:bg-gray-900 transition-all duration-300 ${scrolled ? 'shadow-sm' : ''}`}>
       <div className="max-w-4xl mx-auto px-6">
-        <div className="py-12 border-b border-gray-900 dark:border-gray-700 transition-colors duration-500">
+        <div className={`border-b border-gray-900 dark:border-gray-700 transition-all duration-300 ${scrolled ? 'py-4' : 'py-12'}`}>
           {/* Name */}
-          <div className="mb-8">
+          <div className={`transition-all duration-300 ${scrolled ? 'mb-4' : 'mb-8'}`}>
             <Link to="/" className="block">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-none transition-colors duration-500">
+              <h1 className={`font-bold tracking-tight leading-none transition-all duration-300 ${scrolled ? 'text-2xl md:text-3xl' : 'text-4xl md:text-5xl'}`}>
                 N.R DHANAWADA
               </h1>
             </Link>
