@@ -1,23 +1,5 @@
 import { motion } from 'framer-motion';
-
-const whatIDo = [
-  {
-    title: 'I build service delivery platforms.',
-    description: 'The goal is simple: make them robust, scalable, and actually useful for the people who depend on them. No fluff.'
-  },
-  {
-    title: 'I handle the whole stack.',
-    description: 'From ETL and data modeling to the final application logic. I use tools that work, like Salesforce, Talend, MS SQL, and AWS. The right tool for the job.'
-  },
-  {
-    title: 'My code has a real-world impact.',
-    description: "I've built systems that support thousands of users, managing everything from student data to automated reporting."
-  },
-  {
-    title: 'I focus on no-nonsense development.',
-    description: 'Clean architecture and efficient code are my priorities. I build systems that are easy to understand, maintain, and that last.'
-  }
-];
+import { whatIDo, philosophy } from '../data';
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -69,38 +51,14 @@ const Home = () => {
         >
           <h2 className="text-2xl font-bold mb-8">Philosophy</h2>
           <div className="grid gap-8 md:grid-cols-2">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">First Principles</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-gray-400">
-                Break complex problems down to their fundamentals.
-                Build from the ground up with clear reasoning.
-                Question assumptions, not conclusions.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Practical Impact</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-gray-400">
-                Technology should solve real problems for real people.
-                Complexity for its own sake is waste.
-                Measure success by the problems you eliminate.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Simple Systems</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-gray-400">
-                The best systems are composable and understandable.
-                Small, well-defined pieces that work together.
-                Complexity emerges from simplicity, not chaos.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Open Source</h3>
-              <p className="text-gray-600 leading-relaxed dark:text-gray-400">
-                Code should be shared, studied, and improved by everyone.
-                Transparency builds trust. Collaboration builds better software.
-                Stand on the shoulders of giants.
-              </p>
-            </div>
+            {philosophy.map((item) => (
+              <div key={item.title}>
+                <h3 className="text-lg font-semibold mb-4">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed dark:text-gray-400">
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
         </motion.section>
       </div>
