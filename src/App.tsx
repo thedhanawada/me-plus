@@ -1,6 +1,7 @@
 import { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
+import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
@@ -48,17 +49,19 @@ function App() {
           <TitleUpdater />
           <Header />
 
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/watchlist" element={<Watchlist />} />
-              <Route path="/lab" element={<Lab />} />
-              <Route path="/work" element={<Work />} />
-              <Route path="/art" element={<Art />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/watchlist" element={<Watchlist />} />
+                <Route path="/lab" element={<Lab />} />
+                <Route path="/work" element={<Work />} />
+                <Route path="/art" element={<Art />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
 
           <Footer />
         </div>
