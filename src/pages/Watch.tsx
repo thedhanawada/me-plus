@@ -1,76 +1,52 @@
 import { useState, useEffect } from 'react';
 import { Film, Tv } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
-
-interface Media {
-  id: number;
-  title?: string;
-  name?: string;
-  poster_path: string;
-  release_date?: string;
-  first_air_date?: string;
-  overview: string;
-  vote_average: number;
-  media_type: 'movie' | 'tv';
-}
+import { WATCHLIST_MEDIA, WATCHLIST_SECTIONS } from '../data';
+import {
+  fetchMediaList,
+  isApiKeyConfigured,
+  TMDB_IMAGE_BASE,
+  type Media
+} from '../services';
 
 interface MediaSection {
   title: string;
   items: Media[];
 }
 
-interface MediaEntry {
-  id: number;
-  type: 'movie' | 'tv';
-  category: 'current' | 'waiting' | 'rewatch' | 'favorite';
-}
-
-const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
-
-const FAVORITE_MEDIA: MediaEntry[] = [
-  // Currently Watching
-  { id: 61859, type: 'tv', category: 'current' },   // The Night Manager
-
-  // Waiting for Next Season
-  { id: 125988, type: 'tv', category: 'waiting' },  // Silo
-  { id: 124364, type: 'tv', category: 'waiting' },  // FROM
-  { id: 95396, type: 'tv', category: 'waiting' },   // Severance
-
-  // Dinner & Lunch Rewatch Shows
-  { id: 1421, type: 'tv', category: 'rewatch' },    // Modern Family
-  { id: 62649, type: 'tv', category: 'rewatch' },   // Superstore
-  { id: 1418, type: 'tv', category: 'rewatch' },    // TBBT
-  { id: 49011, type: 'tv', category: 'rewatch' },   // Mom
-  { id: 2691, type: 'tv', category: 'rewatch' },    // Two and a Half Men
-  { id: 1668, type: 'tv', category: 'rewatch' },    // Friends
-  { id: 62320, type: 'tv', category: 'rewatch' },   // Grace and Frankie
-
-  // All-time Favorites
-  { id: 120, type: 'movie', category: 'favorite' },   // LOTR: Fellowship
-  { id: 121, type: 'movie', category: 'favorite' },   // LOTR: Two Towers
-  { id: 122, type: 'movie', category: 'favorite' },   // LOTR: Return of the King
-  { id: 62560, type: 'tv', category: 'favorite' },    // Mr. Robot
-  { id: 4607, type: 'tv', category: 'favorite' },     // Lost
-  { id: 1100, type: 'tv', category: 'favorite' },     // HIMYM
-  { id: 672, type: 'movie', category: 'favorite' },   // Harry Potter Chamber of Secrets
-  { id: 70523, type: 'tv', category: 'favorite' },    // Dark
-  { id: 72844, type: 'tv', category: 'favorite' },    // The Haunting of Hill House
-  { id: 63675, type: 'movie', category: 'favorite' }, // TODO: identify this movie
-  { id: 26910, type: 'movie', category: 'favorite' }, // TODO: identify this movie
-  { id: 7508, type: 'movie', category: 'favorite' },  // TODO: identify this movie
-  { id: 268660, type: 'movie', category: 'favorite' },// TODO: identify this movie
-  { id: 550, type: 'movie', category: 'favorite' },   // Fight Club
-  { id: 198277, type: 'movie', category: 'favorite' },// Begin Again
-];
-
 const Watchlist = () => {
   const [sections, setSections] = useState<MediaSection[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+  const categoryMap = new Map(WATCHLIST_MEDIA.map(m => [m.id, m.category]));
 
-  if (!TMDB_API_KEY) {
+  const buildSections = (mediaItems: Media[]): MediaSection[] =>
+    WATCHLIST_SECTIONS.map(section => ({
+      title: section.title,
+      items: mediaItems.filter(m => categoryMap.get(m.id) === section.key),
+    }));
+
+  const loadMedia = async (useCache = true) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const mediaItems = await fetchMediaList(WATCHLIST_MEDIA, useCache);
+      setSections(buildSections(mediaItems));
+    } catch (err) {
+      console.error('Error fetching media:', err);
+      setError('Failed to load watchlist. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadMedia();
+  }, []);
+
+  if (!isApiKeyConfigured()) {
     return (
       <main id="main-content" className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
         <div className="text-red-600 dark:text-red-400 text-center">
@@ -80,107 +56,13 @@ const Watchlist = () => {
     );
   }
 
-  const CACHE_KEY = 'watchlist_cache';
-  const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
-
-  const categoryMap = new Map(FAVORITE_MEDIA.map(f => [f.id, f.category]));
-
-  const buildSections = (mediaItems: Media[]): MediaSection[] => [
-    {
-      title: "Currently Watching",
-      items: mediaItems.filter(m => categoryMap.get(m.id) === 'current'),
-    },
-    {
-      title: "Dinner & Lunch Rewatch Shows",
-      items: mediaItems.filter(m => categoryMap.get(m.id) === 'rewatch'),
-    },
-    {
-      title: "Waiting for Next Season",
-      items: mediaItems.filter(m => categoryMap.get(m.id) === 'waiting'),
-    },
-    {
-      title: "All Time Favorites",
-      items: mediaItems.filter(m => categoryMap.get(m.id) === 'favorite'),
-    },
-  ];
-
-  const fetchMedia = async (useCache = true) => {
-    setLoading(true);
-    setError(null);
-
-    // Check cache first
-    if (useCache) {
-      try {
-        const cached = sessionStorage.getItem(CACHE_KEY);
-        if (cached) {
-          const { data, timestamp } = JSON.parse(cached);
-          if (Date.now() - timestamp < CACHE_DURATION) {
-            setSections(buildSections(data));
-            setLoading(false);
-            return;
-          }
-        }
-      } catch {
-        // Cache read failed, continue with fetch
-      }
-    }
-
-    try {
-      const favorites = await Promise.all(
-        FAVORITE_MEDIA.map(async ({ id, type }) => {
-          try {
-            const response = await fetch(
-              `https://api.themoviedb.org/3/${type}/${id}?api_key=${TMDB_API_KEY}`
-            );
-            if (!response.ok) {
-              throw new Error(`Failed to fetch ${type} with ID ${id}`);
-            }
-            const data = await response.json();
-            return {
-              ...data,
-              title: data.title || data.name,
-              release_date: data.release_date || data.first_air_date,
-              media_type: type
-            };
-          } catch (error) {
-            console.error(`Error fetching ${type} ${id}:`, error);
-            return null;
-          }
-        })
-      );
-
-      const validFavorites = favorites.filter((item): item is Media => item !== null);
-
-      // Cache the results
-      try {
-        sessionStorage.setItem(CACHE_KEY, JSON.stringify({
-          data: validFavorites,
-          timestamp: Date.now()
-        }));
-      } catch {
-        // Cache write failed, continue without caching
-      }
-
-      setSections(buildSections(validFavorites));
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching media:', error);
-      setError('Failed to load watchlist. Please check your connection and try again.');
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchMedia();
-  }, []);
-
   if (error) {
     return (
       <main id="main-content" className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
         <div className="text-center space-y-4">
           <p className="text-red-600 dark:text-red-400">{error}</p>
           <button
-            onClick={() => fetchMedia(false)}
+            onClick={() => loadMedia(false)}
             className="px-4 py-2 text-sm font-mono bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-80 transition-opacity"
           >
             Try Again
