@@ -43,7 +43,7 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
           </div>
 
           {/* Navigation - Desktop */}
-          <nav className="hidden md:block">
+          <nav className="hidden lg:block">
             <div className="flex items-center space-x-8">
               {navItems.map((item) => {
                 const isActive = location.pathname === item.path;
@@ -89,7 +89,7 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
           </nav>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
@@ -106,7 +106,7 @@ const Header = ({ toggleTheme, theme }: HeaderProps) => {
             <nav
               id="mobile-menu"
               aria-label="Mobile navigation"
-              className="md:hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
+              className="lg:hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
             >
               <div className="space-y-4">
                 {navItems.map((item) => {
