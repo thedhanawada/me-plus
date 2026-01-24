@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Film, Tv } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
 import { SkeletonCard } from '../components/Skeleton';
+import ProgressiveImage from '../components/ProgressiveImage';
 import { WATCHLIST_MEDIA, WATCHLIST_SECTIONS } from '../data';
 import {
   fetchMediaList,
@@ -124,11 +125,11 @@ const Watchlist = () => {
                       rel="noopener noreferrer"
                       className="block group focus:outline-none focus:ring-2 focus:ring-focus-ring rounded-lg card-interactive"
                     >
-                      <div className="aspect-[2/3] relative overflow-hidden rounded-lg bg-bg-secondary card-shadow">
-                        <img
+                      <div className="aspect-[2/3] relative overflow-hidden rounded-lg card-shadow">
+                        <ProgressiveImage
                           src={`${TMDB_IMAGE_BASE}${item.poster_path}`}
                           alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-fast"
+                          className="w-full h-full group-hover:scale-105 transition-transform duration-fast"
                         />
                       </div>
                       <div className="mt-2 space-y-1">
