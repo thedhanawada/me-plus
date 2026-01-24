@@ -99,6 +99,28 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Theme transition effect */
+html.theme-transitioning,
+html.theme-transitioning * {
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease !important;
+}
+
+html.theme-transitioning::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgb(var(--color-bg-primary));
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  animation: theme-fade 0.5s ease;
+}
+
+@keyframes theme-fade {
+  0% { opacity: 0.15; }
+  100% { opacity: 0; }
+}
+
 /* Clean selection */
 ::selection {
   background: rgb(59 130 246 / 0.2);

@@ -29,7 +29,15 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   }, [theme]);
 
   const toggleTheme = () => {
+    // Add transition class for smooth theme switch
+    document.documentElement.classList.add('theme-transitioning');
+
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
+
+    // Remove transition class after animation completes
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-transitioning');
+    }, 500);
   };
 
   return (
