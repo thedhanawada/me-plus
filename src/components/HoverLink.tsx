@@ -24,15 +24,15 @@ const HoverLink = ({
   active = false,
 }: HoverLinkProps) => {
   const baseClasses = active
-    ? `relative font-mono transition-all duration-300 text-white bg-black dark:text-black dark:bg-white focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${className}`
-    : `relative font-mono transition-all duration-300 group text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${className}`;
+    ? `relative font-mono transition-all duration-default text-text-inverted bg-bg-inverted focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary ${className}`
+    : `relative font-mono transition-all duration-default group text-text-secondary hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary ${className}`;
 
   const innerContent = active ? (
     <span className="relative z-10">{children}</span>
   ) : (
     <>
-      <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100 motion-reduce:transition-none motion-reduce:scale-x-100 motion-reduce:opacity-0 motion-reduce:group-hover:opacity-100"></span>
-      <span className="relative z-10 group-hover:text-white dark:group-hover:text-black">
+      <span className="absolute inset-0 bg-bg-inverted scale-x-0 origin-left transition-transform duration-default group-hover:scale-x-100 motion-reduce:transition-none motion-reduce:scale-x-100 motion-reduce:opacity-0 motion-reduce:group-hover:opacity-100"></span>
+      <span className="relative z-10 group-hover:text-text-inverted">
         {children}
       </span>
     </>

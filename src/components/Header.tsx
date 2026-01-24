@@ -59,13 +59,13 @@ const Header = () => {
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-black focus:text-white dark:focus:bg-white dark:focus:text-black font-mono text-sm"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-bg-inverted focus:text-text-inverted font-mono text-sm"
       >
         Skip to main content
       </a>
-      <header className={`sticky top-0 z-50 bg-white dark:bg-gray-900 transition-all duration-300 ${scrolled ? 'shadow-sm' : ''}`}>
-      <div className="max-w-4xl mx-auto px-6">
-        <div className={`border-b border-gray-900 dark:border-gray-700 transition-all duration-300 ${scrolled ? 'py-4' : 'py-12'}`}>
+      <header className={`sticky top-0 z-50 bg-bg-primary transition-all duration-default ${scrolled ? 'shadow-sm' : ''}`}>
+      <div className="max-w-container mx-auto px-page-x">
+        <div className={`border-b border-border-strong transition-all duration-default ${scrolled ? 'py-4' : 'py-12'}`}>
           {/* Name */}
           <div className={`transition-all duration-300 ${scrolled ? 'mb-4' : 'mb-8'}`}>
             <Link to="/" className="block">
@@ -92,7 +92,7 @@ const Header = () => {
               <HoverLink
                 href="https://github.com/thedhanawada/me-plus"
                 external
-                className="px-4 py-2 text-sm ml-8 border-l border-gray-300 dark:border-gray-700 pl-4"
+                className="px-4 py-2 text-sm ml-8 border-l border-border-secondary pl-4"
               >
                 [source code]
               </HoverLink>
@@ -100,7 +100,7 @@ const Header = () => {
               <HoverLink
                 onClick={toggleTheme}
                 ariaLabel={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-                className="px-4 py-2 text-sm border-l border-gray-300 dark:border-gray-700 pl-4"
+                className="px-4 py-2 text-sm border-l border-border-secondary pl-4"
               >
                 [{theme === 'light' ? 'dark' : 'light'} mode]
               </HoverLink>
@@ -114,7 +114,7 @@ const Header = () => {
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="text-gray-600 hover:text-gray-900 font-mono text-sm dark:text-gray-400 dark:hover:text-white transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              className="text-text-secondary hover:text-text-primary font-mono text-sm transition-colors duration-slow focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
             >
               {mobileMenuOpen ? '[close]' : '[menu]'}
             </button>
@@ -126,7 +126,7 @@ const Header = () => {
               <motion.nav
                 id="mobile-menu"
                 aria-label="Mobile navigation"
-                className="lg:hidden mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500 overflow-hidden"
+                className="lg:hidden mt-6 pt-6 border-t border-border-primary transition-colors duration-slow overflow-hidden"
                 initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
                 animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
                 exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
@@ -144,10 +144,10 @@ const Header = () => {
                       >
                         <Link
                           to={item.path}
-                          className={`block text-lg font-mono transition-colors duration-500 ${
+                          className={`block text-lg font-mono transition-colors duration-slow ${
                             isActive
-                              ? 'text-white bg-black dark:text-black dark:bg-white'
-                              : 'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white'
+                              ? 'text-text-inverted bg-bg-inverted'
+                              : 'text-text-secondary hover:text-text-primary'
                           }`}
                         >
                           [{item.name}]
@@ -157,7 +157,7 @@ const Header = () => {
                   })}
 
                   <motion.div
-                    className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
+                    className="pt-4 mt-4 border-t border-border-primary transition-colors duration-slow"
                     initial={prefersReducedMotion ? {} : { opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { opacity: 1 }}
                     transition={prefersReducedMotion ? {} : { delay: 0.25 }}
@@ -166,14 +166,14 @@ const Header = () => {
                       href="https://github.com/thedhanawada/me-plus"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-gray-400 font-mono dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-500"
+                      className="text-sm text-text-muted font-mono hover:text-text-secondary transition-colors duration-slow"
                     >
                       source code
                     </a>
                   </motion.div>
 
                   <motion.div
-                    className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700 transition-colors duration-500"
+                    className="pt-4 mt-4 border-t border-border-primary transition-colors duration-slow"
                     initial={prefersReducedMotion ? {} : { opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { opacity: 1 }}
                     transition={prefersReducedMotion ? {} : { delay: 0.3 }}
@@ -181,7 +181,7 @@ const Header = () => {
                     <button
                       onClick={toggleTheme}
                       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-                      className="text-sm text-gray-400 font-mono dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                      className="text-sm text-text-muted font-mono hover:text-text-secondary transition-colors duration-slow focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
                     >
                       [{theme === 'light' ? 'dark' : 'light'} mode]
                     </button>

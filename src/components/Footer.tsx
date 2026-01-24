@@ -2,8 +2,8 @@ import HoverLink from './HoverLink';
 
 const Footer = () => {
   return (
-    <footer className="border-t border-gray-200 mt-16 dark:border-gray-700 transition-colors duration-500">
-      <div className="max-w-4xl mx-auto px-6 py-12 text-center">
+    <footer className="border-t border-border-primary mt-16 transition-colors duration-slow">
+      <div className="max-w-container mx-auto px-page-x py-12 text-center">
         <div className="flex justify-center space-x-8 text-sm mb-4 mt-6">
           <HoverLink href="https://github.com/thedhanawada" external>
             [github]
@@ -12,7 +12,7 @@ const Footer = () => {
             [email]
           </HoverLink>
         </div>
-        <p className="text-xs text-gray-400 dark:text-gray-500">
+        <p className="text-xs text-text-muted">
           Built with{' '}
           <HoverLink href="https://react.dev/" external className="px-1">
             React

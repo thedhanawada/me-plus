@@ -15,7 +15,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 
 const PageLoader = () => (
   <div className="flex justify-center items-center min-h-[50vh]">
-    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 dark:border-gray-100"></div>
+    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-text-primary"></div>
   </div>
 );
 
@@ -45,7 +45,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen bg-white text-gray-900 font-mono dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+        <div className="min-h-screen bg-bg-primary text-text-primary font-mono transition-colors duration-slow">
           <TitleUpdater />
           <Header />
 
