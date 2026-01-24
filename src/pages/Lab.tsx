@@ -1,5 +1,6 @@
 import { ExternalLink, Github, Package, Palette } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
+import Tooltip from '../components/Tooltip';
 import { StaggeredList } from '../components/StaggeredList';
 import { projects } from '../data';
 
@@ -37,24 +38,32 @@ const Lab = () => {
 
                     <div className="flex items-center gap-4">
                       {project.links.live && (
-                        <HoverLink href={project.links.live} external className="p-2" title="Live Demo" ariaLabel="View live demo">
-                          <ExternalLink size={20} />
-                        </HoverLink>
+                        <Tooltip content="Live Demo">
+                          <HoverLink href={project.links.live} external className="p-2" ariaLabel="View live demo">
+                            <ExternalLink size={20} />
+                          </HoverLink>
+                        </Tooltip>
                       )}
                       {project.links.github && (
-                        <HoverLink href={project.links.github} external className="p-2" title="GitHub" ariaLabel="View on GitHub">
-                          <Github size={20} />
-                        </HoverLink>
+                        <Tooltip content="GitHub">
+                          <HoverLink href={project.links.github} external className="p-2" ariaLabel="View on GitHub">
+                            <Github size={20} />
+                          </HoverLink>
+                        </Tooltip>
                       )}
                       {project.links.npm && (
-                        <HoverLink href={project.links.npm} external className="p-2" title="NPM" ariaLabel="View on NPM">
-                          <Package size={20} />
-                        </HoverLink>
+                        <Tooltip content="NPM">
+                          <HoverLink href={project.links.npm} external className="p-2" ariaLabel="View on NPM">
+                            <Package size={20} />
+                          </HoverLink>
+                        </Tooltip>
                       )}
                       {project.links.firefox && (
-                        <HoverLink href={project.links.firefox} external className="p-2" title="Firefox Add-on" ariaLabel="View Firefox add-on">
-                          <Palette size={20} />
-                        </HoverLink>
+                        <Tooltip content="Firefox Add-on">
+                          <HoverLink href={project.links.firefox} external className="p-2" ariaLabel="View Firefox add-on">
+                            <Palette size={20} />
+                          </HoverLink>
+                        </Tooltip>
                       )}
                     </div>
                   </div>
