@@ -5,6 +5,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import ScrollProgress from './components/ScrollProgress';
+import BackToTop from './components/BackToTop';
 
 const Home = lazy(() => import('./pages/Home'));
 const Watchlist = lazy(() => import('./pages/Watch'));
@@ -66,6 +67,7 @@ function App() {
           </ErrorBoundary>
 
           <Footer />
+          <BackToTop />
         </div>
       </Router>
     </ThemeProvider>
