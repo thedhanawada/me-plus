@@ -7,7 +7,7 @@ const About = () => {
       <div className="space-y-section">
         {/* Header */}
         <section>
-          <h1 className="text-4xl md:text-5xl font-bold mb-content leading-tight">
+          <h1 className="text-fluid-4xl font-bold mb-content leading-tight">
             About
           </h1>
           <p className="text-xl text-text-secondary">

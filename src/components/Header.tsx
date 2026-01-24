@@ -69,7 +69,7 @@ const Header = () => {
           {/* Name */}
           <div className={`transition-all duration-300 ${scrolled ? 'mb-4' : 'mb-8'}`}>
             <Link to="/" className="block">
-              <h1 className={`font-bold tracking-tight leading-none transition-all duration-300 ${scrolled ? 'text-2xl md:text-3xl' : 'text-4xl md:text-5xl'}`}>
+              <h1 className={`font-bold tracking-tight leading-none transition-all duration-300 ${scrolled ? 'text-fluid-2xl' : 'text-fluid-5xl'}`}>
                 N.R DHANAWADA
               </h1>
             </Link>
