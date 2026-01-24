@@ -216,3 +216,109 @@ html {
     rgb(var(--color-bg-inverted) / 0.3)
   );
 }
+
+/* ============================================
+   PRINT STYLES
+   ============================================
+   Optimized for printing portfolio/resume.
+   ============================================ */
+
+@media print {
+  /* Reset colors for print */
+  :root {
+    --color-bg-primary: 255 255 255;
+    --color-text-primary: 0 0 0;
+    --color-text-secondary: 50 50 50;
+    --color-border-primary: 200 200 200;
+  }
+
+  /* Hide non-essential elements */
+  .scroll-progress,
+  header nav,
+  footer,
+  button[aria-label="Back to top"],
+  [aria-label*="theme"],
+  [aria-label*="menu"] {
+    display: none !important;
+  }
+
+  /* Reset backgrounds and shadows */
+  * {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Ensure text is black */
+  body {
+    color: #000 !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Show URLs for links */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+    word-wrap: break-word;
+  }
+
+  /* Don't show URL for internal links */
+  a[href^="/"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  /* Ensure images print properly */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Avoid page breaks inside important elements */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  p, blockquote, ul, ol, dl, table, pre {
+    page-break-inside: avoid;
+  }
+
+  /* Keep headings with content */
+  h1, h2, h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 2cm;
+  }
+
+  /* Header styling for print */
+  header {
+    position: static !important;
+    border-bottom: 2px solid #000 !important;
+    padding-bottom: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  /* Card styling for print */
+  .card-shadow,
+  .card-interactive {
+    border: 1px solid #ccc !important;
+    padding: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Grid layout for print - single column */
+  .grid {
+    display: block !important;
+  }
+
+  .grid > * {
+    margin-bottom: 1rem !important;
+  }
+}
