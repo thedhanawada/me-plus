@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import ScrollProgress from './components/ScrollProgress';
 import BackToTop from './components/BackToTop';
+import KeyboardShortcuts from './components/KeyboardShortcuts';
 
 const Home = lazy(() => import('./pages/Home'));
 const Watchlist = lazy(() => import('./pages/Watch'));
@@ -68,6 +69,7 @@ function App() {
 
           <Footer />
           <BackToTop />
+          <KeyboardShortcuts />
         </div>
       </Router>
     </ThemeProvider>
