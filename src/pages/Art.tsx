@@ -1,10 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image as CloudinaryImage } from 'cloudinary-react';
+import { SkeletonPhotoCard } from '../components/Skeleton';
 
 interface Photo {
   id: string;
   alt: string;
 }
+
+// Skeleton loader for photo grid
+const PhotoGridSkeleton = () => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-content">
+    {Array.from({ length: 9 }).map((_, i) => (
+      <SkeletonPhotoCard key={i} />
+    ))}
+  </div>
+);
 
 const Art = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -58,27 +68,34 @@ const Art = () => {
 
         {/* Photo Grid */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-content">
-            {loading ? (
-              <div className="col-span-full text-center text-text-tertiary">Loading photos...</div>
-            ) : photos.length === 0 ? (
-              <div className="col-span-full text-center text-text-tertiary">No photos found</div>
-            ) : photos.map((photo, index) => (
-              <div key={photo.id} className="relative aspect-square overflow-hidden rounded-lg p-2 border border-border-primary bg-bg-primary shadow-lg hover:shadow-2xl transition-all duration-default">
-                <CloudinaryImage
-                  cloudName={cloudName}
-                  publicId={photo.id}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-                  loading="lazy"
-                  width="800"
-                  crop="fill"
-                  quality="auto"
-                  fetchFormat="auto"
-                />
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <PhotoGridSkeleton />
+          ) : photos.length === 0 ? (
+            <div className="text-center text-text-tertiary py-16">No photos found</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-content">
+              {photos.map((photo) => (
+                <div
+                  key={photo.id}
+                  className="group relative aspect-square overflow-hidden rounded-lg p-2 border border-border-primary bg-bg-primary card-shadow card-interactive"
+                >
+                  <div className="w-full h-full overflow-hidden rounded">
+                    <CloudinaryImage
+                      cloudName={cloudName}
+                      publicId={photo.id}
+                      alt={photo.alt}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-default"
+                      loading="lazy"
+                      width="800"
+                      crop="fill"
+                      quality="auto"
+                      fetchFormat="auto"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </main>

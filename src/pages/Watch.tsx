@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Film, Tv } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
+import { SkeletonCard } from '../components/Skeleton';
 import { WATCHLIST_MEDIA, WATCHLIST_SECTIONS } from '../data';
 import {
   fetchMediaList,
@@ -8,6 +9,22 @@ import {
   TMDB_IMAGE_BASE,
   type Media
 } from '../services';
+
+// Skeleton loader for watchlist sections
+const WatchlistSkeleton = () => (
+  <div className="space-y-12">
+    {WATCHLIST_SECTIONS.map((section) => (
+      <section key={section.key} className="border-t border-border-primary pt-content first:border-t-0 first:pt-0">
+        <div className="h-8 w-48 bg-bg-tertiary rounded animate-pulse mb-6" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+);
 
 interface MediaSection {
   title: string;
@@ -92,9 +109,7 @@ const Watchlist = () => {
         </section>
 
         {loading ? (
-          <div className="flex justify-center items-center min-h-[40vh]">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-text-primary"></div>
-          </div>
+          <WatchlistSkeleton />
         ) : (
           <div className="space-y-12">
             {sections.map((section) => (
@@ -107,9 +122,9 @@ const Watchlist = () => {
                       href={`https://www.themoviedb.org/${item.media_type}/${item.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block group focus:outline-none focus:ring-2 focus:ring-focus-ring rounded-lg"
+                      className="block group focus:outline-none focus:ring-2 focus:ring-focus-ring rounded-lg card-interactive"
                     >
-                      <div className="aspect-[2/3] relative overflow-hidden rounded-lg bg-bg-secondary">
+                      <div className="aspect-[2/3] relative overflow-hidden rounded-lg bg-bg-secondary card-shadow">
                         <img
                           src={`${TMDB_IMAGE_BASE}${item.poster_path}`}
                           alt={item.title}

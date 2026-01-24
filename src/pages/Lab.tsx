@@ -19,9 +19,12 @@ const Lab = () => {
 
         {/* Projects */}
         <section>
-          <div className="space-y-12">
+          <div className="space-y-8">
             {projects.map((project) => (
-              <div key={project.title} className="border-t border-border-primary pt-content first:border-t-0 first:pt-0">
+              <div
+                key={project.title}
+                className="p-6 rounded-lg border border-border-primary bg-bg-primary card-shadow card-interactive"
+              >
                 <div className="space-y-4">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
@@ -63,7 +66,7 @@ const Lab = () => {
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="text-sm bg-bg-secondary px-3 py-1 rounded"
+                        className="text-sm bg-bg-secondary px-3 py-1 rounded transition-colors duration-fast hover:bg-bg-tertiary"
                       >
                         {tech}
                       </span>
