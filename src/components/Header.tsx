@@ -64,45 +64,46 @@ const Header = () => {
         Skip to main content
       </a>
       <header className={`sticky top-0 z-50 bg-bg-primary transition-all duration-default ${scrolled ? 'shadow-sm' : ''}`}>
-      <div className="max-w-container mx-auto px-page-x">
-        <div className={`border-b border-border-strong transition-all duration-default ${scrolled ? 'py-4' : 'py-12'}`}>
-          {/* Name */}
-          <div className={`transition-all duration-300 ${scrolled ? 'mb-4' : 'mb-8'}`}>
-            <Link to="/" className="block">
-              <h1 className={`font-bold tracking-tight leading-none transition-all duration-300 ${scrolled ? 'text-fluid-2xl' : 'text-fluid-5xl'}`}>
-                N.R DHANAWADA
+        <div className={`px-8 md:px-12 lg:px-16 transition-all duration-default ${scrolled ? 'py-4' : 'py-10'}`}>
+          {/* Name - Full width, left aligned */}
+          <div className={`transition-all duration-300 ${scrolled ? 'mb-3' : 'mb-6'}`}>
+            <Link to="/" className="inline-block">
+              <h1 className={`font-bold tracking-tight leading-none transition-all duration-300 ${scrolled ? 'text-fluid-2xl' : 'text-fluid-4xl'}`}>
+                N.R Dhanawada
               </h1>
             </Link>
           </div>
 
-          {/* Navigation - Desktop */}
-          <nav className="hidden lg:block">
-            <div className="flex items-center space-x-8">
+          {/* Navigation - Desktop - Full width with nav left, actions right */}
+          <nav className="hidden lg:flex items-center justify-between">
+            <div className="flex items-center space-x-6">
               {NAV_ITEMS.map((item) => (
                 <HoverLink
                   key={item.name}
                   to={item.path}
                   active={location.pathname === item.path}
-                  className="px-4 py-2 text-sm"
+                  className="px-3 py-1.5 text-sm"
                 >
                   [{item.name}]
                 </HoverLink>
               ))}
-              
+            </div>
+
+            <div className="flex items-center space-x-4">
               <HoverLink
                 href="https://github.com/thedhanawada/me-plus"
                 external
-                className="px-4 py-2 text-sm ml-8 border-l border-border-secondary pl-4"
+                className="px-3 py-1.5 text-sm"
               >
-                [source code]
+                [src]
               </HoverLink>
 
               <HoverLink
                 onClick={toggleTheme}
                 ariaLabel={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-                className="px-4 py-2 text-sm border-l border-border-secondary pl-4"
+                className="px-3 py-1.5 text-sm"
               >
-                [{theme === 'light' ? 'dark' : 'light'} mode]
+                [{theme === 'light' ? '◐' : '◑'}]
               </HoverLink>
             </div>
           </nav>
@@ -157,7 +158,7 @@ const Header = () => {
                   })}
 
                   <motion.div
-                    className="pt-4 mt-4 border-t border-border-primary transition-colors duration-slow"
+                    className="pt-4 mt-4 border-t border-border-primary transition-colors duration-slow flex items-center justify-between"
                     initial={prefersReducedMotion ? {} : { opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { opacity: 1 }}
                     transition={prefersReducedMotion ? {} : { delay: 0.25 }}
@@ -168,22 +169,15 @@ const Header = () => {
                       rel="noopener noreferrer"
                       className="text-sm text-text-muted font-mono hover:text-text-secondary transition-colors duration-slow"
                     >
-                      source code
+                      [src]
                     </a>
-                  </motion.div>
 
-                  <motion.div
-                    className="pt-4 mt-4 border-t border-border-primary transition-colors duration-slow"
-                    initial={prefersReducedMotion ? {} : { opacity: 0 }}
-                    animate={prefersReducedMotion ? {} : { opacity: 1 }}
-                    transition={prefersReducedMotion ? {} : { delay: 0.3 }}
-                  >
                     <button
                       onClick={toggleTheme}
                       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
                       className="text-sm text-text-muted font-mono hover:text-text-secondary transition-colors duration-slow focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
                     >
-                      [{theme === 'light' ? 'dark' : 'light'} mode]
+                      [{theme === 'light' ? '◐' : '◑'}]
                     </button>
                   </motion.div>
                 </div>
@@ -191,8 +185,10 @@ const Header = () => {
             )}
           </AnimatePresence>
         </div>
-      </div>
-    </header>
+
+        {/* Separator line - full width */}
+        <div className="border-b border-border-primary" />
+      </header>
     </>
   );
 };
