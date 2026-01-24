@@ -4,6 +4,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import ScrollProgress from './components/ScrollProgress';
 
 const Home = lazy(() => import('./pages/Home'));
 const Watchlist = lazy(() => import('./pages/Watch'));
@@ -46,6 +47,7 @@ function App() {
     <ThemeProvider>
       <Router>
         <div className="min-h-screen bg-bg-primary text-text-primary font-mono transition-colors duration-slow">
+          <ScrollProgress />
           <TitleUpdater />
           <Header />
 
