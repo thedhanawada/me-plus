@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Image as CloudinaryImage } from 'cloudinary-react';
 import { SkeletonPhotoCard } from '../components/Skeleton';
+import EmptyState from '../components/EmptyState';
 
 interface Photo {
   id: string;
@@ -71,7 +72,7 @@ const Art = () => {
           {loading ? (
             <PhotoGridSkeleton />
           ) : photos.length === 0 ? (
-            <div className="text-center text-text-tertiary py-16">No photos found</div>
+            <EmptyState type="photos" />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-content">
               {photos.map((photo) => (

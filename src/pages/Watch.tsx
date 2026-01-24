@@ -3,6 +3,7 @@ import { Film, Tv } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
 import { SkeletonCard } from '../components/Skeleton';
 import ProgressiveImage from '../components/ProgressiveImage';
+import EmptyState from '../components/EmptyState';
 import { WATCHLIST_MEDIA, WATCHLIST_SECTIONS } from '../data';
 import {
   fetchMediaList,
@@ -111,9 +112,11 @@ const Watchlist = () => {
 
         {loading ? (
           <WatchlistSkeleton />
+        ) : sections.every(s => s.items.length === 0) ? (
+          <EmptyState type="media" />
         ) : (
           <div className="space-y-12">
-            {sections.map((section) => (
+            {sections.filter(s => s.items.length > 0).map((section) => (
               <section key={section.title} className="border-t border-border-primary pt-content first:border-t-0 first:pt-0">
                 <h2 className="text-2xl font-bold mb-6">{section.title}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
