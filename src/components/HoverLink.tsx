@@ -1,4 +1,6 @@
+import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { useExternalLink } from '../hooks';
 
 interface HoverLinkProps {
   href?: string;
@@ -23,6 +25,17 @@ const HoverLink = ({
   title,
   active = false,
 }: HoverLinkProps) => {
+  const { showModal } = useExternalLink();
+
+  // Check if this is a real external link (not mailto, tel, etc.)
+  const isExternalUrl = external && href && href.startsWith('http');
+
+  const handleExternalClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (isExternalUrl) {
+      e.preventDefault();
+      showModal(href);
+    }
+  };
   const baseClasses = active
     ? `relative font-mono transition-all duration-default text-text-inverted bg-bg-inverted focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary ${className}`
     : `relative font-mono transition-all duration-default group text-text-secondary hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary ${className}`;
@@ -57,7 +70,8 @@ const HoverLink = ({
   return (
     <a
       href={href}
-      target={external ? '_blank' : undefined}
+      onClick={isExternalUrl ? handleExternalClick : undefined}
+      target={external && !isExternalUrl ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
       className={baseClasses}
       aria-label={ariaLabel}

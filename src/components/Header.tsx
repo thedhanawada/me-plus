@@ -163,14 +163,13 @@ const Header = () => {
                     animate={prefersReducedMotion ? {} : { opacity: 1 }}
                     transition={prefersReducedMotion ? {} : { delay: 0.25 }}
                   >
-                    <a
+                    <HoverLink
                       href="https://github.com/thedhanawada/me-plus"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-text-muted font-mono hover:text-text-secondary transition-colors duration-slow"
+                      external
+                      className="text-sm text-text-muted hover:text-text-secondary px-0 py-0"
                     >
                       [src]
-                    </a>
+                    </HoverLink>
 
                     <button
                       onClick={toggleTheme}

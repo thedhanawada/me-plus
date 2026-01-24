@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Film, Tv } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
+import ExternalLink from '../components/ExternalLink';
 import { SkeletonCard } from '../components/Skeleton';
 import ProgressiveImage from '../components/ProgressiveImage';
 import EmptyState from '../components/EmptyState';
@@ -121,12 +122,11 @@ const Watchlist = () => {
                 <h2 className="text-2xl font-bold mb-6">{section.title}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {section.items.map((item) => (
-                    <a
+                    <ExternalLink
                       key={item.id}
                       href={`https://www.themoviedb.org/${item.media_type}/${item.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="block group focus:outline-none focus:ring-2 focus:ring-focus-ring rounded-lg card-interactive"
+                      ariaLabel={`View ${item.title} on TMDB`}
                     >
                       <div className="aspect-[2/3] relative overflow-hidden rounded-lg card-shadow">
                         <ProgressiveImage
@@ -147,7 +147,7 @@ const Watchlist = () => {
                           </div>
                         </div>
                       </div>
-                    </a>
+                    </ExternalLink>
                   ))}
                 </div>
               </section>
