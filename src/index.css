@@ -2,12 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Clean, minimal CSS for the simple, powerful design */
-
-/* Remove all complex animations and effects */
-/* Use system fonts for better performance and consistency */
+/* ============================================
+   DESIGN TOKENS - CSS Custom Properties
+   ============================================
+   Centralized design system for consistent theming.
+   All color, spacing, and timing values defined here.
+   ============================================ */
 
 @layer base {
+  :root {
+    /* ===================
+       COLOR TOKENS
+       =================== */
+
+    /* Background colors */
+    --color-bg-primary: 255 255 255;           /* white */
+    --color-bg-secondary: 243 244 246;         /* gray-100 */
+    --color-bg-tertiary: 229 231 235;          /* gray-200 */
+    --color-bg-inverted: 0 0 0;                /* black */
+
+    /* Text colors */
+    --color-text-primary: 17 24 39;            /* gray-900 */
+    --color-text-secondary: 75 85 99;          /* gray-600 */
+    --color-text-tertiary: 107 114 128;        /* gray-500 */
+    --color-text-muted: 156 163 175;           /* gray-400 */
+    --color-text-inverted: 255 255 255;        /* white */
+
+    /* Border colors */
+    --color-border-primary: 229 231 235;       /* gray-200 */
+    --color-border-secondary: 209 213 219;     /* gray-300 */
+    --color-border-strong: 17 24 39;           /* gray-900 */
+
+    /* Interactive states */
+    --color-hover-bg: 243 244 246;             /* gray-100 */
+    --color-focus-ring: 156 163 175;           /* gray-400 */
+
+    /* Accent (selection, loader) */
+    --color-accent: 59 130 246;                /* blue-500 */
+    --color-loader: 52 152 219;                /* custom blue */
+
+    /* ===================
+       SPACING TOKENS
+       =================== */
+    --spacing-page-x: 1.5rem;                  /* 24px - px-6 */
+    --spacing-page-y: 4rem;                    /* 64px - py-16 */
+    --spacing-section: 4rem;                   /* 64px - space-y-16 */
+    --spacing-content: 2rem;                   /* 32px - gap-8 */
+    --spacing-element: 1rem;                   /* 16px - gap-4 */
+
+    /* ===================
+       LAYOUT TOKENS
+       =================== */
+    --container-max-width: 56rem;              /* max-w-4xl (896px) */
+
+    /* ===================
+       TRANSITION TOKENS
+       =================== */
+    --transition-fast: 200ms;
+    --transition-default: 300ms;
+    --transition-slow: 500ms;
+    --transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Dark mode overrides */
+  .dark {
+    /* Background colors */
+    --color-bg-primary: 17 24 39;              /* gray-900 */
+    --color-bg-secondary: 31 41 55;            /* gray-800 */
+    --color-bg-tertiary: 55 65 81;             /* gray-700 */
+    --color-bg-inverted: 255 255 255;          /* white */
+
+    /* Text colors */
+    --color-text-primary: 243 244 246;         /* gray-100 */
+    --color-text-secondary: 209 213 219;       /* gray-300 */
+    --color-text-tertiary: 156 163 175;        /* gray-400 */
+    --color-text-muted: 107 114 128;           /* gray-500 */
+    --color-text-inverted: 17 24 39;           /* gray-900 */
+
+    /* Border colors */
+    --color-border-primary: 55 65 81;          /* gray-700 */
+    --color-border-secondary: 75 85 99;        /* gray-600 */
+    --color-border-strong: 243 244 246;        /* gray-100 */
+
+    /* Interactive states */
+    --color-hover-bg: 31 41 55;                /* gray-800 */
+    --color-focus-ring: 156 163 175;           /* gray-400 */
+  }
+
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
