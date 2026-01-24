@@ -129,3 +129,89 @@ html {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* ============================================
+   SKELETON LOADING ANIMATIONS
+   ============================================ */
+
+/* Shimmer effect for skeleton screens */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--color-bg-tertiary)) 0%,
+    rgb(var(--color-bg-secondary)) 50%,
+    rgb(var(--color-bg-tertiary)) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ============================================
+   ENHANCED CARD INTERACTIONS
+   ============================================ */
+
+/* Card with lift effect on hover */
+.card-interactive {
+  transition: transform var(--transition-default) var(--transition-easing),
+              box-shadow var(--transition-default) var(--transition-easing);
+}
+
+.card-interactive:hover {
+  transform: translateY(-4px);
+}
+
+/* Card shadow levels */
+.card-shadow {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  transition: box-shadow var(--transition-default) var(--transition-easing);
+}
+
+.card-shadow:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.dark .card-shadow {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+}
+
+.dark .card-shadow:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+}
+
+/* ============================================
+   SCROLL PROGRESS INDICATOR
+   ============================================ */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: rgb(var(--color-bg-inverted));
+  transform-origin: left;
+  z-index: 100;
+  transition: opacity var(--transition-fast) var(--transition-easing);
+}
+
+.scroll-progress::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 100px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--color-bg-inverted) / 0.3)
+  );
+}
