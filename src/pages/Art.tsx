@@ -35,7 +35,7 @@ const Art = () => {
 
   if (!cloudName) {
     return (
-      <main id="main-content" className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
+      <main id="main-content" className="max-w-container mx-auto px-page-x py-page-y transition-colors duration-slow">
         <div className="text-red-600 dark:text-red-400 text-center">
           <p>Configuration error: Cloudinary cloud name is not configured.</p>
         </div>
@@ -44,27 +44,27 @@ const Art = () => {
   }
 
   return (
-    <main id="main-content" className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
-      <div className="space-y-16">
+    <main id="main-content" className="max-w-container mx-auto px-page-x py-page-y transition-colors duration-slow">
+      <div className="space-y-section">
         {/* Header */}
         <section>
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight dark:text-gray-100">
+          <h1 className="text-4xl md:text-5xl font-bold mb-content leading-tight">
             Photography
           </h1>
-          <div className="text-xl text-gray-600 dark:text-gray-300">
+          <div className="text-xl text-text-secondary">
             <p>A collection of moments.</p>
           </div>
         </section>
 
         {/* Photo Grid */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-content">
             {loading ? (
-              <div className="col-span-full text-center text-gray-500 dark:text-gray-400">Loading photos...</div>
+              <div className="col-span-full text-center text-text-tertiary">Loading photos...</div>
             ) : photos.length === 0 ? (
-              <div className="col-span-full text-center text-gray-500 dark:text-gray-400">No photos found</div>
+              <div className="col-span-full text-center text-text-tertiary">No photos found</div>
             ) : photos.map((photo, index) => (
-              <div key={photo.id} className="relative aspect-square overflow-hidden rounded-lg p-2 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg dark:shadow-xl hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-300">
+              <div key={photo.id} className="relative aspect-square overflow-hidden rounded-lg p-2 border border-border-primary bg-bg-primary shadow-lg hover:shadow-2xl transition-all duration-default">
                 <CloudinaryImage
                   cloudName={cloudName}
                   publicId={photo.id}

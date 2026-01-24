@@ -8,15 +8,15 @@ const sectionVariants = {
 
 const Home = () => {
   return (
-    <main id="main-content" className="max-w-4xl mx-auto px-6 py-16">
-      <div className="space-y-16">
+    <main id="main-content" className="max-w-container mx-auto px-page-x py-page-y">
+      <div className="space-y-section">
         {/* Hero Section */}
         <motion.section
           variants={sectionVariants}
           initial="hidden"
           animate="visible"
         >
-          <div className="text-xl md:text-2xl text-gray-600 space-y-6 leading-relaxed dark:text-gray-400">
+          <div className="text-xl md:text-2xl text-text-secondary space-y-6 leading-relaxed">
             <p>I design and build platforms that help organizations serve people better.</p>
             <p>Architecture. Integration. Scale. Purpose.</p>
           </div>
@@ -28,14 +28,14 @@ const Home = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="border-t border-gray-200 pt-16 dark:border-gray-700"
+          className="border-t border-border-primary pt-section"
         >
-          <h2 className="text-2xl font-bold mb-8">What I Do</h2>
-          <div className="grid gap-8 md:grid-cols-2">
+          <h2 className="text-2xl font-bold mb-content">What I Do</h2>
+          <div className="grid gap-content md:grid-cols-2">
             {whatIDo.map((item) => (
               <div key={item.title}>
                 <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed dark:text-gray-400">{item.description}</p>
+                <p className="text-text-secondary leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
@@ -47,14 +47,14 @@ const Home = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="border-t border-gray-200 pt-16 dark:border-gray-700"
+          className="border-t border-border-primary pt-section"
         >
-          <h2 className="text-2xl font-bold mb-8">Philosophy</h2>
-          <div className="grid gap-8 md:grid-cols-2">
+          <h2 className="text-2xl font-bold mb-content">Philosophy</h2>
+          <div className="grid gap-content md:grid-cols-2">
             {philosophy.map((item) => (
               <div key={item.title}>
                 <h3 className="text-lg font-semibold mb-4">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed dark:text-gray-400">
+                <p className="text-text-secondary leading-relaxed">
                   {item.description}
                 </p>
               </div>

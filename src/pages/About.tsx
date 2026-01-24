@@ -3,36 +3,36 @@ import { education } from '../data';
 
 const About = () => {
   return (
-    <main id="main-content" className="max-w-4xl mx-auto px-6 py-16 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-500">
-      <div className="space-y-16">
+    <main id="main-content" className="max-w-container mx-auto px-page-x py-page-y transition-colors duration-slow">
+      <div className="space-y-section">
         {/* Header */}
         <section>
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight dark:text-gray-100">
+          <h1 className="text-4xl md:text-5xl font-bold mb-content leading-tight">
             About
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
+          <p className="text-xl text-text-secondary">
             Background and education.
           </p>
         </section>
 
         {/* Education */}
-        <section className="border-t border-gray-200 pt-16 dark:border-gray-700">
-          <h2 className="text-2xl font-bold mb-8 dark:text-gray-100">Education</h2>
-          <div className="space-y-8">
+        <section className="border-t border-border-primary pt-section">
+          <h2 className="text-2xl font-bold mb-content">Education</h2>
+          <div className="space-y-content">
             {education.map((edu) => (
               <div key={edu.university} className="space-y-4">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div>
-                    <h3 className="text-xl font-semibold dark:text-gray-100">{edu.university}</h3>
-                    <p className="text-gray-600 dark:text-gray-300">{edu.degree} - {edu.program}</p>
+                    <h3 className="text-xl font-semibold">{edu.university}</h3>
+                    <p className="text-text-secondary">{edu.degree} - {edu.program}</p>
                   </div>
-                  <div className="text-sm text-gray-500 space-y-1 md:text-right dark:text-gray-400">
+                  <div className="text-sm text-text-tertiary space-y-1 md:text-right">
                     <div className="flex items-center gap-1 md:justify-end">
-                      <MapPin size={14} className="dark:text-gray-500" />
+                      <MapPin size={14} className="text-text-muted" />
                       {edu.location}
                     </div>
                     <div className="flex items-center gap-1 md:justify-end">
-                      <Calendar size={14} className="dark:text-gray-500" />
+                      <Calendar size={14} className="text-text-muted" />
                       {edu.period}
                     </div>
                   </div>
@@ -40,11 +40,11 @@ const About = () => {
 
                 {edu.achievements && (
                   <div>
-                    <h4 className="font-semibold mb-2 dark:text-gray-100">Achievements</h4>
-                    <ul className="space-y-1 text-gray-600 dark:text-gray-300">
+                    <h4 className="font-semibold mb-2">Achievements</h4>
+                    <ul className="space-y-1 text-text-secondary">
                       {edu.achievements.map((achievement, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <Award size={16} className="text-gray-400 mt-0.5 flex-shrink-0 dark:text-gray-500" />
+                          <Award size={16} className="text-text-muted mt-0.5 flex-shrink-0" />
                           {achievement}
                         </li>
                       ))}
@@ -53,10 +53,10 @@ const About = () => {
                 )}
 
                 <div>
-                  <h4 className="font-semibold mb-2 dark:text-gray-100">Key Courses</h4>
+                  <h4 className="font-semibold mb-2">Key Courses</h4>
                   <div className="flex flex-wrap gap-2">
                     {edu.courses.map((course) => (
-                      <span key={course} className="text-sm bg-gray-100 px-3 py-1 rounded dark:bg-gray-700 dark:text-gray-200">
+                      <span key={course} className="text-sm bg-bg-secondary px-3 py-1 rounded">
                         {course}
                       </span>
                     ))}
