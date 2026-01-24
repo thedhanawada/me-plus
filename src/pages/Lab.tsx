@@ -1,5 +1,6 @@
 import { ExternalLink, Github, Package, Palette } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
+import { StaggeredList } from '../components/StaggeredList';
 import { projects } from '../data';
 
 const Lab = () => {
@@ -19,7 +20,7 @@ const Lab = () => {
 
         {/* Projects */}
         <section>
-          <div className="space-y-8">
+          <StaggeredList className="space-y-8" staggerDelay={0.15}>
             {projects.map((project) => (
               <div
                 key={project.title}
@@ -79,7 +80,7 @@ const Lab = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </StaggeredList>
         </section>
       </div>
     </main>

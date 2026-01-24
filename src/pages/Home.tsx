@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { whatIDo, philosophy } from '../data';
+import { StaggeredGrid } from '../components/StaggeredList';
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -31,14 +32,14 @@ const Home = () => {
           className="border-t border-border-primary pt-section"
         >
           <h2 className="text-2xl font-bold mb-content">What I Do</h2>
-          <div className="grid gap-content md:grid-cols-2">
+          <StaggeredGrid className="grid gap-content md:grid-cols-2" staggerDelay={0.1}>
             {whatIDo.map((item) => (
               <div key={item.title}>
                 <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
                 <p className="text-text-secondary leading-relaxed">{item.description}</p>
               </div>
             ))}
-          </div>
+          </StaggeredGrid>
         </motion.section>
 
         {/* Philosophy Section */}
@@ -50,7 +51,7 @@ const Home = () => {
           className="border-t border-border-primary pt-section"
         >
           <h2 className="text-2xl font-bold mb-content">Philosophy</h2>
-          <div className="grid gap-content md:grid-cols-2">
+          <StaggeredGrid className="grid gap-content md:grid-cols-2" staggerDelay={0.1}>
             {philosophy.map((item) => (
               <div key={item.title}>
                 <h3 className="text-lg font-semibold mb-4">{item.title}</h3>
@@ -59,7 +60,7 @@ const Home = () => {
                 </p>
               </div>
             ))}
-          </div>
+          </StaggeredGrid>
         </motion.section>
       </div>
     </main>
