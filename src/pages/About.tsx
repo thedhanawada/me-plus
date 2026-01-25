@@ -10,8 +10,8 @@ const About = () => {
           <h1 className="text-fluid-4xl font-bold mb-content leading-tight">
             About
           </h1>
-          <p className="text-xl text-text-secondary">
-            Background and education.
+          <p className="text-lg text-text-secondary leading-relaxed">
+            I work at MTC Australia, a non-profit that helps people get jobs and build skills. I build the internal systems - the stuff staff use to do their work. Databases, integrations, forms, reports. I like open source. Most of what I know came from other people sharing their code, so I try to do the same. I'm not solving hard problems or building anything new. Just trying to make things work a bit better than they did yesterday.
           </p>
         </section>
 
