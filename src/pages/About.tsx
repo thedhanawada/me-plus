@@ -1,5 +1,6 @@
 import { MapPin, Calendar, Award } from 'lucide-react';
 import { education } from '../data';
+import JourneyMap from '../components/JourneyMap';
 
 const About = () => {
   return (
@@ -13,6 +14,11 @@ const About = () => {
           <p className="text-lg text-text-secondary leading-relaxed">
             I work at a non-profit that helps people get jobs and build skills. I build the internal systems - the stuff staff use to do their work. Databases, integrations, forms, reports. I like open source. Most of what I know came from other people sharing their code, so I try to do the same. I'm not solving hard problems or building anything new. Just trying to make things work a bit better than they did yesterday.
           </p>
+        </section>
+
+        {/* Journey */}
+        <section className="border-t border-border-primary pt-section">
+          <JourneyMap />
         </section>
 
         {/* Education */}
