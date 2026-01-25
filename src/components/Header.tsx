@@ -69,7 +69,7 @@ const Header = () => {
           <div className={`transition-all duration-300 ${scrolled ? 'mb-3' : 'mb-6'}`}>
             <Link to="/" className="inline-block">
               <h1 className={`font-bold tracking-tight leading-none transition-all duration-300 ${scrolled ? 'text-fluid-2xl' : 'text-fluid-4xl'}`}>
-                N.R Dhanawada
+                N.R. Dhanawada
               </h1>
             </Link>
           </div>
