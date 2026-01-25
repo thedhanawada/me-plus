@@ -1,48 +1,50 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Image as CloudinaryImage } from 'cloudinary-react';
-import { SkeletonPhotoCard } from '../components/Skeleton';
-import EmptyState from '../components/EmptyState';
+import { photos, type Photo } from '../data';
+import Skeleton from '../components/Skeleton';
 
-interface Photo {
-  id: string;
-  alt: string;
-}
+const PhotoSkeleton = ({ photo }: { photo: Photo }) => {
+  const aspectRatio = photo.width / photo.height;
+  return (
+    <div
+      className="w-full max-w-4xl mx-auto"
+      style={{ aspectRatio: aspectRatio }}
+    >
+      <Skeleton className="w-full h-full" />
+    </div>
+  );
+};
 
-// Skeleton loader for photo grid
-const PhotoGridSkeleton = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-content">
-    {Array.from({ length: 9 }).map((_, i) => (
-      <SkeletonPhotoCard key={i} />
-    ))}
-  </div>
-);
+const PhotoItem = ({ photo }: { photo: Photo }) => {
+  const [loaded, setLoaded] = useState(false);
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const aspectRatio = photo.width / photo.height;
+
+  return (
+    <div className="w-full max-w-4xl mx-auto">
+      {!loaded && <PhotoSkeleton photo={photo} />}
+      <div
+        className={`transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0 absolute'}`}
+        style={{ aspectRatio: aspectRatio }}
+      >
+        <CloudinaryImage
+          cloudName={cloudName}
+          publicId={photo.id}
+          alt=""
+          className="w-full h-full object-contain"
+          loading="lazy"
+          width="1200"
+          quality="auto"
+          fetchFormat="auto"
+          onLoad={() => setLoaded(true)}
+        />
+      </div>
+    </div>
+  );
+};
 
 const Art = () => {
-  const [photos, setPhotos] = useState<Photo[]>([]);
-  const [loading, setLoading] = useState(true);
-
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-
-  useEffect(() => {
-    // For now, let's use a static list of photos
-    // In a production environment, you would typically have a backend API
-    // that would securely fetch this list from Cloudinary
-    const photoList = [
-      { id: '22', alt: 'Photography by N.R Dhanawada' },
-      { id: '472007649_1653285385584310_7880930838952272566_n_18050182676011288_qh9ysx', alt: 'Photography by N.R Dhanawada' },
-      { id: '471870504_470471162449468_1301845703334164529_n_18057795115760805_qk7ij7', alt: 'Photography by N.R Dhanawada' },
-      { id: '472028752_677524267977881_7782810903216877222_n_18052829000068831_kzj7dl', alt: 'Photography by N.R Dhanawada' },
-      { id: '471961629_1305187030687139_5087451783665427063_n_17962354376837477_pr1g66', alt: 'Photography by N.R Dhanawada' },
-      { id: '471848228_634245685604604_5320794688258876057_n_17913369978050780_wjnueu', alt: 'Photography by N.R Dhanawada' },
-      { id: '471507008_962068528601656_6075539269720940501_n_18052370966481944_kbj6gd', alt: 'Photography by N.R Dhanawada' },
-      { id: '471703857_2377874515912198_12434465591510404_n_17994608639727968_jahs5j', alt: 'Photography by N.R Dhanawada' },
-      { id: '471553046_1104895781177670_5300287396742135585_n_18066609328796010_d32nyy', alt: 'Photography by N.R Dhanawada' },
-      { id: '470305537_18053173805494713_1713032142419250645_n_17845625373372790_akqc6s', alt: 'Photography by N.R Dhanawada' },
-    ];
-
-    setPhotos(photoList);
-    setLoading(false);
-  }, []);
 
   if (!cloudName) {
     return (
@@ -57,46 +59,16 @@ const Art = () => {
   return (
     <main id="main-content" className="max-w-container mx-auto px-page-x py-page-y transition-colors duration-slow">
       <div className="space-y-section">
-        {/* Header */}
         <section>
           <h1 className="text-fluid-4xl font-bold mb-content leading-tight">
-            Photography
+            Photos
           </h1>
-          <div className="text-xl text-text-secondary">
-            <p>A collection of moments.</p>
-          </div>
         </section>
 
-        {/* Photo Grid */}
-        <section>
-          {loading ? (
-            <PhotoGridSkeleton />
-          ) : photos.length === 0 ? (
-            <EmptyState type="photos" />
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-content">
-              {photos.map((photo) => (
-                <div
-                  key={photo.id}
-                  className="group relative aspect-square overflow-hidden rounded-lg p-2 border border-border-primary bg-bg-primary card-shadow card-interactive"
-                >
-                  <div className="w-full h-full overflow-hidden rounded">
-                    <CloudinaryImage
-                      cloudName={cloudName}
-                      publicId={photo.id}
-                      alt={photo.alt}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-default"
-                      loading="lazy"
-                      width="800"
-                      crop="fill"
-                      quality="auto"
-                      fetchFormat="auto"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+        <section className="space-y-16">
+          {photos.map((photo) => (
+            <PhotoItem key={photo.id} photo={photo} />
+          ))}
         </section>
       </div>
     </main>
