@@ -38,7 +38,7 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 198277, type: 'movie', category: 'favorite' },// Begin Again
   { id: 438631, type: 'movie', category: 'favorite' },// Dune
   { id: 693134, type: 'movie', category: 'favorite' },// Dune: Part Two
-  { id: 1233069, type: 'movie', category: 'favorite' },// Sinners
+  { id: 1233413, type: 'movie', category: 'favorite' },// Sinners
 ];
 
 export const WATCHLIST_SECTIONS = [
