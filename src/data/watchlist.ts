@@ -3,6 +3,8 @@ import type { MediaEntry } from '../services/tmdb';
 export const WATCHLIST_MEDIA: MediaEntry[] = [
   // Currently Watching
   { id: 61859, type: 'tv', category: 'current' },   // The Night Manager
+  { id: 71712, type: 'tv', category: 'current' },   // The Good Doctor
+  { id: 249522, type: 'tv', category: 'current' },  // The Pitt
 
   // Waiting for Next Season
   { id: 125988, type: 'tv', category: 'waiting' },  // Silo
