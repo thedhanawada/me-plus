@@ -25,12 +25,12 @@ const PageLoader = () => (
   </div>
 );
 
-type ValidRoutes = '/' | '/watchlist' | '/lab' | '/work' | '/art' | '/about';
+type ValidRoutes = '/' | '/tv' | '/lab' | '/work' | '/art' | '/about';
 
 const PAGE_TITLES: Record<ValidRoutes, string> = {
   '/': 'N.R Dhanawada',
   '/about': 'N.R Dhanawada - About',
-  '/watchlist': 'N.R Dhanawada - Watchlist',
+  '/tv': 'N.R Dhanawada - TV',
   '/lab': 'N.R Dhanawada - Lab',
   '/work': 'N.R Dhanawada - Work',
   '/art': 'N.R Dhanawada - Photography'
@@ -62,7 +62,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/watchlist" element={<Watchlist />} />
+                  <Route path="/tv" element={<Watchlist />} />
                   <Route path="/lab" element={<Lab />} />
                   <Route path="/work" element={<Work />} />
                   <Route path="/art" element={<Art />} />

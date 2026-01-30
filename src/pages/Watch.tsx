@@ -98,7 +98,7 @@ const Watchlist = () => {
         {/* Header */}
         <section>
           <h1 className="text-fluid-4xl font-bold mb-content leading-tight">
-            Watchlist
+            TV
           </h1>
           <div className="space-y-4 text-xl text-text-secondary">
             <p>Not everything I watch — just the ones that stuck.</p>

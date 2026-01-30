@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { name: 'work', path: '/work' },
   { name: 'lab', path: '/lab' },
   { name: 'art', path: '/art' },
-  { name: 'watch', path: '/watchlist' },
+  { name: 'tv', path: '/tv' },
 ] as const;
 
 const Header = () => {
