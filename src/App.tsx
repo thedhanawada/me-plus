@@ -6,7 +6,6 @@ import { ExternalLinkProvider } from './context/ExternalLinkContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import ScrollProgress from './components/ScrollProgress';
 import BackToTop from './components/BackToTop';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 import ExternalLinkModal from './components/ExternalLinkModal';
@@ -53,7 +52,6 @@ function App() {
       <ExternalLinkProvider>
         <Router>
           <div className="min-h-screen bg-bg-primary text-text-primary font-mono transition-colors duration-slow">
-            <ScrollProgress />
             <TitleUpdater />
             <Header />
 

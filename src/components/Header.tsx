@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import HoverLink from './HoverLink';
+import ScrollProgress from './ScrollProgress';
 import { useTheme } from '../hooks';
 
 const NAV_ITEMS = [
@@ -185,8 +186,10 @@ const Header = () => {
           </AnimatePresence>
         </div>
 
-        {/* Separator line - full width */}
-        <div className="border-b border-border-primary" />
+        {/* Scroll progress bar as separator */}
+        <div className="relative h-[1px] bg-border-primary">
+          <ScrollProgress />
+        </div>
       </header>
     </>
   );
