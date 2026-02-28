@@ -5,6 +5,7 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 61859, type: 'tv', category: 'current' },   // The Night Manager
   { id: 71712, type: 'tv', category: 'current' },   // The Good Doctor
   { id: 250307, type: 'tv', category: 'current' },  // The Pitt
+  { id: 197067, type: 'tv', category: 'current' },  // Extraordinary Attorney Woo
 
   // Waiting for Next Season
   { id: 125988, type: 'tv', category: 'waiting' },  // Silo
@@ -20,6 +21,7 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 1668, type: 'tv', category: 'rewatch' },    // Friends
   { id: 62320, type: 'tv', category: 'rewatch' },   // Grace and Frankie
   { id: 1424, type: 'tv', category: 'rewatch' },    // Orange Is the New Black
+  { id: 64010, type: 'tv', category: 'rewatch' },    // Reply 1988
 
   // All-time Favorites
   { id: 120, type: 'movie', category: 'favorite' },   // LOTR: Fellowship
