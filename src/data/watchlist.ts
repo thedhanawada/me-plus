@@ -19,6 +19,7 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 2691, type: 'tv', category: 'rewatch' },    // Two and a Half Men
   { id: 1668, type: 'tv', category: 'rewatch' },    // Friends
   { id: 62320, type: 'tv', category: 'rewatch' },   // Grace and Frankie
+  { id: 1424, type: 'tv', category: 'rewatch' },    // Orange Is the New Black
 
   // All-time Favorites
   { id: 120, type: 'movie', category: 'favorite' },   // LOTR: Fellowship
