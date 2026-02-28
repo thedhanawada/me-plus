@@ -1,6 +1,5 @@
 export interface ExperienceHighlight {
   title: string;
-  iconName: 'users' | 'database' | 'globe' | 'shield' | 'zap' | 'fileText' | 'code' | 'cloud' | 'layout' | 'building' | 'server';
   description: string;
 }
 
@@ -32,57 +31,48 @@ export const experiences: Experience[] = [
     award: 'MTC Applause Award (2022)',
     highlights: [
       {
-        title: 'Stakeholder Engagement & Solution Architecture',
-        iconName: 'users',
-        description: 'Engage regularly with diverse stakeholders to gather business needs. Specialize in architecting Salesforce solutions, customizing with Apex, Lightning, and Visualforce. Implemented integration with AskNicely and FormAssembly.'
+        title: 'Salesforce Solutions & Stakeholder Work',
+        description: 'Talk to stakeholders, figure out what they actually need, then build it in Salesforce — Apex, Lightning, Visualforce. Integrated AskNicely and FormAssembly into the platform.'
       },
       {
-        title: 'Data Management & Integration',
-        iconName: 'database',
-        description: 'Conduct ETL operations using Talend, extract data from private subscriptions via MS SQL Server, and load it into Salesforce for enhanced analytics and decision-making processes.'
+        title: 'Data Pipeline & ETL',
+        description: 'ETL with Talend. Pull data from private subscriptions via MS SQL Server, load it into Salesforce for reporting and analytics.'
       },
       {
-        title: 'Web Development & Management',
-        iconName: 'globe',
-        description: 'Lead technical aspect of publishing data from Salesforce to WordPress using custom plugins, and perform site-wide CSS and JS updates to improve uniformity and user experience.'
+        title: 'WordPress & Web Publishing',
+        description: 'Built custom plugins to publish Salesforce data to WordPress. Handle site-wide CSS and JS updates to keep things consistent.'
       },
       {
-        title: 'Web Accessibility & Compliance',
-        iconName: 'shield',
-        description: 'Collaborate with marketing team using Monsido to ensure web accessibility. Worked on technical aspects of Marketo integration with Salesforce.'
+        title: 'Accessibility & Compliance',
+        description: 'Work with the marketing team using Monsido to keep the site accessible. Also handled the technical side of wiring Marketo into Salesforce.'
       },
       {
-        title: 'Process Automation',
-        iconName: 'zap',
-        description: 'Drive automation of business and system processes using Salesforce and Power Automate, resulting in significant operational efficiency improvements.'
+        title: 'Automation',
+        description: 'Automated a bunch of manual business processes using Salesforce and Power Automate. Less busywork, fewer errors.'
       }
     ]
   },
   {
-    title: 'University Research Placement Student',
+    title: 'Research Placement Student',
     company: 'Walter and Eliza Hall Institute of Medical Research',
     location: 'Melbourne, AU',
     period: '2021.07 - 2021.10',
     highlights: [
       {
-        title: 'Requirements Assessment',
-        iconName: 'fileText',
-        description: 'Determined requirements for Blood Cells and Blood Cancer Division at WEHI and Centre for Stem Cell Systems at University of Melbourne.'
+        title: 'Requirements & Scoping',
+        description: 'Worked with the Blood Cells and Blood Cancer Division at WEHI and the Centre for Stem Cell Systems at University of Melbourne to figure out what they needed.'
       },
       {
-        title: 'Implementation & Documentation',
-        iconName: 'code',
-        description: 'Executed implementation to expand application functionality and provided detailed technical documentation for researchers.'
+        title: 'Building & Documenting',
+        description: 'Extended the existing application and wrote proper technical documentation so researchers could actually use it.'
       },
       {
-        title: 'Client Collaboration',
-        iconName: 'users',
-        description: 'Engaged in constructive discussions with clients to suggest improvements, leading to application expansion.'
+        title: 'Client Work',
+        description: 'Sat down with researchers, talked through what was working and what wasn\'t, then suggested and built improvements.'
       },
       {
-        title: 'Publication',
-        iconName: 'cloud',
-        description: 'Published new implementation on NECTAR Research Cloud for researcher accessibility.'
+        title: 'Deployment',
+        description: 'Published the updated application on NECTAR Research Cloud so it was accessible to the research team.'
       }
     ]
   },
@@ -90,23 +80,20 @@ export const experiences: Experience[] = [
     title: 'Senior Technology Analyst',
     company: "Victoria's Secret & Co.",
     location: 'Bangalore, IN',
-    period: '2016.10 - 2020.2',
+    period: '2016.10 - 2020.02',
     award: 'Individual Achievement Award',
     highlights: [
       {
-        title: 'Accelerator Program',
-        iconName: 'zap',
-        description: 'Implemented internal corporate accelerator program, working with 150+ startups. Led collaboration with 12 startups in developing use case prototypes.'
+        title: 'Corporate Accelerator',
+        description: 'Ran an internal accelerator program. Worked with 150+ startups, led 12 of them through building use case prototypes.'
       },
       {
         title: 'Technology Integration',
-        iconName: 'layout',
-        description: 'Managed technology integration within organization, partnering with diverse stakeholders for successful implementation.'
+        description: 'Managed how new tech got adopted inside the org. Lots of stakeholder coordination to make rollouts actually stick.'
       },
       {
-        title: 'Innovation Framework',
-        iconName: 'building',
-        description: 'Developed framework for internal innovation, collaborating with 200+ associates from 10 business verticals on USD 650k project.'
+        title: 'Innovation Program',
+        description: 'Built a framework for internal innovation — 200+ associates across 10 business verticals, USD 650k budget.'
       }
     ]
   },
@@ -114,23 +101,20 @@ export const experiences: Experience[] = [
     title: 'Assistant System Engineer',
     company: 'Tata Consultancy Services',
     location: 'Chennai, IN',
-    period: '2015.6 - 2016.10',
+    period: '2015.06 - 2016.10',
     award: 'Star of the Learners Group',
     highlights: [
       {
-        title: 'Technology Research',
-        iconName: 'fileText',
-        description: 'Researched emerging solutions and startup opportunities in retail technologies to maintain industry leadership.'
+        title: 'Research',
+        description: 'Tracked emerging tech and startup activity in the retail space. Kept the team current on what was worth paying attention to.'
       },
       {
-        title: 'Technology Implementation',
-        iconName: 'code',
-        description: 'Applied new technologies to create disruptive competitive advantages for retail enterprises.'
+        title: 'Implementation',
+        description: 'Took new technologies from research to working prototypes for retail clients.'
       },
       {
-        title: 'Technology Maintenance',
-        iconName: 'server',
-        description: 'Maintained network code, managed enterprise sandboxes, and coordinated innovation space activities.'
+        title: 'Operations',
+        description: 'Maintained network code, managed enterprise sandboxes, and kept the innovation lab running.'
       }
     ]
   }

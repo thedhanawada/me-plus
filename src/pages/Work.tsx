@@ -1,34 +1,76 @@
-import {
-  MapPin,
-  Calendar,
-  Building2,
-  BookOpen,
-  Users,
-  Database,
-  Globe,
-  Shield,
-  Zap,
-  FileText,
-  Code,
-  Cloud,
-  Layout,
-  Server
-} from 'lucide-react';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { MapPin, Calendar, BookOpen, ChevronDown, Award } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
-import { experiences, publications, type ExperienceHighlight } from '../data';
+import { StaggeredList } from '../components/StaggeredList';
+import { experiences, publications } from '../data';
 
-const iconMap: Record<ExperienceHighlight['iconName'], React.ReactNode> = {
-  users: <Users className="w-5 h-5 text-text-tertiary" />,
-  database: <Database className="w-5 h-5 text-text-tertiary" />,
-  globe: <Globe className="w-5 h-5 text-text-tertiary" />,
-  shield: <Shield className="w-5 h-5 text-text-tertiary" />,
-  zap: <Zap className="w-5 h-5 text-text-tertiary" />,
-  fileText: <FileText className="w-5 h-5 text-text-tertiary" />,
-  code: <Code className="w-5 h-5 text-text-tertiary" />,
-  cloud: <Cloud className="w-5 h-5 text-text-tertiary" />,
-  layout: <Layout className="w-5 h-5 text-text-tertiary" />,
-  building: <Building2 className="w-5 h-5 text-text-tertiary" />,
-  server: <Server className="w-5 h-5 text-text-tertiary" />
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
+
+const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: number }) => {
+  const [expanded, setExpanded] = useState(index === 0);
+
+  return (
+    <div className="border border-border-primary rounded-lg overflow-hidden bg-bg-primary card-shadow">
+      {/* Card header — always visible */}
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full text-left p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 hover:bg-bg-secondary transition-colors duration-fast focus:outline-none focus-ring"
+        aria-expanded={expanded}
+      >
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 text-xs text-text-muted mb-1 font-mono">
+            <Calendar size={12} />
+            <span>{exp.period}</span>
+            <span className="text-text-muted">·</span>
+            <MapPin size={12} />
+            <span>{exp.location}</span>
+          </div>
+          <h3 className="text-lg font-semibold">{exp.title}</h3>
+          <p className="text-text-secondary text-sm">{exp.company}</p>
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0">
+          {exp.award && (
+            <span className="text-xs text-text-tertiary flex items-center gap-1">
+              <Award size={12} />
+              {exp.award}
+            </span>
+          )}
+          <ChevronDown
+            size={16}
+            className={`text-text-muted transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+          />
+        </div>
+      </button>
+
+      {/* Expandable details */}
+      <motion.div
+        initial={index === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
+        animate={expanded ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        className="overflow-hidden"
+      >
+        <div className="px-6 pb-6 space-y-3 border-t border-border-primary pt-4">
+          {exp.highlights.map((highlight) => (
+            <div key={highlight.title} className="flex gap-3">
+              <span className="text-text-muted select-none mt-0.5 text-sm">→</span>
+              <div>
+                <span className="font-medium text-text-primary">{highlight.title}</span>
+                <span className="text-text-muted mx-1.5">—</span>
+                <span className="text-text-secondary text-sm leading-relaxed">
+                  {highlight.description}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
 };
 
 const Work = () => {
@@ -36,97 +78,75 @@ const Work = () => {
     <main id="main-content" className="max-w-container mx-auto px-page-x py-page-y transition-colors duration-slow">
       <div className="space-y-section">
         {/* Header */}
-        <section>
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <h1 className="text-fluid-4xl font-bold mb-content leading-tight">
             Work
           </h1>
           <p className="text-xl text-text-secondary">
-            Building systems that solve real problems.
+            What I've been building and where.
           </p>
-        </section>
+        </motion.section>
 
         {/* Experience */}
-        <section className="border-t border-border-primary pt-section">
-          <h2 className="text-2xl font-bold mb-content">Experience</h2>
-          <div className="space-y-content">
-            {experiences.map((exp) => (
-              <div key={exp.title} className="space-y-4">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <h3 className="text-xl font-semibold">{exp.title}</h3>
-                    <p className="text-text-secondary flex items-center gap-1">
-                      <Building2 size={16} className="text-text-tertiary" />
-                      {exp.company}
-                    </p>
-                  </div>
-                  <div className="text-sm text-text-tertiary space-y-1 md:text-right">
-                    <div className="flex items-center gap-1 md:justify-end">
-                      <MapPin size={14} className="text-text-muted" />
-                      {exp.location}
-                    </div>
-                    <div className="flex items-center gap-1 md:justify-end">
-                      <Calendar size={14} className="text-text-muted" />
-                      {exp.period}
-                    </div>
-                  </div>
-                </div>
-
-                {exp.award && (
-                  <p className="text-sm text-text-secondary font-medium">
-                    🏆 {exp.award}
-                  </p>
-                )}
-
-                <div className="space-y-3">
-                  {exp.highlights.map((highlight) => (
-                    <div key={highlight.title} className="border-l-2 border-border-primary pl-4">
-                      <h4 className="font-semibold text-text-primary">{highlight.title}</h4>
-                      <p className="text-text-secondary text-sm leading-relaxed">
-                        {highlight.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="border-t border-border-primary pt-section"
+        >
+          <StaggeredList className="space-y-4" staggerDelay={0.12}>
+            {experiences.map((exp, index) => (
+              <ExperienceCard key={`${exp.title}-${exp.company}`} exp={exp} index={index} />
             ))}
-          </div>
-        </section>
+          </StaggeredList>
+        </motion.section>
 
         {/* Publications */}
-        <section className="border-t border-border-primary pt-section">
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="border-t border-border-primary pt-section"
+        >
           <h2 className="text-2xl font-bold mb-content">Publications</h2>
           <div className="space-y-6">
             {publications.map((pub) => (
               <div key={pub.title} className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <BookOpen className="w-6 h-6 text-text-muted mt-1" />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-text-primary mb-2">
+                  <BookOpen className="w-5 h-5 text-text-muted mt-1 shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <h3 className="text-lg font-semibold text-text-primary">
                       {pub.title}
                     </h3>
 
-                    <div className="space-y-2 text-sm text-text-secondary">
-                      <div className="flex flex-wrap gap-4">
+                    <div className="text-sm text-text-secondary space-y-1">
+                      <div className="flex flex-wrap gap-3 text-text-tertiary">
                         <span className="flex items-center gap-1">
-                          <Calendar size={14} className="text-text-muted" />
+                          <Calendar size={12} />
                           {pub.date}
                         </span>
                         <span>Article {pub.articleNo}</span>
                         <span>Pages {pub.pages}</span>
                       </div>
 
-                      <div>
-                        <strong>Authors:</strong> <span>{pub.authors.join(', ')}</span>
-                      </div>
-
-                      <div>
-                        <strong>Conference:</strong> <span>{pub.conference}</span>
-                      </div>
+                      <p>{pub.authors.join(', ')}</p>
+                      <p className="text-text-tertiary">{pub.conference}</p>
                     </div>
 
-                    <div className="mt-3">
-                      <HoverLink href={pub.link} external className="px-4 py-2 text-sm">
-                        [View Publication →]
+                    <div className="pt-1">
+                      <HoverLink
+                        href={pub.link}
+                        external
+                        className="px-4 py-2 text-sm"
+                        ariaLabel={`View publication: ${pub.title}`}
+                      >
+                        [view paper →]
                       </HoverLink>
                     </div>
                   </div>
@@ -134,11 +154,10 @@ const Work = () => {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
       </div>
     </main>
   );
 };
 
 export default Work;
-
