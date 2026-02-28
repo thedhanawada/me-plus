@@ -41,6 +41,7 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 693134, type: 'movie', category: 'favorite' },// Dune: Part Two
   { id: 1233413, type: 'movie', category: 'favorite' },// Sinners
   { id: 157336, type: 'movie', category: 'favorite' }, // Interstellar
+  { id: 46648, type: 'tv', category: 'favorite' },    // True Detective
 ];
 
 export const WATCHLIST_SECTIONS = [
