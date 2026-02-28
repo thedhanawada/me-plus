@@ -16,6 +16,8 @@ const Lab = lazy(() => import('./pages/Lab'));
 const Work = lazy(() => import('./pages/Work'));
 const Art = lazy(() => import('./pages/Art'));
 const About = lazy(() => import('./pages/About'));
+const Notes = lazy(() => import('./pages/Notes'));
+const NotePost = lazy(() => import('./pages/NotePost'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 const PageLoader = () => (
@@ -24,7 +26,7 @@ const PageLoader = () => (
   </div>
 );
 
-type ValidRoutes = '/' | '/tv' | '/lab' | '/work' | '/art' | '/about';
+type ValidRoutes = '/' | '/tv' | '/lab' | '/work' | '/art' | '/about' | '/notes';
 
 const PAGE_TITLES: Record<ValidRoutes, string> = {
   '/': 'N.R Dhanawada',
@@ -32,7 +34,8 @@ const PAGE_TITLES: Record<ValidRoutes, string> = {
   '/tv': 'N.R Dhanawada - TV',
   '/lab': 'N.R Dhanawada - Lab',
   '/work': 'N.R Dhanawada - Work',
-  '/art': 'N.R Dhanawada - Photography'
+  '/art': 'N.R Dhanawada - Photography',
+  '/notes': 'N.R Dhanawada - Notes'
 };
 
 const TitleUpdater = () => {
@@ -64,6 +67,8 @@ function App() {
                   <Route path="/lab" element={<Lab />} />
                   <Route path="/work" element={<Work />} />
                   <Route path="/art" element={<Art />} />
+                  <Route path="/notes" element={<Notes />} />
+                  <Route path="/notes/:slug" element={<NotePost />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

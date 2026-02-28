@@ -240,6 +240,169 @@ html.theme-transitioning::after {
 }
 
 /* ============================================
+   NOTE/POST PROSE STYLES
+   ============================================
+   Typography for rendered markdown content.
+   Uses design tokens for theme consistency.
+   ============================================ */
+
+.prose-note {
+  line-height: 1.75;
+  color: rgb(var(--color-text-secondary));
+}
+
+.prose-note > * + * {
+  margin-top: 1.5rem;
+}
+
+/* Headings */
+.prose-note h1,
+.prose-note h2,
+.prose-note h3,
+.prose-note h4 {
+  color: rgb(var(--color-text-primary));
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose-note h1 { font-size: 1.875rem; }
+.prose-note h2 { font-size: 1.5rem; }
+.prose-note h3 { font-size: 1.25rem; }
+.prose-note h4 { font-size: 1.125rem; }
+
+.prose-note > h1:first-child,
+.prose-note > h2:first-child,
+.prose-note > h3:first-child {
+  margin-top: 0;
+}
+
+/* Paragraphs */
+.prose-note p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Links */
+.prose-note a {
+  color: rgb(var(--color-text-primary));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast) var(--transition-easing);
+}
+
+.prose-note a:hover {
+  color: rgb(var(--color-accent));
+}
+
+/* Strong and emphasis */
+.prose-note strong {
+  color: rgb(var(--color-text-primary));
+  font-weight: 600;
+}
+
+/* Lists */
+.prose-note ul,
+.prose-note ol {
+  padding-left: 1.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose-note ul { list-style-type: disc; }
+.prose-note ol { list-style-type: decimal; }
+
+.prose-note li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-note li::marker {
+  color: rgb(var(--color-text-muted));
+}
+
+/* Blockquotes */
+.prose-note blockquote {
+  border-left: 3px solid rgb(var(--color-border-strong));
+  padding-left: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: rgb(var(--color-text-tertiary));
+  font-style: italic;
+}
+
+/* Inline code */
+.prose-note code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.875em;
+  color: rgb(var(--color-text-primary));
+  background: rgb(var(--color-bg-secondary));
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+}
+
+/* Code blocks */
+.prose-note pre {
+  background: rgb(var(--color-bg-secondary));
+  border: 1px solid rgb(var(--color-border-primary));
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose-note pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Horizontal rules */
+.prose-note hr {
+  border: none;
+  border-top: 1px solid rgb(var(--color-border-primary));
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Tables */
+.prose-note table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.prose-note th {
+  color: rgb(var(--color-text-primary));
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid rgb(var(--color-border-primary));
+}
+
+.prose-note td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgb(var(--color-border-primary));
+}
+
+.prose-note tr:last-child td {
+  border-bottom: none;
+}
+
+/* Images */
+.prose-note img {
+  max-width: 100%;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================
    PRINT STYLES
    ============================================
    Optimized for printing portfolio/resume.

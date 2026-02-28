@@ -10,6 +10,7 @@ const SHORTCUTS = [
   { keys: ['g', 'l'], description: 'Go to Lab', action: 'navigate', path: '/lab' },
   { keys: ['g', 'p'], description: 'Go to Photography', action: 'navigate', path: '/art' },
   { keys: ['g', 't'], description: 'Go to TV', action: 'navigate', path: '/tv' },
+  { keys: ['g', 'n'], description: 'Go to Notes', action: 'navigate', path: '/notes' },
   { keys: ['t'], description: 'Toggle theme', action: 'theme' },
   { keys: ['?'], description: 'Show shortcuts', action: 'help' },
   { keys: ['Escape'], description: 'Close dialog', action: 'close' },

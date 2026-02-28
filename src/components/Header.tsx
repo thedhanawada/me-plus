@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { name: 'about', path: '/about' },
   { name: 'work', path: '/work' },
   { name: 'lab', path: '/lab' },
+  { name: 'notes', path: '/notes' },
   { name: 'art', path: '/art' },
   { name: 'tv', path: '/tv' },
 ] as const;
