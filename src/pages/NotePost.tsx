@@ -32,6 +32,8 @@ const NotePost = () => {
       return;
     }
 
+    document.title = `N.R Dhanawada - ${post.title}`;
+
     const loadContent = async () => {
       const filePath = `/src/content/posts/${post.slug}.md`;
       const loader = markdownFiles[filePath];
