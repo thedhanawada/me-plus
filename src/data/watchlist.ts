@@ -42,6 +42,7 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 1233413, type: 'movie', category: 'favorite' },// Sinners
   { id: 157336, type: 'movie', category: 'favorite' }, // Interstellar
   { id: 46648, type: 'tv', category: 'favorite' },    // True Detective
+  { id: 71578, type: 'tv', category: 'favorite' },    // Atypical
 ];
 
 export const WATCHLIST_SECTIONS = [
