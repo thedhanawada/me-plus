@@ -32,23 +32,23 @@ export const experiences: Experience[] = [
     highlights: [
       {
         title: 'CRM Architecture & Program Delivery',
-        description: 'I lay the architecture for every new program that lands on our CRM. When the organisation picks up a government contract — SEE, IEA, Workforce Australia, Self Employment Assistance, VET, EST — I figure out how it should live in the system, then build it end-to-end. That means working with the BI team to set up the data pipeline, mapping out the service delivery model, and making sure the whole thing holds together once real users start putting weight on it.'
+        description: 'When the organisation takes on a new government program — SEE, IEA, Workforce Australia, Self Employment Assistance, VET, EST — I work on preparing the architecture for how it lives in our CRM, then build it out end-to-end. That involves coordinating with the BI team on the data pipeline, mapping the service delivery model to what the system can support, and making sure things hold together once staff are actually using it.'
       },
       {
         title: 'Lightning Web Components & Internal Tooling',
-        description: 'I build the custom Salesforce components — Lightning Web Components and other internal pieces — that over 500 people use throughout the day, every day. These aren\'t vanity projects. They\'re the interfaces staff rely on to do their actual work: processing enrolments, tracking participant progress, managing compliance. When a team needs something that doesn\'t exist off the shelf, I build it. Bespoke tools and workflows shaped to specific operational problems.'
+        description: 'I build and maintain custom Salesforce components — Lightning Web Components and other internal pieces — used by over 500 staff throughout the day. These are the interfaces people rely on for actual work: processing enrolments, tracking participant progress, managing compliance. When a team has a workflow that nothing off-the-shelf fits, I work on building something specific to that problem.'
       },
       {
         title: 'Data Integration & Pipeline Management',
-        description: 'Department data doesn\'t arrive in a convenient format. I build the integrations that pull it in, transform it, and load it into our CRM — the full ETL pipeline, maintained across multiple sources. When a new program comes on board, I work with the BI team to stand up the pipeline from scratch. I also build integrations for other teams: Eventbrite and HubSpot for marketing to capture campaign and event data, AskNicely for the customer success team to close the feedback loop.'
+        description: 'Department data doesn\'t arrive in a usable format. I build and maintain the integrations that pull it from source systems and load it into our CRM, working with the BI team who handle the transformation layer in between. When a new program comes on board, this pipeline gets stood up from scratch. I also work on integrations for other parts of the organisation — Eventbrite and HubSpot for marketing, AskNicely for the customer success team.'
       },
       {
         title: 'Architecture Review & Standards',
-        description: 'I review what the team builds before it ships. Architectural consistency, maintainability, adherence to the patterns we\'ve settled on — someone has to hold the line on that, and it\'s me. It\'s less about gatekeeping and more about making sure we\'re not creating problems for our future selves.'
+        description: 'I\'m involved in reviewing what the team builds before it ships — looking at architectural consistency, maintainability, and adherence to the patterns we\'ve established. The aim is less about gatekeeping and more about catching things that tend to create problems further down the line.'
       },
       {
         title: 'Web & Marketing Platforms',
-        description: 'On the web side, I build and maintain WordPress sites, write custom plugins, and wire up whatever the marketing team needs to run campaigns and get content out the door. It\'s a different kind of work from the CRM architecture, but it rounds out the picture — internal tools, external-facing platforms, data pipelines, the lot.'
+        description: 'On the web side, I work on building and maintaining WordPress sites, writing custom plugins, and supporting whatever the marketing team needs to run campaigns and publish content. It sits alongside the CRM and data work, but covers the external-facing side of things.'
       }
     ]
   },
