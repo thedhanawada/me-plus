@@ -16,6 +16,9 @@ declare module 'cloudinary-react' {
     quality?: string;
     loading?: 'lazy' | 'eager';
     fetchFormat?: string;
+    alt?: string;
+    onLoad?: () => void;
+    [key: string]: unknown;
   }
 
   export class CloudinaryContext extends Component<CloudinaryContextProps> {}
