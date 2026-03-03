@@ -1,96 +1,191 @@
-import { ExternalLink, Github, Package, Palette } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Github, Package, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
 import Tooltip from '../components/Tooltip';
 import { StaggeredList } from '../components/StaggeredList';
-import { projects } from '../data';
+import { featuredProject, contributions, archivedProjects } from '../data';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 const Lab = () => {
   return (
     <main id="main-content" className="max-w-container mx-auto px-page-x py-page-y transition-colors duration-slow">
       <div className="space-y-section">
         {/* Header */}
-        <section>
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <h1 className="text-fluid-4xl font-bold mb-content leading-tight">
             Lab
           </h1>
           <div className="space-y-4 text-xl text-text-secondary">
-            <p>Hobby projects and experiments.</p>
+            <p>Things I build and contribute to outside of work.</p>
             <p>Everything here is open source.</p>
           </div>
-        </section>
+        </motion.section>
 
-        {/* Projects */}
-        <section>
-          <StaggeredList className="space-y-8" staggerDelay={0.15}>
-            {projects.map((project) => (
+        {/* Featured Project */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="border-t border-border-primary pt-section"
+        >
+          <div className="border border-border-primary rounded-lg bg-bg-primary card-shadow overflow-hidden">
+            <div className="p-6 md:p-8">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold">{featuredProject.name}</h2>
+                  <p className="text-text-secondary text-sm mt-1">{featuredProject.tagline}</p>
+                </div>
+                <div className="flex items-center gap-4 shrink-0">
+                  <Tooltip content="GitHub">
+                    <HoverLink href={featuredProject.links.github} external className="p-2" ariaLabel="View on GitHub">
+                      <Github size={20} />
+                    </HoverLink>
+                  </Tooltip>
+                  {featuredProject.links.npm && (
+                    <Tooltip content="npm">
+                      <HoverLink href={featuredProject.links.npm} external className="p-2" ariaLabel="View on npm">
+                        <Package size={20} />
+                      </HoverLink>
+                    </Tooltip>
+                  )}
+                </div>
+              </div>
+
+              <p className="text-text-secondary leading-relaxed mb-6">
+                {featuredProject.description}
+              </p>
+
+              {/* Packages */}
+              <div className="space-y-3 mb-6">
+                {featuredProject.packages.map((pkg) => (
+                  <div
+                    key={pkg.name}
+                    className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 py-2 border-b border-border-primary last:border-b-0"
+                  >
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-mono text-sm text-text-primary">{pkg.name}</span>
+                      <span className="text-xs text-text-muted font-mono">v{pkg.version}</span>
+                    </div>
+                    <span className="text-sm text-text-tertiary">{pkg.summary}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {featuredProject.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="text-sm bg-bg-secondary px-3 py-1 rounded transition-colors duration-fast hover:bg-bg-tertiary"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Contributions */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="border-t border-border-primary pt-section"
+        >
+          <h2 className="text-2xl font-bold mb-content">Contributions</h2>
+          <StaggeredList className="space-y-3" staggerDelay={0.1}>
+            {contributions.map((c) => (
               <div
-                key={project.title}
-                className="p-6 rounded-lg border border-border-primary bg-bg-primary card-shadow card-interactive"
+                key={c.url}
+                className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3"
               >
-                <div className="space-y-4">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                    <div>
-                      <h3 className="text-2xl font-bold">{project.title}</h3>
-                      <p className="text-text-tertiary text-sm mt-1">
-                        Open Source • {project.type === 'library' ? 'Library' : project.type === 'theme' ? 'Theme' : 'Tool'}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                      {project.links.live && (
-                        <Tooltip content="Live Demo">
-                          <HoverLink href={project.links.live} external className="p-2" ariaLabel="View live demo">
-                            <ExternalLink size={20} />
-                          </HoverLink>
-                        </Tooltip>
-                      )}
-                      {project.links.github && (
-                        <Tooltip content="GitHub">
-                          <HoverLink href={project.links.github} external className="p-2" ariaLabel="View on GitHub">
-                            <Github size={20} />
-                          </HoverLink>
-                        </Tooltip>
-                      )}
-                      {project.links.npm && (
-                        <Tooltip content="NPM">
-                          <HoverLink href={project.links.npm} external className="p-2" ariaLabel="View on NPM">
-                            <Package size={20} />
-                          </HoverLink>
-                        </Tooltip>
-                      )}
-                      {project.links.firefox && (
-                        <Tooltip content="Firefox Add-on">
-                          <HoverLink href={project.links.firefox} external className="p-2" ariaLabel="View Firefox add-on">
-                            <Palette size={20} />
-                          </HoverLink>
-                        </Tooltip>
-                      )}
-                    </div>
-                  </div>
-
-                  <p className="text-text-secondary leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-sm bg-bg-secondary px-3 py-1 rounded transition-colors duration-fast hover:bg-bg-tertiary"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="text-sm text-text-tertiary">
-                    Status: {project.status === 'active' ? 'Active Development' : 'Completed'}
-                  </div>
+                <span className="font-mono text-sm text-text-tertiary shrink-0">
+                  {c.org}/{c.repo}
+                </span>
+                <span className="text-text-secondary text-sm truncate flex-1">
+                  {c.title}
+                </span>
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className={`text-xs font-mono ${c.status === 'merged' ? 'text-text-tertiary' : 'text-text-muted'}`}>
+                    {c.status}
+                  </span>
+                  <HoverLink href={c.url} external className="px-2 py-1 text-xs" ariaLabel={`View PR: ${c.title}`}>
+                    [view →]
+                  </HoverLink>
                 </div>
               </div>
             ))}
           </StaggeredList>
-        </section>
+        </motion.section>
+
+        {/* Archived Projects */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="border-t border-border-primary pt-section"
+        >
+          <h2 className="text-2xl font-bold mb-content">Older Projects</h2>
+          <StaggeredList className="space-y-4" staggerDelay={0.1}>
+            {archivedProjects.map((project) => (
+              <div
+                key={project.title}
+                className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 py-2 border-b border-border-primary last:border-b-0"
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-semibold text-text-primary">{project.title}</span>
+                    <span className="text-xs text-text-muted">
+                      {project.type === 'library' ? 'Library' : project.type === 'theme' ? 'Theme' : 'Tool'}
+                    </span>
+                  </div>
+                  <p className="text-sm text-text-tertiary mt-0.5">{project.description}</p>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  {project.links.github && (
+                    <Tooltip content="GitHub">
+                      <HoverLink href={project.links.github} external className="p-1.5" ariaLabel={`View ${project.title} on GitHub`}>
+                        <Github size={16} />
+                      </HoverLink>
+                    </Tooltip>
+                  )}
+                  {project.links.npm && (
+                    <Tooltip content="npm">
+                      <HoverLink href={project.links.npm} external className="p-1.5" ariaLabel={`View ${project.title} on npm`}>
+                        <Package size={16} />
+                      </HoverLink>
+                    </Tooltip>
+                  )}
+                  {project.links.live && (
+                    <Tooltip content="Live">
+                      <HoverLink href={project.links.live} external className="p-1.5" ariaLabel={`View ${project.title} live`}>
+                        <ExternalLinkIcon size={16} />
+                      </HoverLink>
+                    </Tooltip>
+                  )}
+                  {project.links.firefox && (
+                    <Tooltip content="Firefox Add-on">
+                      <HoverLink href={project.links.firefox} external className="p-1.5" ariaLabel={`View ${project.title} add-on`}>
+                        <ExternalLinkIcon size={16} />
+                      </HoverLink>
+                    </Tooltip>
+                  )}
+                </div>
+              </div>
+            ))}
+          </StaggeredList>
+        </motion.section>
       </div>
     </main>
   );

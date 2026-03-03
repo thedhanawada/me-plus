@@ -1,4 +1,32 @@
-export interface Project {
+// Featured project — production-grade, actively maintained
+export interface FeaturedProject {
+  name: string;
+  tagline: string;
+  description: string;
+  packages: {
+    name: string;
+    version: string;
+    summary: string;
+  }[];
+  links: {
+    github: string;
+    npm?: string;
+    website?: string;
+  };
+  tech: string[];
+}
+
+// Open source contributions to other projects
+export interface Contribution {
+  org: string;
+  repo: string;
+  title: string;
+  url: string;
+  status: 'merged' | 'open';
+}
+
+// Archived/older personal projects
+export interface ArchivedProject {
   title: string;
   description: string;
   links: {
@@ -7,54 +35,92 @@ export interface Project {
     npm?: string;
     firefox?: string;
   };
-  tech: string[];
-  status: 'active' | 'completed' | 'planned';
   type: 'library' | 'theme' | 'tool';
 }
 
-export const projects: Project[] = [
+export const featuredProject: FeaturedProject = {
+  name: 'forceCalendar',
+  tagline: 'A calendar engine and UI library for Salesforce.',
+  description:
+    'Built for the constraints of the Salesforce platform — Locker Service compatible, zero dependencies, pure JavaScript. Handles RFC 5545 recurrence, timezone math, conflict detection, search, and ICS import/export. The interface package provides month, week, day, and list views as Web Components.',
+  packages: [
+    {
+      name: '@forcecalendar/core',
+      version: '2.1.20',
+      summary: 'Pure JS calendar engine — zero deps, Locker Service compatible',
+    },
+    {
+      name: '@forcecalendar/interface',
+      version: '1.0.57',
+      summary: 'Web Components UI — month, week, day, and list views',
+    },
+  ],
+  links: {
+    github: 'https://github.com/forceCalendar',
+    npm: 'https://www.npmjs.com/org/forcecalendar',
+  },
+  tech: ['JavaScript', 'Web Components', 'Rollup', 'Jest'],
+};
+
+export const contributions: Contribution[] = [
+  {
+    org: 'oclif',
+    repo: 'oclif',
+    title: 'fix: initialize oclif object when building tarballs',
+    url: 'https://github.com/oclif/oclif/pull/1929',
+    status: 'merged',
+  },
+  {
+    org: 'oclif',
+    repo: 'core',
+    title: 'feat: display min/max in help output',
+    url: 'https://github.com/oclif/core/pull/1518',
+    status: 'open',
+  },
+  {
+    org: 'internetarchive',
+    repo: 'openlibrary',
+    title: 'Fix: Preserve list notes when resolving redirects',
+    url: 'https://github.com/internetarchive/openlibrary/pull/11122',
+    status: 'merged',
+  },
+];
+
+export const archivedProjects: ArchivedProject[] = [
   {
     title: 'StandUp+',
-    description: 'An open-source tool for effortless tracking and real results. StandUp+ helps teams streamline their daily standups and track progress effectively.',
+    description: 'An open-source standup tracking tool for teams.',
     links: {
       live: 'https://standupplus.dhanawada.org/',
-      github: 'https://github.com/thedhanawada/standupplus'
+      github: 'https://github.com/thedhanawada/standupplus',
     },
-    tech: ['React', 'TypeScript', 'Node.js', 'MongoDB'],
-    status: 'active',
-    type: 'tool'
+    type: 'tool',
   },
   {
     title: 'SpinOnSubmitJS',
-    description: 'A compact JavaScript library that enhances form submit buttons with a visual loading spinner, providing immediate and intuitive feedback to users upon submission.',
+    description: 'A tiny library that adds loading spinners to form submit buttons.',
     links: {
       github: 'https://github.com/thedhanawada/SpinOnSubmitJS',
-      npm: 'https://www.npmjs.com/package/spinonsubmitjs'
+      npm: 'https://www.npmjs.com/package/spinonsubmitjs',
     },
-    tech: ['JavaScript', 'CSS', 'DOM API'],
-    status: 'active',
-    type: 'library'
+    type: 'library',
   },
   {
     title: 'LiveValidateJS',
-    description: 'A lightweight JavaScript library that provides real-time form validation and input checking for HTML forms. Create custom validation rules for each input field and receive instant feedback as users type.',
+    description: 'Real-time form validation as users type.',
     links: {
       github: 'https://github.com/thedhanawada/LiveValidateJS',
-      npm: 'https://www.npmjs.com/package/livevalidatejs'
+      npm: 'https://www.npmjs.com/package/livevalidatejs',
     },
-    tech: ['JavaScript', 'Form Validation', 'DOM API'],
-    status: 'active',
-    type: 'library'
+    type: 'library',
   },
   {
     title: 'Timeless Veil',
-    description: 'A minimalist Firefox theme with an elegant color palette. Sometimes the simplest things catch on - this theme brings a touch of sophistication to your browsing experience.',
+    description: 'A minimalist Firefox theme.',
     links: {
       firefox: 'https://addons.mozilla.org/en-US/firefox/addon/timeless-veil/',
-      github: 'https://github.com/thedhanawada/timeless-veil'
+      github: 'https://github.com/thedhanawada/timeless-veil',
     },
-    tech: ['Firefox Theme', 'Design', 'CSS'],
-    status: 'completed',
-    type: 'theme'
-  }
+    type: 'theme',
+  },
 ];

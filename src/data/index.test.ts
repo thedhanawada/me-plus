@@ -3,7 +3,9 @@ import {
   whatIDo,
   philosophy,
   education,
-  projects,
+  featuredProject,
+  contributions,
+  archivedProjects,
   experiences,
   publications,
   WATCHLIST_MEDIA,
@@ -45,22 +47,34 @@ describe('Data exports', () => {
   });
 
   describe('projects data', () => {
-    it('should have projects with required fields', () => {
-      expect(projects.length).toBeGreaterThan(0);
-      projects.forEach(project => {
-        expect(project).toHaveProperty('title');
-        expect(project).toHaveProperty('description');
-        expect(project).toHaveProperty('links');
-        expect(project).toHaveProperty('tech');
-        expect(project).toHaveProperty('status');
-        expect(project).toHaveProperty('type');
+    it('should have a featured project with required fields', () => {
+      expect(featuredProject).toHaveProperty('name');
+      expect(featuredProject).toHaveProperty('description');
+      expect(featuredProject).toHaveProperty('packages');
+      expect(featuredProject).toHaveProperty('links');
+      expect(featuredProject).toHaveProperty('tech');
+      expect(featuredProject.packages.length).toBeGreaterThan(0);
+    });
+
+    it('should have contributions with required fields', () => {
+      expect(contributions.length).toBeGreaterThan(0);
+      contributions.forEach(c => {
+        expect(c).toHaveProperty('org');
+        expect(c).toHaveProperty('repo');
+        expect(c).toHaveProperty('title');
+        expect(c).toHaveProperty('url');
+        expect(c).toHaveProperty('status');
+        expect(['merged', 'open']).toContain(c.status);
       });
     });
 
-    it('should have valid status values', () => {
-      const validStatuses = ['active', 'completed', 'planned'];
-      projects.forEach(project => {
-        expect(validStatuses).toContain(project.status);
+    it('should have archived projects with required fields', () => {
+      expect(archivedProjects.length).toBeGreaterThan(0);
+      archivedProjects.forEach(project => {
+        expect(project).toHaveProperty('title');
+        expect(project).toHaveProperty('description');
+        expect(project).toHaveProperty('links');
+        expect(project).toHaveProperty('type');
       });
     });
   });
