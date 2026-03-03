@@ -31,6 +31,10 @@ export const experiences: Experience[] = [
     award: 'MTC Applause Award (2022)',
     highlights: [
       {
+        title: 'Day-to-Day Program Support',
+        description: 'Most of my time goes into keeping existing programs running well. That means picking up new build requests, diagnosing root-level problems in what\'s already there, and fixing them properly rather than patching over symptoms. It\'s the kind of work that doesn\'t make for exciting reading, but it\'s what keeps things stable for the people who depend on them.'
+      },
+      {
         title: 'CRM Architecture & Program Delivery',
         description: 'When the organisation takes on a new government program — SEE, IEA, Workforce Australia, Self Employment Assistance, VET, EST — I work on preparing the architecture for how it lives in our CRM, then work with our team to build it out end-to-end. That involves coordinating with the BI team on the data pipeline, mapping the service delivery model to what the system can support, and making sure things hold together once staff are actually using it.'
       },
