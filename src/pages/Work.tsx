@@ -22,24 +22,33 @@ const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: num
         aria-expanded={expanded}
       >
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 text-xs text-text-muted mb-1 font-mono">
+          <div className="flex items-center gap-2 flex-wrap text-xs text-text-muted mb-1 font-mono">
             <Calendar size={12} />
             <span>{exp.period}</span>
             <span className="text-text-muted">·</span>
             <MapPin size={12} />
             <span>{exp.location}</span>
+            {exp.award && (
+              <>
+                <span className="text-text-muted">·</span>
+                <span className="flex items-center gap-1">
+                  <Award size={12} />
+                  {exp.award}
+                </span>
+              </>
+            )}
+            {index === 0 && (
+              <>
+                <span className="text-text-muted">·</span>
+                <span className="text-text-tertiary bg-bg-secondary px-2 py-0.5 rounded">current</span>
+              </>
+            )}
           </div>
           <h3 className="text-lg font-semibold">{exp.title}</h3>
           <p className="text-text-secondary text-sm">{exp.company}</p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          {exp.award && (
-            <span className="text-xs text-text-tertiary flex items-center gap-1">
-              <Award size={12} />
-              {exp.award}
-            </span>
-          )}
+        <div className="flex items-center shrink-0">
           <ChevronDown
             size={16}
             className={`text-text-muted transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
@@ -54,19 +63,19 @@ const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: num
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="overflow-hidden"
       >
-        <div className="px-6 pb-6 space-y-3 border-t border-border-primary pt-4">
-          {exp.highlights.map((highlight) => (
-            <div key={highlight.title} className="flex gap-3">
-              <span className="text-text-muted select-none mt-0.5 text-sm">→</span>
-              <div>
-                <span className="font-medium text-text-primary">{highlight.title}</span>
-                <span className="text-text-muted mx-1.5">—</span>
-                <span className="text-text-secondary text-sm leading-relaxed">
+        <div className="px-6 pb-8 pt-6">
+          <div className="border-l-2 border-border-secondary pl-6 space-y-6">
+            {exp.highlights.map((highlight) => (
+              <div key={highlight.title} className="space-y-1.5">
+                <h4 className="text-sm font-semibold text-text-primary tracking-wide uppercase">
+                  {highlight.title}
+                </h4>
+                <p className="text-text-secondary leading-relaxed">
                   {highlight.description}
-                </span>
+                </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </motion.div>
     </div>
@@ -87,7 +96,7 @@ const Work = () => {
             Work
           </h1>
           <p className="text-xl text-text-secondary">
-            What I've been building and where.
+            The places I've worked and the problems I chose.
           </p>
         </motion.section>
 
