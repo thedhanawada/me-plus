@@ -32,7 +32,7 @@ export const experiences: Experience[] = [
     highlights: [
       {
         title: 'CRM Architecture & Program Delivery',
-        description: 'When the organisation takes on a new government program — SEE, IEA, Workforce Australia, Self Employment Assistance, VET, EST — I work on preparing the architecture for how it lives in our CRM, then build it out end-to-end. That involves coordinating with the BI team on the data pipeline, mapping the service delivery model to what the system can support, and making sure things hold together once staff are actually using it.'
+        description: 'When the organisation takes on a new government program — SEE, IEA, Workforce Australia, Self Employment Assistance, VET, EST — I work on preparing the architecture for how it lives in our CRM, then work with our team to build it out end-to-end. That involves coordinating with the BI team on the data pipeline, mapping the service delivery model to what the system can support, and making sure things hold together once staff are actually using it.'
       },
       {
         title: 'Lightning Web Components & Internal Tooling',
