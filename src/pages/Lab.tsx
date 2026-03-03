@@ -1,7 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Package, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
-import Tooltip from '../components/Tooltip';
 import { StaggeredList } from '../components/StaggeredList';
 import { featuredProject, contributions, archivedProjects } from '../data';
 
@@ -45,17 +43,13 @@ const Lab = () => {
                   <p className="text-text-secondary text-sm mt-1">{featuredProject.tagline}</p>
                 </div>
                 <div className="flex items-center gap-4 shrink-0">
-                  <Tooltip content="GitHub">
-                    <HoverLink href={featuredProject.links.github} external className="p-2" ariaLabel="View on GitHub">
-                      <Github size={20} />
-                    </HoverLink>
-                  </Tooltip>
+                  <HoverLink href={featuredProject.links.github} external className="px-3 py-1.5 text-sm" ariaLabel="View on GitHub">
+                    [github]
+                  </HoverLink>
                   {featuredProject.links.npm && (
-                    <Tooltip content="npm">
-                      <HoverLink href={featuredProject.links.npm} external className="p-2" ariaLabel="View on npm">
-                        <Package size={20} />
-                      </HoverLink>
-                    </Tooltip>
+                    <HoverLink href={featuredProject.links.npm} external className="px-3 py-1.5 text-sm" ariaLabel="View on npm">
+                      [npm]
+                    </HoverLink>
                   )}
                 </div>
               </div>
@@ -152,35 +146,15 @@ const Lab = () => {
                   </div>
                   <p className="text-sm text-text-tertiary mt-0.5">{project.description}</p>
                 </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  {project.links.github && (
-                    <Tooltip content="GitHub">
-                      <HoverLink href={project.links.github} external className="p-1.5" ariaLabel={`View ${project.title} on GitHub`}>
-                        <Github size={16} />
-                      </HoverLink>
-                    </Tooltip>
-                  )}
-                  {project.links.npm && (
-                    <Tooltip content="npm">
-                      <HoverLink href={project.links.npm} external className="p-1.5" ariaLabel={`View ${project.title} on npm`}>
-                        <Package size={16} />
-                      </HoverLink>
-                    </Tooltip>
-                  )}
-                  {project.links.live && (
-                    <Tooltip content="Live">
-                      <HoverLink href={project.links.live} external className="p-1.5" ariaLabel={`View ${project.title} live`}>
-                        <ExternalLinkIcon size={16} />
-                      </HoverLink>
-                    </Tooltip>
-                  )}
-                  {project.links.firefox && (
-                    <Tooltip content="Firefox Add-on">
-                      <HoverLink href={project.links.firefox} external className="p-1.5" ariaLabel={`View ${project.title} add-on`}>
-                        <ExternalLinkIcon size={16} />
-                      </HoverLink>
-                    </Tooltip>
-                  )}
+                <div className="shrink-0">
+                  <HoverLink
+                    href={project.links.github || project.links.live || project.links.npm || project.links.firefox || '#'}
+                    external
+                    className="px-2 py-1 text-xs"
+                    ariaLabel={`View ${project.title}`}
+                  >
+                    [view →]
+                  </HoverLink>
                 </div>
               </div>
             ))}
