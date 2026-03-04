@@ -1,4 +1,3 @@
-const TMDB_API_BASE = 'https://api.themoviedb.org/3';
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
 const CACHE_KEY = 'watchlist_cache';
@@ -27,12 +26,8 @@ interface CacheData {
   timestamp: number;
 }
 
-const getApiKey = (): string | null => {
-  return import.meta.env.VITE_TMDB_API_KEY || null;
-};
-
 export const isApiKeyConfigured = (): boolean => {
-  return !!getApiKey();
+  return true;
 };
 
 const getCachedData = (): Media[] | null => {
@@ -62,13 +57,8 @@ const setCachedData = (data: Media[]): void => {
 };
 
 export const fetchMediaItem = async (id: number, type: 'movie' | 'tv'): Promise<Media | null> => {
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    throw new Error('TMDB API key is not configured');
-  }
-
   try {
-    const response = await fetch(`${TMDB_API_BASE}/${type}/${id}?api_key=${apiKey}`);
+    const response = await fetch(`/api/tmdb?type=${type}&id=${id}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch ${type} with ID ${id}`);
