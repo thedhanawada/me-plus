@@ -1,9 +1,12 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useExternalLink } from '../hooks';
 
 const ExternalLinkModal = () => {
   const { isOpen, pendingUrl, hideModal } = useExternalLink();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const continueRef = useRef<HTMLButtonElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
   // Extract domain from URL for display
   const getDomain = (url: string): string => {
@@ -25,6 +28,48 @@ const ExternalLinkModal = () => {
   const handleCancel = useCallback(() => {
     hideModal();
   }, [hideModal]);
+
+  // Auto-focus continue button and restore focus on close
+  useEffect(() => {
+    if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
+      // Delay to allow animation to start
+      requestAnimationFrame(() => {
+        continueRef.current?.focus();
+      });
+    } else {
+      previousFocusRef.current?.focus();
+    }
+  }, [isOpen]);
+
+  // Focus trap
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleTabTrap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !modalRef.current) return;
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleTabTrap);
+    return () => document.removeEventListener('keydown', handleTabTrap);
+  }, [isOpen]);
 
   // Handle escape key
   useEffect(() => {
@@ -77,6 +122,7 @@ const ExternalLinkModal = () => {
 
           {/* Modal */}
           <motion.div
+            ref={modalRef}
             className="relative bg-bg-primary border border-border-primary max-w-sm w-full p-6"
             initial={{ opacity: 0, scale: 0.96, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -120,6 +166,7 @@ const ExternalLinkModal = () => {
                 [cancel]
               </button>
               <button
+                ref={continueRef}
                 onClick={handleContinue}
                 className="font-mono text-sm bg-bg-inverted text-text-inverted hover:opacity-80 transition-opacity duration-default focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary px-4 py-2"
               >

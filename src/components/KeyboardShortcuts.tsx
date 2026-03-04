@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../hooks';
 import { X } from 'lucide-react';
@@ -93,6 +93,49 @@ const KeyboardShortcuts = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [keySequence, handleAction]);
 
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  // Focus trap, auto-focus, and restore
+  useEffect(() => {
+    if (showHelp) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
+      // Auto-focus the close button
+      const firstFocusable = dialogRef.current?.querySelector<HTMLElement>('button');
+      firstFocusable?.focus();
+    } else {
+      previousFocusRef.current?.focus();
+    }
+  }, [showHelp]);
+
+  useEffect(() => {
+    if (!showHelp) return;
+
+    const handleTabTrap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleTabTrap);
+    return () => document.removeEventListener('keydown', handleTabTrap);
+  }, [showHelp]);
+
   if (!showHelp) return null;
 
   return (
@@ -101,11 +144,15 @@ const KeyboardShortcuts = () => {
       onClick={() => setShowHelp(false)}
     >
       <div
+        ref={dialogRef}
         className="bg-bg-primary border border-border-primary rounded-lg shadow-2xl max-w-md w-full p-6"
         onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="keyboard-shortcuts-title"
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold">Keyboard Shortcuts</h2>
+          <h2 id="keyboard-shortcuts-title" className="text-xl font-bold">Keyboard Shortcuts</h2>
           <button
             onClick={() => setShowHelp(false)}
             className="p-1 hover:bg-bg-secondary rounded transition-colors"
