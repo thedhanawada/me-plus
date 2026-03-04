@@ -22,6 +22,14 @@
     <meta name="twitter:description" content="Solutions Architect specializing in platform engineering, enterprise architecture, and building systems that help organizations serve people better." />
   </head>
   <body>
+    <script>
+      (function() {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
