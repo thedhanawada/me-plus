@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Film, Tv } from 'lucide-react';
 import HoverLink from '../components/HoverLink';
 import ExternalLink from '../components/ExternalLink';
@@ -39,15 +39,15 @@ const Watchlist = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const categoryMap = new Map(WATCHLIST_MEDIA.map(m => [m.id, m.category]));
+  const categoryMap = useMemo(() => new Map(WATCHLIST_MEDIA.map(m => [m.id, m.category])), []);
 
-  const buildSections = (mediaItems: Media[]): MediaSection[] =>
+  const buildSections = useCallback((mediaItems: Media[]): MediaSection[] =>
     WATCHLIST_SECTIONS.map(section => ({
       title: section.title,
       items: mediaItems.filter(m => categoryMap.get(m.id) === section.key),
-    }));
+    })), [categoryMap]);
 
-  const loadMedia = async (useCache = true) => {
+  const loadMedia = useCallback(async (useCache = true) => {
     setLoading(true);
     setError(null);
 
@@ -60,11 +60,11 @@ const Watchlist = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [buildSections]);
 
   useEffect(() => {
     loadMedia();
-  }, []);
+  }, [loadMedia]);
 
   if (!isApiKeyConfigured()) {
     return (
