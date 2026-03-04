@@ -28,11 +28,11 @@ const About = () => {
                   </div>
                   <div className="text-sm text-text-tertiary space-y-1 md:text-right">
                     <div className="flex items-center gap-1 md:justify-end">
-                      <MapPin size={14} className="text-text-muted" />
+                      <MapPin size={14} className="text-text-muted" aria-hidden="true" />
                       {edu.location}
                     </div>
                     <div className="flex items-center gap-1 md:justify-end">
-                      <Calendar size={14} className="text-text-muted" />
+                      <Calendar size={14} className="text-text-muted" aria-hidden="true" />
                       {edu.period}
                     </div>
                   </div>
@@ -44,7 +44,7 @@ const About = () => {
                     <ul className="space-y-1 text-text-secondary">
                       {edu.achievements.map((achievement, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <Award size={16} className="text-text-muted mt-0.5 flex-shrink-0" />
+                          <Award size={16} className="text-text-muted mt-0.5 flex-shrink-0" aria-hidden="true" />
                           {achievement}
                         </li>
                       ))}

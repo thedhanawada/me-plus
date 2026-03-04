@@ -18,21 +18,22 @@ const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: num
       {/* Card header — always visible */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full text-left p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 hover:bg-bg-secondary transition-colors duration-fast focus:outline-none focus-ring"
+        className="w-full text-left p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 hover:bg-bg-secondary transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
         aria-expanded={expanded}
+        aria-controls={`experience-details-${index}`}
       >
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap text-xs text-text-muted mb-1 font-mono">
-            <Calendar size={12} />
+            <Calendar size={12} aria-hidden="true" />
             <span>{exp.period}</span>
             <span className="text-text-muted">·</span>
-            <MapPin size={12} />
+            <MapPin size={12} aria-hidden="true" />
             <span>{exp.location}</span>
             {exp.award && (
               <>
                 <span className="text-text-muted">·</span>
                 <span className="flex items-center gap-1">
-                  <Award size={12} />
+                  <Award size={12} aria-hidden="true" />
                   {exp.award}
                 </span>
               </>
@@ -58,6 +59,7 @@ const ExperienceCard = ({ exp, index }: { exp: typeof experiences[0]; index: num
 
       {/* Expandable details */}
       <motion.div
+        id={`experience-details-${index}`}
         initial={index === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
         animate={expanded ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
@@ -125,7 +127,7 @@ const Work = () => {
             {publications.map((pub) => (
               <div key={pub.title} className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <BookOpen className="w-5 h-5 text-text-muted mt-1 shrink-0" />
+                  <BookOpen className="w-5 h-5 text-text-muted mt-1 shrink-0" aria-hidden="true" />
                   <div className="flex-1 space-y-2">
                     <h3 className="text-lg font-semibold text-text-primary">
                       {pub.title}
@@ -134,7 +136,7 @@ const Work = () => {
                     <div className="text-sm text-text-secondary space-y-1">
                       <div className="flex flex-wrap gap-3 text-text-tertiary">
                         <span className="flex items-center gap-1">
-                          <Calendar size={12} />
+                          <Calendar size={12} aria-hidden="true" />
                           {pub.date}
                         </span>
                         <span>Article {pub.articleNo}</span>

@@ -44,7 +44,7 @@ const Notes = () => {
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-sm text-text-tertiary">
                     <span className="flex items-center gap-1">
-                      <Calendar size={14} className="text-text-muted" />
+                      <Calendar size={14} className="text-text-muted" aria-hidden="true" />
                       {new Date(post.date).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
@@ -64,7 +64,7 @@ const Notes = () => {
                   </p>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    <Tag size={14} className="text-text-muted" />
+                    <Tag size={14} className="text-text-muted" aria-hidden="true" />
                     {post.tags.map((tag) => (
                       <span
                         key={tag}

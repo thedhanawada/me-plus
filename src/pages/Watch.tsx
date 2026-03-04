@@ -142,7 +142,7 @@ const Watchlist = () => {
                         <div className="flex items-center justify-between text-xs text-text-tertiary">
                           <span>{new Date(item.release_date || '').getFullYear()}</span>
                           <div className="flex items-center gap-1">
-                            {item.media_type === 'tv' ? <Tv className="w-3 h-3" /> : <Film className="w-3 h-3" />}
+                            {item.media_type === 'tv' ? <Tv className="w-3 h-3" aria-hidden="true" /> : <Film className="w-3 h-3" aria-hidden="true" />}
                             <span>★ {item.vote_average.toFixed(1)}</span>
                           </div>
                         </div>
