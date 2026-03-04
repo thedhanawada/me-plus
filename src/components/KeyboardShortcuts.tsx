@@ -18,7 +18,7 @@ const SHORTCUTS = [
 
 const KeyboardShortcuts = () => {
   const [showHelp, setShowHelp] = useState(false);
-  const [keySequence, setKeySequence] = useState<string[]>([]);
+  const keySequenceRef = useRef<string[]>([]);
   const navigate = useNavigate();
   const { toggleTheme } = useTheme();
 
@@ -55,7 +55,7 @@ const KeyboardShortcuts = () => {
       // Handle Escape separately
       if (key === 'Escape') {
         handleAction('close');
-        setKeySequence([]);
+        keySequenceRef.current = [];
         return;
       }
 
@@ -63,13 +63,13 @@ const KeyboardShortcuts = () => {
       if (key === '?') {
         e.preventDefault();
         handleAction('help');
-        setKeySequence([]);
+        keySequenceRef.current = [];
         return;
       }
 
       // Build key sequence
-      const newSequence = [...keySequence, key.toLowerCase()];
-      setKeySequence(newSequence);
+      const newSequence = [...keySequenceRef.current, key.toLowerCase()];
+      keySequenceRef.current = newSequence;
 
       // Check for matching shortcuts
       const matchingShortcut = SHORTCUTS.find(shortcut => {
@@ -82,16 +82,16 @@ const KeyboardShortcuts = () => {
       if (matchingShortcut && newSequence.length >= matchingShortcut.keys.length) {
         e.preventDefault();
         handleAction(matchingShortcut.action, matchingShortcut.path);
-        setKeySequence([]);
+        keySequenceRef.current = [];
       }
 
       // Reset sequence after timeout
-      setTimeout(() => setKeySequence([]), 1000);
+      setTimeout(() => { keySequenceRef.current = []; }, 1000);
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [keySequence, handleAction]);
+  }, [handleAction]);
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
