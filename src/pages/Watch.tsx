@@ -126,12 +126,12 @@ const Watchlist = () => {
                       key={item.id}
                       href={`https://www.themoviedb.org/${item.media_type}/${item.id}`}
                       className="block group focus:outline-none focus:ring-2 focus:ring-focus-ring rounded-lg card-interactive"
-                      ariaLabel={`View ${item.title} on TMDB`}
+                      ariaLabel={`View ${item.title || item.name || 'media'} on TMDB`}
                     >
                       <div className="aspect-[2/3] relative overflow-hidden rounded-lg card-shadow">
                         <ProgressiveImage
                           src={`${TMDB_IMAGE_BASE}${item.poster_path}`}
-                          alt={item.title}
+                          alt={item.title || item.name || ''}
                           className="w-full h-full group-hover:scale-105 transition-transform duration-fast"
                         />
                       </div>
@@ -140,7 +140,7 @@ const Watchlist = () => {
                           {item.title}
                         </h3>
                         <div className="flex items-center justify-between text-xs text-text-tertiary">
-                          <span>{new Date(item.release_date || '').getFullYear()}</span>
+                          <span>{item.release_date ? new Date(item.release_date).getFullYear() : ''}</span>
                           <div className="flex items-center gap-1">
                             {item.media_type === 'tv' ? <Tv className="w-3 h-3" aria-hidden="true" /> : <Film className="w-3 h-3" aria-hidden="true" />}
                             <span>★ {item.vote_average.toFixed(1)}</span>
