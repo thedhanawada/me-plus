@@ -23,6 +23,7 @@ const NotePost = () => {
   const navigate = useNavigate();
   const [content, setContent] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const post = posts.find((p) => p.slug === slug);
 
@@ -35,15 +36,25 @@ const NotePost = () => {
     document.title = `N.R Dhanawada - ${post.title}`;
 
     const loadContent = async () => {
-      const filePath = `/src/content/posts/${post.slug}.md`;
-      const loader = markdownFiles[filePath];
+      try {
+        const filePath = `/src/content/posts/${post.slug}.md`;
+        const loader = markdownFiles[filePath];
 
-      if (loader) {
-        const raw = (await loader()) as string;
-        setContent(raw);
+        if (!loader) {
+          setError('Post not found');
+          setContent(null);
+        } else {
+          const raw = (await loader()) as string;
+          setContent(raw);
+          setError(null);
+        }
+      } catch (err) {
+        console.error('Error loading post:', err);
+        setError('Failed to load post. Please try again.');
+        setContent(null);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     loadContent();
@@ -113,6 +124,8 @@ const NotePost = () => {
               <SkeletonText lines={3} />
               <SkeletonText lines={5} />
             </div>
+          ) : error ? (
+            <p className="text-text-secondary text-center py-8">{error}</p>
           ) : content ? (
             <article className="prose-note">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -120,7 +133,7 @@ const NotePost = () => {
               </ReactMarkdown>
             </article>
           ) : (
-            <p className="text-text-secondary">Content not found.</p>
+            <p className="text-text-secondary">No content available.</p>
           )}
         </motion.section>
       </div>
