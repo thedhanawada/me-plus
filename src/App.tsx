@@ -58,21 +58,19 @@ function App() {
             <TitleUpdater />
             <Header />
 
-            <ErrorBoundary>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/tv" element={<Watchlist />} />
-                  <Route path="/lab" element={<Lab />} />
-                  <Route path="/work" element={<Work />} />
-                  <Route path="/art" element={<Art />} />
-                  <Route path="/notes" element={<Notes />} />
-                  <Route path="/notes/:slug" element={<NotePost />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </ErrorBoundary>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<ErrorBoundary><Home /></ErrorBoundary>} />
+                <Route path="/about" element={<ErrorBoundary><About /></ErrorBoundary>} />
+                <Route path="/tv" element={<ErrorBoundary><Watchlist /></ErrorBoundary>} />
+                <Route path="/lab" element={<ErrorBoundary><Lab /></ErrorBoundary>} />
+                <Route path="/work" element={<ErrorBoundary><Work /></ErrorBoundary>} />
+                <Route path="/art" element={<ErrorBoundary><Art /></ErrorBoundary>} />
+                <Route path="/notes" element={<ErrorBoundary><Notes /></ErrorBoundary>} />
+                <Route path="/notes/:slug" element={<ErrorBoundary><NotePost /></ErrorBoundary>} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
 
             <Footer />
             <BackToTop />
