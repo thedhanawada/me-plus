@@ -42,7 +42,8 @@ const Header = () => {
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 50);
+          const newScrolled = window.scrollY > 50;
+          setScrolled(prev => prev !== newScrolled ? newScrolled : prev);
           ticking = false;
         });
         ticking = true;
