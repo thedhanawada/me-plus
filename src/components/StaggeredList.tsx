@@ -57,7 +57,7 @@ export const StaggeredList = ({
       viewport={{ once: true, margin: '-50px' }}
     >
       {children.map((child, index) => (
-        <motion.div key={index} variants={itemVariants}>
+        <motion.div key={`staggered-list-${index}`} variants={itemVariants}>
           {child}
         </motion.div>
       ))}
@@ -92,7 +92,7 @@ export const StaggeredGrid = ({
       viewport={{ once: true, margin: '-50px' }}
     >
       {children.map((child, index) => (
-        <motion.div key={index} variants={itemVariants}>
+        <motion.div key={`staggered-grid-${index}`} variants={itemVariants}>
           {child}
         </motion.div>
       ))}
