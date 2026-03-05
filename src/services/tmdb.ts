@@ -56,9 +56,9 @@ const setCachedData = (data: Media[]): void => {
   }
 };
 
-export const fetchMediaItem = async (id: number, type: 'movie' | 'tv'): Promise<Media | null> => {
+export const fetchMediaItem = async (id: number, type: 'movie' | 'tv', signal?: AbortSignal): Promise<Media | null> => {
   try {
-    const response = await fetch(`/api/tmdb?type=${type}&id=${id}`);
+    const response = await fetch(`/api/tmdb?type=${type}&id=${id}`, { signal });
 
     if (!response.ok) {
       throw new Error(`Failed to fetch ${type} with ID ${id}`);
@@ -73,6 +73,9 @@ export const fetchMediaItem = async (id: number, type: 'movie' | 'tv'): Promise<
       media_type: type
     };
   } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      return null; // Request was cancelled
+    }
     console.error(`Error fetching ${type} ${id}:`, error);
     return null;
   }
@@ -80,7 +83,8 @@ export const fetchMediaItem = async (id: number, type: 'movie' | 'tv'): Promise<
 
 export const fetchMediaList = async (
   entries: MediaEntry[],
-  useCache = true
+  useCache = true,
+  signal?: AbortSignal
 ): Promise<Media[]> => {
   // Check cache first
   if (useCache) {
@@ -91,7 +95,7 @@ export const fetchMediaList = async (
   }
 
   const results = await Promise.all(
-    entries.map(({ id, type }) => fetchMediaItem(id, type))
+    entries.map(({ id, type }) => fetchMediaItem(id, type, signal))
   );
 
   const validResults = results.filter((item): item is Media => item !== null);
