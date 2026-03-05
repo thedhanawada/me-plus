@@ -25,15 +25,25 @@ const ScrollProgress = () => {
       }
     };
 
+    const onResize = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateProgress();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     // Initial calculation
     updateProgress();
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', updateProgress, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', updateProgress);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
