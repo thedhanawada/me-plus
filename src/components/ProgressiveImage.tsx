@@ -28,9 +28,13 @@ const ProgressiveImage = ({
       setCurrentSrc(src);
       setIsLoaded(true);
     };
+    img.onerror = () => {
+      setIsLoaded(false);
+    };
 
     return () => {
       img.onload = null;
+      img.onerror = null;
     };
   }, [src]);
 
