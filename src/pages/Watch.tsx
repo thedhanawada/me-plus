@@ -56,6 +56,7 @@ const Watchlist = () => {
       setSections(buildSections(mediaItems));
     } catch (err) {
       console.error('Error fetching media:', err);
+      setSections([]);
       setError('Failed to load watchlist. Please check your connection and try again.');
     } finally {
       setLoading(false);
@@ -137,7 +138,7 @@ const Watchlist = () => {
                       </div>
                       <div className="mt-2 space-y-1">
                         <h3 className="text-sm font-medium text-text-primary line-clamp-2">
-                          {item.title}
+                          {item.title || item.name || 'Unknown'}
                         </h3>
                         <div className="flex items-center justify-between text-xs text-text-tertiary">
                           <span>{item.release_date ? new Date(item.release_date).getFullYear() : ''}</span>
