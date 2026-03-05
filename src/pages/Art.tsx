@@ -75,6 +75,7 @@ const Lightbox = ({
   const [loaded, setLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const preloadControllerRef = useRef<AbortController | null>(null);
 
   // Reset loaded state when photo changes
   useEffect(() => {
@@ -133,15 +134,30 @@ const Lightbox = ({
 
   // Preload adjacent images
   useEffect(() => {
+    // Cancel previous preload requests
+    if (preloadControllerRef.current) {
+      preloadControllerRef.current.abort();
+    }
+
+    const controller = new AbortController();
+    preloadControllerRef.current = controller;
+
     const preload = (idx: number) => {
+      if (controller.signal.aborted) return;
+
       const p = photos[idx];
       if (p && cloudName) {
         const img = new Image();
         img.src = `https://res.cloudinary.com/${cloudName}/image/upload/w_1600,q_auto,f_auto/${p.id}`;
       }
     };
+
     preload((currentIndex + 1) % total);
     preload((currentIndex - 1 + total) % total);
+
+    return () => {
+      controller.abort();
+    };
   }, [currentIndex, total, cloudName]);
 
   return (
