@@ -81,7 +81,7 @@ const Header = () => {
       >
         Skip to main content
       </a>
-      <header className={`sticky top-0 z-50 bg-bg-primary transition-all duration-default ${scrolled ? 'shadow-sm' : ''}`}>
+      <header className={`sticky top-0 bg-bg-primary transition-all duration-default ${scrolled ? 'shadow-sm' : ''}`} style={{ zIndex: 'var(--z-sticky-header)' }}>
         <div className={`px-8 md:px-12 lg:px-16 transition-all duration-default ${scrolled ? 'py-4' : 'py-10'}`}>
           {/* Name - Full width, left aligned */}
           <div className={`transition-all duration-300 ${scrolled ? 'mb-3' : 'mb-6'}`}>

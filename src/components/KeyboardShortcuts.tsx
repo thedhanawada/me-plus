@@ -140,7 +140,8 @@ const KeyboardShortcuts = () => {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-bg-inverted/50 backdrop-blur-sm"
+      className="fixed inset-0 flex items-center justify-center p-4 bg-bg-inverted/50 backdrop-blur-sm"
+      style={{ zIndex: 'var(--z-modal)' }}
       onClick={() => setShowHelp(false)}
     >
       <div
