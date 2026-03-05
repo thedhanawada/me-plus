@@ -163,7 +163,8 @@ const Lightbox = ({
   return (
     <motion.div
       ref={containerRef}
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="fixed inset-0 flex items-center justify-center"
+      style={{ zIndex: 'var(--z-lightbox)' }}
       onClick={onClose}
       tabIndex={-1}
       role="dialog"
@@ -176,7 +177,7 @@ const Lightbox = ({
     >
       {/* Backdrop */}
       <motion.div
-        className="absolute inset-0 bg-black/95"
+        className="absolute inset-0 bg-bg-inverted/95"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
