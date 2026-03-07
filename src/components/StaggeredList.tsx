@@ -6,6 +6,7 @@ interface StaggeredListProps {
   className?: string;
   staggerDelay?: number;
   initialDelay?: number;
+  keys?: (string | number)[];
 }
 
 const containerVariants = {
@@ -36,6 +37,7 @@ export const StaggeredList = ({
   className = '',
   staggerDelay = 0.1,
   initialDelay = 0,
+  keys,
 }: StaggeredListProps) => {
   const customContainerVariants = {
     ...containerVariants,
@@ -57,7 +59,7 @@ export const StaggeredList = ({
       viewport={{ once: true, margin: '-50px' }}
     >
       {children.map((child, index) => (
-        <motion.div key={`staggered-list-${index}`} variants={itemVariants}>
+        <motion.div key={keys?.[index] ?? index} variants={itemVariants}>
           {child}
         </motion.div>
       ))}
@@ -71,6 +73,7 @@ export const StaggeredGrid = ({
   className = '',
   staggerDelay = 0.05,
   initialDelay = 0,
+  keys,
 }: StaggeredListProps) => {
   const customContainerVariants = {
     ...containerVariants,
@@ -92,7 +95,7 @@ export const StaggeredGrid = ({
       viewport={{ once: true, margin: '-50px' }}
     >
       {children.map((child, index) => (
-        <motion.div key={`staggered-grid-${index}`} variants={itemVariants}>
+        <motion.div key={keys?.[index] ?? index} variants={itemVariants}>
           {child}
         </motion.div>
       ))}
