@@ -39,12 +39,12 @@ const PAGE_TITLES: Record<ValidRoutes, string> = {
 };
 
 const TitleUpdater = () => {
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const currentPath = location.pathname as ValidRoutes;
-    document.title = PAGE_TITLES[currentPath] || 'N.R Dhanawada';
-  }, [location]);
+    document.title = PAGE_TITLES[pathname as ValidRoutes] || 'N.R Dhanawada';
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return null;
 };
