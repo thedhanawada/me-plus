@@ -4,6 +4,7 @@ import { Image as CloudinaryImage } from 'cloudinary-react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { photos, type Photo } from '../data';
 import Skeleton from '../components/Skeleton';
+import { CLOUDINARY_CLOUD_NAME } from '../env';
 
 // ---------------------------------------------------------------------------
 // PhotoTile — individual photo in the masonry grid
@@ -18,7 +19,7 @@ const PhotoTile = ({
   onClick: () => void;
 }) => {
   const [loaded, setLoaded] = useState(false);
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const cloudName = CLOUDINARY_CLOUD_NAME;
 
   return (
     <motion.button
@@ -71,7 +72,7 @@ const Lightbox = ({
   currentIndex: number;
   total: number;
 }) => {
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const cloudName = CLOUDINARY_CLOUD_NAME;
   const [loaded, setLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -265,7 +266,7 @@ const Lightbox = ({
 // Art — main page component
 // ---------------------------------------------------------------------------
 const Art = () => {
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const cloudName = CLOUDINARY_CLOUD_NAME;
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const favorites = useMemo(() => photos.filter((p) => p.favorite), []);
