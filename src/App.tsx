@@ -26,24 +26,82 @@ const PageLoader = () => (
   </div>
 );
 
-type ValidRoutes = '/' | '/tv' | '/lab' | '/work' | '/art' | '/about' | '/notes';
+const BASE_URL = 'https://dhanawada.org';
+const DEFAULT_DESCRIPTION = 'Solutions Architect specializing in platform engineering, enterprise architecture, and building systems that help organizations serve people better.';
 
-const PAGE_TITLES: Record<ValidRoutes, string> = {
-  '/': 'N.R Dhanawada',
-  '/about': 'N.R Dhanawada - About',
-  '/tv': 'N.R Dhanawada - TV',
-  '/lab': 'N.R Dhanawada - Lab',
-  '/work': 'N.R Dhanawada - Work',
-  '/art': 'N.R Dhanawada - Photography',
-  '/notes': 'N.R Dhanawada - Notes'
+interface PageMeta {
+  title: string;
+  description: string;
+}
+
+const PAGE_META: Record<string, PageMeta> = {
+  '/': {
+    title: 'N.R Dhanawada',
+    description: DEFAULT_DESCRIPTION,
+  },
+  '/about': {
+    title: 'N.R Dhanawada - About',
+    description: 'Background, education, and professional journey of N.R Dhanawada.',
+  },
+  '/tv': {
+    title: 'N.R Dhanawada - TV',
+    description: 'What I\'m watching, rewatching, and waiting for.',
+  },
+  '/lab': {
+    title: 'N.R Dhanawada - Lab',
+    description: 'Open source projects, contributions, and experiments.',
+  },
+  '/work': {
+    title: 'N.R Dhanawada - Work',
+    description: 'Professional experience in solutions architecture and platform engineering.',
+  },
+  '/art': {
+    title: 'N.R Dhanawada - Photography',
+    description: 'A collection of photographs.',
+  },
+  '/notes': {
+    title: 'N.R Dhanawada - Notes',
+    description: 'Thinking out loud about systems, code, and building things.',
+  },
 };
 
-const TitleUpdater = () => {
+function updateMeta(name: string, content: string) {
+  let el = document.querySelector(`meta[property="${name}"], meta[name="${name}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    if (name.startsWith('og:')) {
+      el.setAttribute('property', name);
+    } else {
+      el.setAttribute('name', name);
+    }
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+const MetaUpdater = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    document.title = PAGE_TITLES[pathname as ValidRoutes] || 'N.R Dhanawada';
+    const meta = PAGE_META[pathname] || { title: 'N.R Dhanawada', description: DEFAULT_DESCRIPTION };
+
+    document.title = meta.title;
     window.scrollTo(0, 0);
+
+    updateMeta('description', meta.description);
+    updateMeta('og:title', meta.title);
+    updateMeta('og:description', meta.description);
+    updateMeta('og:url', `${BASE_URL}${pathname}`);
+    updateMeta('twitter:title', meta.title);
+    updateMeta('twitter:description', meta.description);
+
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = `${BASE_URL}${pathname}`;
   }, [pathname]);
 
   return null;
@@ -55,7 +113,7 @@ function App() {
       <ExternalLinkProvider>
         <Router>
           <div className="min-h-screen bg-bg-primary text-text-primary font-mono transition-colors duration-slow">
-            <TitleUpdater />
+            <MetaUpdater />
             <Header />
 
             <Suspense fallback={<PageLoader />}>
