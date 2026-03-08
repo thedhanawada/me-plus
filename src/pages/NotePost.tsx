@@ -33,7 +33,24 @@ const NotePost = () => {
       return;
     }
 
-    document.title = `N.R Dhanawada - ${post.title}`;
+    const title = `N.R Dhanawada - ${post.title}`;
+    document.title = title;
+
+    const setMeta = (name: string, content: string) => {
+      let el = document.querySelector(`meta[property="${name}"], meta[name="${name}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(name.startsWith('og:') ? 'property' : 'name', name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    };
+    setMeta('description', post.summary);
+    setMeta('og:title', title);
+    setMeta('og:description', post.summary);
+    setMeta('og:url', `https://dhanawada.org/notes/${post.slug}`);
+    setMeta('twitter:title', title);
+    setMeta('twitter:description', post.summary);
 
     const loadContent = async () => {
       try {
