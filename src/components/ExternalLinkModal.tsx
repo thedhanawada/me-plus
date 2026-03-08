@@ -20,7 +20,11 @@ const ExternalLinkModal = () => {
 
   const handleContinue = useCallback(() => {
     if (pendingUrl) {
-      window.open(pendingUrl, '_blank', 'noopener,noreferrer');
+      const newWindow = window.open(pendingUrl, '_blank', 'noopener,noreferrer');
+      if (!newWindow) {
+        // Popup was blocked — fall back to same-tab navigation
+        window.location.href = pendingUrl;
+      }
     }
     hideModal();
   }, [pendingUrl, hideModal]);
