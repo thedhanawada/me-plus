@@ -39,6 +39,8 @@ const KeyboardShortcuts = () => {
     }
   }, [navigate, toggleTheme]);
 
+  const sequenceTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Ignore if typing in an input
@@ -85,12 +87,16 @@ const KeyboardShortcuts = () => {
         keySequenceRef.current = [];
       }
 
-      // Reset sequence after timeout
-      setTimeout(() => { keySequenceRef.current = []; }, 1000);
+      // Clear previous timer before setting a new one
+      clearTimeout(sequenceTimerRef.current);
+      sequenceTimerRef.current = setTimeout(() => { keySequenceRef.current = []; }, 1000);
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      clearTimeout(sequenceTimerRef.current);
+    };
   }, [handleAction]);
 
   const dialogRef = useRef<HTMLDivElement>(null);

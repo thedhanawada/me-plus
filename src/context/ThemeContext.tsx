@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, useRef, useCallback, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -20,6 +20,8 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
+  const transitionTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -29,17 +31,22 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
+  useEffect(() => {
+    return () => clearTimeout(transitionTimerRef.current);
+  }, []);
+
+  const toggleTheme = useCallback(() => {
     // Add transition class for smooth theme switch
     document.documentElement.classList.add('theme-transitioning');
 
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
-    // Remove transition class after animation completes
-    setTimeout(() => {
+    // Clear any pending timer from rapid toggling
+    clearTimeout(transitionTimerRef.current);
+    transitionTimerRef.current = setTimeout(() => {
       document.documentElement.classList.remove('theme-transitioning');
     }, 500);
-  };
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

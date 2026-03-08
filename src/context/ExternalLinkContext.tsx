@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback, ReactNode } from 'react';
+import { createContext, useState, useCallback, useEffect, useRef, ReactNode } from 'react';
 
 interface ExternalLinkContextType {
   showModal: (url: string) => void;
@@ -16,6 +16,11 @@ interface ExternalLinkProviderProps {
 export const ExternalLinkProvider = ({ children }: ExternalLinkProviderProps) => {
   const [pendingUrl, setPendingUrl] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    return () => clearTimeout(hideTimerRef.current);
+  }, []);
 
   const showModal = useCallback((url: string) => {
     setPendingUrl(url);
@@ -24,8 +29,8 @@ export const ExternalLinkProvider = ({ children }: ExternalLinkProviderProps) =>
 
   const hideModal = useCallback(() => {
     setIsOpen(false);
-    // Clear URL after animation completes
-    setTimeout(() => setPendingUrl(null), 200);
+    clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = setTimeout(() => setPendingUrl(null), 200);
   }, []);
 
   return (
