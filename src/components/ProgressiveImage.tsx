@@ -17,24 +17,29 @@ const ProgressiveImage = ({
   const [currentSrc, setCurrentSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    // Reset state when src changes
     setIsLoaded(false);
     setCurrentSrc(null);
 
-    // Preload the image
+    let cancelled = false;
     const img = new Image();
     img.src = src;
     img.onload = () => {
-      setCurrentSrc(src);
-      setIsLoaded(true);
+      if (!cancelled) {
+        setCurrentSrc(src);
+        setIsLoaded(true);
+      }
     };
     img.onerror = () => {
-      setIsLoaded(false);
+      if (!cancelled) {
+        setIsLoaded(false);
+      }
     };
 
     return () => {
+      cancelled = true;
       img.onload = null;
       img.onerror = null;
+      img.src = '';
     };
   }, [src]);
 
