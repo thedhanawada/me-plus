@@ -166,14 +166,16 @@ const ExternalLinkModal = () => {
             <div className="flex items-center justify-between">
               <button
                 onClick={handleCancel}
-                className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors duration-default focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary px-2 py-1"
+                className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors duration-default focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 px-2 py-1"
+                style={{ '--tw-ring-offset-color': 'rgb(var(--color-bg-primary))' } as React.CSSProperties}
               >
                 [cancel]
               </button>
               <button
                 ref={continueRef}
                 onClick={handleContinue}
-                className="font-mono text-sm bg-bg-inverted text-text-inverted hover:opacity-80 transition-opacity duration-default focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary px-4 py-2"
+                className="font-mono text-sm bg-bg-inverted text-text-inverted hover:opacity-80 transition-opacity duration-default focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 px-4 py-2"
+                style={{ '--tw-ring-offset-color': 'rgb(var(--color-bg-primary))' } as React.CSSProperties}
               >
                 [continue →]
               </button>
