@@ -83,10 +83,10 @@ const Header = () => {
         Skip to main content
       </a>
       <header className={`sticky top-0 bg-bg-primary transition-all duration-default ${scrolled ? 'shadow-sm' : ''}`} style={{ zIndex: 'var(--z-sticky-header)' }}>
-        <div className={`px-8 md:px-12 lg:px-16 transition-all duration-default ${scrolled ? 'py-4' : 'py-10'}`}>
+        <div className={`px-4 sm:px-6 md:px-12 lg:px-16 transition-all duration-default ${scrolled ? 'py-4' : 'py-10'}`}>
           {/* Name - Full width, left aligned */}
           <div className={`transition-all duration-300 ${scrolled ? 'mb-3' : 'mb-6'}`}>
-            <Link to="/" className="inline-block">
+            <Link to="/" className="inline-block" aria-current={location.pathname === "/" ? "page" : undefined}>
               <span className={`font-bold tracking-tight leading-none transition-all duration-300 block ${scrolled ? 'text-fluid-2xl' : 'text-fluid-4xl'}`}>
                 N.R. Dhanawada
               </span>
@@ -166,7 +166,7 @@ const Header = () => {
                           to={item.path}
                           className={`block text-lg font-mono transition-colors duration-slow ${
                             isActive
-                              ? 'text-text-inverted bg-bg-inverted'
+                              ? 'text-text-primary font-bold border-b-2 border-border-strong'
                               : 'text-text-secondary hover:text-text-primary'
                           }`}
                         >

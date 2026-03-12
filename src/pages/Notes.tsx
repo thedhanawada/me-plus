@@ -68,7 +68,7 @@ const Notes = () => {
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-sm bg-bg-secondary px-3 py-1 rounded transition-colors duration-fast hover:bg-bg-tertiary"
+                        className="text-sm bg-bg-secondary px-3 py-1 rounded"
                       >
                         {tag}
                       </span>

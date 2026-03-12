@@ -16,11 +16,18 @@ const Tooltip = ({ content, children, position = 'top' }: TooltipProps) => {
     right: 'left-full top-1/2 -translate-y-1/2 ml-2',
   };
 
-  const arrowClasses = {
-    top: 'top-full left-1/2 -translate-x-1/2 border-t-bg-inverted border-x-transparent border-b-transparent',
-    bottom: 'bottom-full left-1/2 -translate-x-1/2 border-b-bg-inverted border-x-transparent border-t-transparent',
-    left: 'left-full top-1/2 -translate-y-1/2 border-l-bg-inverted border-y-transparent border-r-transparent',
-    right: 'right-full top-1/2 -translate-y-1/2 border-r-bg-inverted border-y-transparent border-l-transparent',
+  const arrowPositionClasses = {
+    top: 'top-full left-1/2 -translate-x-1/2',
+    bottom: 'bottom-full left-1/2 -translate-x-1/2',
+    left: 'left-full top-1/2 -translate-y-1/2',
+    right: 'right-full top-1/2 -translate-y-1/2',
+  };
+
+  const arrowBorderStyles: Record<string, React.CSSProperties> = {
+    top: { borderTopColor: 'rgb(var(--color-bg-inverted))', borderLeftColor: 'transparent', borderRightColor: 'transparent', borderBottomColor: 'transparent' },
+    bottom: { borderBottomColor: 'rgb(var(--color-bg-inverted))', borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: 'transparent' },
+    left: { borderLeftColor: 'rgb(var(--color-bg-inverted))', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderRightColor: 'transparent' },
+    right: { borderRightColor: 'rgb(var(--color-bg-inverted))', borderTopColor: 'transparent', borderBottomColor: 'transparent', borderLeftColor: 'transparent' },
   };
 
   return (
@@ -46,9 +53,10 @@ const Tooltip = ({ content, children, position = 'top' }: TooltipProps) => {
         {content}
         <div
           className={`
-            absolute ${arrowClasses[position]}
+            absolute ${arrowPositionClasses[position]}
             border-4
           `}
+          style={arrowBorderStyles[position]}
         />
       </div>
     </div>

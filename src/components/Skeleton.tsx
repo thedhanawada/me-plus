@@ -13,7 +13,7 @@ const Skeleton = ({
   height,
   count = 1,
 }: SkeletonProps) => {
-  const baseClasses = 'animate-pulse bg-bg-tertiary';
+  const baseClasses = 'animate-pulse motion-reduce:animate-none bg-bg-tertiary';
 
   const variantClasses = {
     text: 'rounded',

@@ -44,7 +44,7 @@ const HoverLink = ({
     <span className="relative z-10">{children}</span>
   ) : (
     <>
-      <span className="absolute inset-0 bg-bg-inverted scale-x-0 origin-left transition-transform duration-default group-hover:scale-x-100 motion-reduce:transition-none motion-reduce:scale-x-100 motion-reduce:opacity-0 motion-reduce:group-hover:opacity-100"></span>
+      <span className="absolute inset-0 bg-bg-inverted scale-x-0 origin-left transition-transform duration-default group-hover:scale-x-100 group-focus-within:scale-x-100 motion-reduce:transition-none motion-reduce:scale-x-100 motion-reduce:opacity-0 motion-reduce:group-hover:opacity-100"></span>
       <span className="relative z-10 group-hover:text-text-inverted">
         {children}
       </span>
