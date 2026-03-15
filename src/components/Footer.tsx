@@ -12,6 +12,9 @@ const Footer = () => {
             [email]
           </HoverLink>
         </div>
+        <p className="text-xs text-text-muted mb-4">
+          All views and opinions expressed here are my own and do not represent those of my employer.
+        </p>
         <p className="text-xs text-text-muted">
           Built with{' '}
           <HoverLink href="https://react.dev/" external className="px-1">
