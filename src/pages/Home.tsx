@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import HoverLink from '../components/HoverLink';
 import ThemeToggle from '../components/ThemeToggle';
 import SettingsPanel from '../components/SettingsPanel';
@@ -18,6 +19,26 @@ const PHOTO_ID = 'IMG_3973_wvbdt9';
 
 const Home = () => {
   const location = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
 
   return (
     <main id="main-content" className="relative min-h-screen flex flex-col">
@@ -54,12 +75,51 @@ const Home = () => {
             <ThemeToggle />
           </div>
 
-          {/* Mobile: just settings and theme for now, nav is in other pages */}
+          {/* Mobile */}
           <div className="lg:hidden flex items-center gap-4">
             <SettingsPanel />
             <ThemeToggle />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="text-text-secondary hover:text-text-primary font-mono text-sm transition-colors duration-slow focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
+            >
+              {mobileMenuOpen ? '[close]' : '[menu]'}
+            </button>
           </div>
         </div>
+
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              className="lg:hidden mt-6 pt-6 border-t border-border-primary"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+            >
+              <div className="space-y-4">
+                {NAV_ITEMS.map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link
+                      to={item.path}
+                      className="block text-lg font-mono text-text-secondary hover:text-text-primary transition-colors duration-slow"
+                    >
+                      [{item.name}]
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Center content: photo + dedication */}
@@ -93,26 +153,6 @@ const Home = () => {
           To Amma, Naana, Gayatri, and Swathi.
         </motion.p>
       </div>
-
-      {/* Bottom navigation */}
-      <motion.nav
-        className="relative z-10 px-4 sm:px-6 md:px-12 lg:px-16 py-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1, ease: 'easeOut' }}
-      >
-        <div className="flex items-center justify-center gap-4 sm:gap-6 text-sm font-mono">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className="text-text-muted hover:text-text-primary transition-colors duration-fast"
-            >
-              [{item.name}]
-            </Link>
-          ))}
-        </div>
-      </motion.nav>
     </main>
   );
 };
