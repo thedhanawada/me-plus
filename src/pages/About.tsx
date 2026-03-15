@@ -27,6 +27,13 @@ const About = () => {
   };
 
   const handleScroll = useCallback(() => {
+    // If scrolled to bottom, activate last section
+    const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 50;
+    if (atBottom) {
+      setActiveSection('publications');
+      return;
+    }
+
     const sections: Section[] = ['publications', 'work', 'education'];
     for (const section of sections) {
       const el = sectionRefs[section].current;
