@@ -53,7 +53,7 @@
     /* ===================
        LAYOUT TOKENS
        =================== */
-    --container-max-width: 56rem;              /* max-w-4xl (896px) */
+    --container-max-width: 68rem;              /* ~1088px */
 
     /* ===================
        TRANSITION TOKENS
