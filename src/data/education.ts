@@ -15,11 +15,7 @@ export const education: Education[] = [
     period: '2020 - 2021',
     degree: "Master's",
     program: 'Information Technology (Computing)',
-    courses: [
-      'Enterprise Architecture',
-      'Digital Ethics',
-      'Technology Equity & Management'
-    ],
+    courses: [],
     achievements: [
       "Distinction Awardee, 2021 Dean's Honours List",
       'Recipient of Melbourne School of Engineering Scholarship, 2020',
