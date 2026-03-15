@@ -136,10 +136,8 @@ const Home = () => {
             alt=""
             className="w-full h-auto"
             style={{
-              maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent), linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-              WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent), linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-              maskComposite: 'intersect',
-              WebkitMaskComposite: 'destination-in',
+              maskImage: 'linear-gradient(to bottom, transparent, black 12%, black 88%, transparent)',
+              WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 12%, black 88%, transparent)',
             }}
             loading="eager"
           />
