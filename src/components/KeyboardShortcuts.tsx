@@ -6,7 +6,6 @@ import { X } from 'lucide-react';
 const SHORTCUTS = [
   { keys: ['g', 'h'], description: 'Go to Home', action: 'navigate', path: '/' },
   { keys: ['g', 'a'], description: 'Go to About', action: 'navigate', path: '/about' },
-  { keys: ['g', 'l'], description: 'Go to Lab', action: 'navigate', path: '/lab' },
   { keys: ['g', 'p'], description: 'Go to Photography', action: 'navigate', path: '/art' },
   { keys: ['g', 't'], description: 'Go to TV', action: 'navigate', path: '/tv' },
   { keys: ['g', 'n'], description: 'Go to Notes', action: 'navigate', path: '/notes' },

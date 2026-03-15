@@ -7,7 +7,6 @@ import SettingsPanel from '../components/SettingsPanel';
 
 const NAV_ITEMS = [
   { name: 'about', path: '/about' },
-  { name: 'lab', path: '/lab' },
   { name: 'notes', path: '/notes' },
   { name: 'art', path: '/art' },
   { name: 'tv', path: '/tv' },

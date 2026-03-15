@@ -26,7 +26,6 @@ function lazyWithRetry(importFn: () => Promise<{ default: React.ComponentType }>
 
 const Home = lazyWithRetry(() => import('./pages/Home'));
 const Watchlist = lazyWithRetry(() => import('./pages/Watch'));
-const Lab = lazyWithRetry(() => import('./pages/Lab'));
 const Art = lazyWithRetry(() => import('./pages/Art'));
 const About = lazyWithRetry(() => import('./pages/About'));
 const Notes = lazyWithRetry(() => import('./pages/Notes'));
@@ -59,10 +58,6 @@ const PAGE_META: Record<string, PageMeta> = {
   '/tv': {
     title: 'N.R Dhanawada - TV',
     description: 'What I\'m watching, rewatching, and waiting for.',
-  },
-  '/lab': {
-    title: 'N.R Dhanawada - Lab',
-    description: 'Open source projects, contributions, and experiments.',
   },
   '/art': {
     title: 'N.R Dhanawada - Photography',
@@ -144,7 +139,7 @@ const AnimatedRoutes = () => {
           <Route path="/" element={<ErrorBoundary><Home /></ErrorBoundary>} />
           <Route path="/about" element={<PageTransition><ErrorBoundary><About /></ErrorBoundary></PageTransition>} />
           <Route path="/tv" element={<PageTransition><ErrorBoundary><Watchlist /></ErrorBoundary></PageTransition>} />
-          <Route path="/lab" element={<PageTransition><ErrorBoundary><Lab /></ErrorBoundary></PageTransition>} />
+          <Route path="/lab" element={<Navigate to="/about" replace />} />
           <Route path="/work" element={<Navigate to="/about" replace />} />
           <Route path="/art" element={<PageTransition><ErrorBoundary><Art /></ErrorBoundary></PageTransition>} />
           <Route path="/notes" element={<PageTransition><ErrorBoundary><Notes /></ErrorBoundary></PageTransition>} />
