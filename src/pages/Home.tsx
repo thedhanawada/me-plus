@@ -76,8 +76,8 @@ const Home = () => {
             alt=""
             className="w-full h-auto"
             style={{
-              maskImage: 'radial-gradient(ellipse 70% 70% at center, black 40%, transparent 100%)',
-              WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at center, black 40%, transparent 100%)',
+              maskImage: 'radial-gradient(ellipse 60% 55% at center, black 20%, transparent 70%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 60% 55% at center, black 20%, transparent 70%)',
             }}
             loading="eager"
           />
