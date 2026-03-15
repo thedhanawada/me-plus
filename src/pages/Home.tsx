@@ -144,14 +144,22 @@ const Home = () => {
         </motion.div>
 
         {/* Dedication */}
-        <motion.p
-          className="text-center font-mono text-sm sm:text-base text-text-secondary italic mt-8 tracking-wide"
+        <motion.div
+          className="text-center mt-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
         >
-          To Amma, Naana, Swathi, Gayatri and Suku.
-        </motion.p>
+          <p className="font-mono text-sm sm:text-base text-text-secondary italic tracking-wide">
+            To Amma, Naana, Swathi, Gayatri and Suku.
+          </p>
+          <p
+            className="mt-6 text-3xl sm:text-4xl text-text-secondary"
+            style={{ fontFamily: "'Caveat', cursive" }}
+          >
+            NRDhanawada
+          </p>
+        </motion.div>
       </div>
     </main>
   );
