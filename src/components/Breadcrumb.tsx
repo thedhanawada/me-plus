@@ -9,7 +9,6 @@ interface Crumb {
 
 const ROUTE_LABELS: Record<string, string> = {
   '/about': 'about',
-  '/work': 'work',
   '/lab': 'lab',
   '/notes': 'notes',
   '/art': 'art',

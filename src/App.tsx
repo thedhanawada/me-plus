@@ -1,5 +1,5 @@
 import { useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from './context/ThemeContext';
@@ -27,7 +27,6 @@ function lazyWithRetry(importFn: () => Promise<{ default: React.ComponentType }>
 const Home = lazyWithRetry(() => import('./pages/Home'));
 const Watchlist = lazyWithRetry(() => import('./pages/Watch'));
 const Lab = lazyWithRetry(() => import('./pages/Lab'));
-const Work = lazyWithRetry(() => import('./pages/Work'));
 const Art = lazyWithRetry(() => import('./pages/Art'));
 const About = lazyWithRetry(() => import('./pages/About'));
 const Notes = lazyWithRetry(() => import('./pages/Notes'));
@@ -64,10 +63,6 @@ const PAGE_META: Record<string, PageMeta> = {
   '/lab': {
     title: 'N.R Dhanawada - Lab',
     description: 'Open source projects, contributions, and experiments.',
-  },
-  '/work': {
-    title: 'N.R Dhanawada - Work',
-    description: 'Professional experience in solutions architecture and platform engineering.',
   },
   '/art': {
     title: 'N.R Dhanawada - Photography',
@@ -150,7 +145,7 @@ const AnimatedRoutes = () => {
           <Route path="/about" element={<PageTransition><ErrorBoundary><About /></ErrorBoundary></PageTransition>} />
           <Route path="/tv" element={<PageTransition><ErrorBoundary><Watchlist /></ErrorBoundary></PageTransition>} />
           <Route path="/lab" element={<PageTransition><ErrorBoundary><Lab /></ErrorBoundary></PageTransition>} />
-          <Route path="/work" element={<PageTransition><ErrorBoundary><Work /></ErrorBoundary></PageTransition>} />
+          <Route path="/work" element={<Navigate to="/about" replace />} />
           <Route path="/art" element={<PageTransition><ErrorBoundary><Art /></ErrorBoundary></PageTransition>} />
           <Route path="/notes" element={<PageTransition><ErrorBoundary><Notes /></ErrorBoundary></PageTransition>} />
           <Route path="/notes/:slug" element={<PageTransition><ErrorBoundary><NotePost /></ErrorBoundary></PageTransition>} />
