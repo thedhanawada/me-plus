@@ -4,11 +4,11 @@ import { useTheme } from '../hooks';
 import { X } from 'lucide-react';
 
 const SHORTCUTS = [
-  { keys: ['g', 'h'], description: 'Go to Home', action: 'navigate', path: '/' },
-  { keys: ['g', 'a'], description: 'Go to About', action: 'navigate', path: '/about' },
-  { keys: ['g', 'p'], description: 'Go to Photography', action: 'navigate', path: '/art' },
-  { keys: ['g', 't'], description: 'Go to TV', action: 'navigate', path: '/tv' },
-  { keys: ['g', 'n'], description: 'Go to Notes', action: 'navigate', path: '/notes' },
+  { keys: ['1'], description: 'Go to Home', action: 'navigate', path: '/' },
+  { keys: ['2'], description: 'Go to About', action: 'navigate', path: '/about' },
+  { keys: ['3'], description: 'Go to Notes', action: 'navigate', path: '/notes' },
+  { keys: ['4'], description: 'Go to Art', action: 'navigate', path: '/art' },
+  { keys: ['5'], description: 'Go to TV', action: 'navigate', path: '/tv' },
   { keys: ['t'], description: 'Toggle theme', action: 'theme' },
   { keys: ['?'], description: 'Show shortcuts', action: 'help' },
   { keys: ['Escape'], description: 'Close dialog', action: 'close' },
