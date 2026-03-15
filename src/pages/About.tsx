@@ -40,7 +40,7 @@ const About = () => {
 
                 {edu.achievements && (
                   <div>
-                    <h4 className="font-semibold mb-2">Achievements</h4>
+                    <h4 className="font-semibold mb-2">Honours</h4>
                     <ul className="space-y-1 text-text-secondary">
                       {edu.achievements.map((achievement, i) => (
                         <li key={i} className="flex items-start gap-2">
