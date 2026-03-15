@@ -15,15 +15,24 @@ import DotGrid from './components/DotGrid';
 import Breadcrumb from './components/Breadcrumb';
 import PageTransition from './components/PageTransition';
 
-const Home = lazy(() => import('./pages/Home'));
-const Watchlist = lazy(() => import('./pages/Watch'));
-const Lab = lazy(() => import('./pages/Lab'));
-const Work = lazy(() => import('./pages/Work'));
-const Art = lazy(() => import('./pages/Art'));
-const About = lazy(() => import('./pages/About'));
-const Notes = lazy(() => import('./pages/Notes'));
-const NotePost = lazy(() => import('./pages/NotePost'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+function lazyWithRetry(importFn: () => Promise<{ default: React.ComponentType }>) {
+  return lazy(() =>
+    importFn().catch(() => {
+      window.location.reload();
+      return new Promise(() => {});
+    })
+  );
+}
+
+const Home = lazyWithRetry(() => import('./pages/Home'));
+const Watchlist = lazyWithRetry(() => import('./pages/Watch'));
+const Lab = lazyWithRetry(() => import('./pages/Lab'));
+const Work = lazyWithRetry(() => import('./pages/Work'));
+const Art = lazyWithRetry(() => import('./pages/Art'));
+const About = lazyWithRetry(() => import('./pages/About'));
+const Notes = lazyWithRetry(() => import('./pages/Notes'));
+const NotePost = lazyWithRetry(() => import('./pages/NotePost'));
+const NotFound = lazyWithRetry(() => import('./pages/NotFound'));
 
 const PageLoader = () => (
   <div className="flex justify-center items-center min-h-[50vh]">
