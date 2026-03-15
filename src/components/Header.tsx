@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import HoverLink from './HoverLink';
 import ScrollProgress from './ScrollProgress';
 import ThemeToggle from './ThemeToggle';
+import SettingsPanel from './SettingsPanel';
 
 const NAV_ITEMS = [
   { name: 'about', path: '/about' },
@@ -116,6 +117,7 @@ const Header = () => {
                 [src]
               </HoverLink>
 
+              <SettingsPanel />
               <ThemeToggle />
             </div>
           </nav>
@@ -183,7 +185,10 @@ const Header = () => {
                       [src]
                     </HoverLink>
 
-                    <ThemeToggle />
+                    <div className="flex items-center gap-4">
+                      <SettingsPanel />
+                      <ThemeToggle />
+                    </div>
                   </motion.div>
                 </div>
               </motion.nav>
