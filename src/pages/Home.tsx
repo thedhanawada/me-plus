@@ -150,7 +150,7 @@ const Home = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
         >
-          To Amma, Naana, Gayatri, and Swathi.
+          To Amma, Naana, Swathi, Gayatri and Suku.
         </motion.p>
       </div>
     </main>
