@@ -112,6 +112,24 @@ const MetaUpdater = () => {
   return null;
 };
 
+const AppShell = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
+  if (isHome) {
+    return <>{children}</>;
+  }
+
+  return (
+    <>
+      <Header />
+      <Breadcrumb />
+      {children}
+      <Footer />
+    </>
+  );
+};
+
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -119,7 +137,7 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <Suspense fallback={<PageLoader />} key={location.pathname}>
         <Routes location={location}>
-          <Route path="/" element={<PageTransition><ErrorBoundary><Home /></ErrorBoundary></PageTransition>} />
+          <Route path="/" element={<ErrorBoundary><Home /></ErrorBoundary>} />
           <Route path="/about" element={<PageTransition><ErrorBoundary><About /></ErrorBoundary></PageTransition>} />
           <Route path="/tv" element={<PageTransition><ErrorBoundary><Watchlist /></ErrorBoundary></PageTransition>} />
           <Route path="/lab" element={<PageTransition><ErrorBoundary><Lab /></ErrorBoundary></PageTransition>} />
@@ -144,12 +162,9 @@ function App() {
             <DotGrid />
             <div className="relative" style={{ zIndex: 1 }}>
             <MetaUpdater />
-            <Header />
-            <Breadcrumb />
-
-            <AnimatedRoutes />
-
-            <Footer />
+            <AppShell>
+              <AnimatedRoutes />
+            </AppShell>
             <BackToTop />
             <KeyboardShortcuts />
             <ExternalLinkModal />
