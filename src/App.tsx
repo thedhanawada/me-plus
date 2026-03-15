@@ -1,5 +1,6 @@
 import { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from './context/ThemeContext';
 import { ExternalLinkProvider } from './context/ExternalLinkContext';
@@ -11,6 +12,7 @@ import KeyboardShortcuts from './components/KeyboardShortcuts';
 import ExternalLinkModal from './components/ExternalLinkModal';
 import DotGrid from './components/DotGrid';
 import Breadcrumb from './components/Breadcrumb';
+import PageTransition from './components/PageTransition';
 
 const Home = lazy(() => import('./pages/Home'));
 const Watchlist = lazy(() => import('./pages/Watch'));
@@ -109,6 +111,28 @@ const MetaUpdater = () => {
   return null;
 };
 
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Suspense fallback={<PageLoader />} key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<PageTransition><ErrorBoundary><Home /></ErrorBoundary></PageTransition>} />
+          <Route path="/about" element={<PageTransition><ErrorBoundary><About /></ErrorBoundary></PageTransition>} />
+          <Route path="/tv" element={<PageTransition><ErrorBoundary><Watchlist /></ErrorBoundary></PageTransition>} />
+          <Route path="/lab" element={<PageTransition><ErrorBoundary><Lab /></ErrorBoundary></PageTransition>} />
+          <Route path="/work" element={<PageTransition><ErrorBoundary><Work /></ErrorBoundary></PageTransition>} />
+          <Route path="/art" element={<PageTransition><ErrorBoundary><Art /></ErrorBoundary></PageTransition>} />
+          <Route path="/notes" element={<PageTransition><ErrorBoundary><Notes /></ErrorBoundary></PageTransition>} />
+          <Route path="/notes/:slug" element={<PageTransition><ErrorBoundary><NotePost /></ErrorBoundary></PageTransition>} />
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
+      </Suspense>
+    </AnimatePresence>
+  );
+};
+
 function App() {
   return (
     <ThemeProvider>
@@ -121,19 +145,7 @@ function App() {
             <Header />
             <Breadcrumb />
 
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<ErrorBoundary><Home /></ErrorBoundary>} />
-                <Route path="/about" element={<ErrorBoundary><About /></ErrorBoundary>} />
-                <Route path="/tv" element={<ErrorBoundary><Watchlist /></ErrorBoundary>} />
-                <Route path="/lab" element={<ErrorBoundary><Lab /></ErrorBoundary>} />
-                <Route path="/work" element={<ErrorBoundary><Work /></ErrorBoundary>} />
-                <Route path="/art" element={<ErrorBoundary><Art /></ErrorBoundary>} />
-                <Route path="/notes" element={<ErrorBoundary><Notes /></ErrorBoundary>} />
-                <Route path="/notes/:slug" element={<ErrorBoundary><NotePost /></ErrorBoundary>} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
+            <AnimatedRoutes />
 
             <Footer />
             <BackToTop />
