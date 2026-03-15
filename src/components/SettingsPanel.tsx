@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSettings } from '../hooks';
+import HoverLink from './HoverLink';
 
 const SettingsPanel = () => {
   const [open, setOpen] = useState(false);
@@ -40,16 +41,15 @@ const SettingsPanel = () => {
 
   return (
     <div className="relative">
-      <button
-        ref={buttonRef}
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-        aria-haspopup="true"
-        aria-label="Site settings"
-        className="px-3 py-1.5 text-sm font-mono text-text-secondary hover:text-text-primary transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
-      >
-        [settings]
-      </button>
+      <div ref={buttonRef}>
+        <HoverLink
+          onClick={() => setOpen(!open)}
+          ariaLabel="Site settings"
+          className="px-3 py-1.5 text-sm"
+        >
+          [settings]
+        </HoverLink>
+      </div>
 
       <AnimatePresence>
         {open && (
