@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import HoverLink from './HoverLink';
 import ScrollProgress from './ScrollProgress';
-import { useTheme } from '../hooks';
+import ThemeToggle from './ThemeToggle';
 
 const NAV_ITEMS = [
   { name: 'about', path: '/about' },
@@ -15,7 +15,6 @@ const NAV_ITEMS = [
 ] as const;
 
 const Header = () => {
-  const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -117,13 +116,7 @@ const Header = () => {
                 [src]
               </HoverLink>
 
-              <HoverLink
-                onClick={toggleTheme}
-                ariaLabel={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-                className="px-3 py-1.5 text-sm"
-              >
-                [{theme === 'light' ? '◐' : '◑'}]
-              </HoverLink>
+              <ThemeToggle />
             </div>
           </nav>
 
@@ -190,13 +183,7 @@ const Header = () => {
                       [src]
                     </HoverLink>
 
-                    <button
-                      onClick={toggleTheme}
-                      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-                      className="text-sm text-text-muted font-mono hover:text-text-secondary transition-colors duration-slow focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
-                    >
-                      [{theme === 'light' ? '◐' : '◑'}]
-                    </button>
+                    <ThemeToggle />
                   </motion.div>
                 </div>
               </motion.nav>
