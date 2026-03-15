@@ -154,13 +154,14 @@ const Home = () => {
             To Amma, Naana, Swathi, Gayatri and Suku.
           </p>
           <p
-            className="mt-6 text-3xl sm:text-4xl text-text-secondary"
+            className="mt-6 text-5xl sm:text-6xl text-text-secondary select-none"
             style={{
-              fontFamily: "'Caveat', cursive",
-              transform: 'rotate(-3deg) translateX(10px)',
+              fontFamily: "'Herr Von Muellerhoff', cursive",
+              transform: 'rotate(-2deg)',
+              letterSpacing: '-0.02em',
             }}
           >
-            NRDhanawada
+            N.R.Dhanawada
           </p>
         </motion.div>
       </div>
