@@ -12,13 +12,11 @@ export const education: Education[] = [
   {
     university: 'University of Melbourne',
     location: 'Melbourne, AU',
-    period: '2020.2 - 2021.12',
-    degree: 'Master Program',
+    period: '2020 - 2021',
+    degree: "Master's",
     program: 'Information Technology (Computing)',
     courses: [
-      'Software Project Management',
       'Enterprise Architecture',
-      'ICT Infrastructure',
       'Digital Ethics',
       'Technology Equity & Management'
     ],
@@ -31,14 +29,9 @@ export const education: Education[] = [
   {
     university: 'Pondicherry University',
     location: 'Pondicherry, IN',
-    period: '2011.08 - 2015.05',
-    degree: 'Bachelor Program',
+    period: '2011 - 2015',
+    degree: "Bachelor's",
     program: 'Computer Science and Engineering',
-    courses: [
-      'Data Structures',
-      'Automata Languages and Computation',
-      'Object-Oriented Programming Languages',
-      'Design and Analysis of Algorithms'
-    ]
+    courses: []
   }
 ];

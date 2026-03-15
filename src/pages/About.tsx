@@ -52,16 +52,18 @@ const About = () => {
                   </div>
                 )}
 
-                <div>
-                  <h4 className="font-semibold mb-2">Key Courses</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {edu.courses.map((course) => (
-                      <span key={course} className="text-sm bg-bg-secondary px-3 py-1 rounded">
-                        {course}
-                      </span>
-                    ))}
+                {edu.courses.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold mb-2">Key Courses</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {edu.courses.map((course) => (
+                        <span key={course} className="text-sm bg-bg-secondary px-3 py-1 rounded">
+                          {course}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>
