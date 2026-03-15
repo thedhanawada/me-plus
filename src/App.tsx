@@ -9,6 +9,7 @@ import Header from './components/Header';
 import BackToTop from './components/BackToTop';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 import ExternalLinkModal from './components/ExternalLinkModal';
+import DotGrid from './components/DotGrid';
 
 const Home = lazy(() => import('./pages/Home'));
 const Watchlist = lazy(() => import('./pages/Watch'));
@@ -113,6 +114,8 @@ function App() {
       <ExternalLinkProvider>
         <Router>
           <div className="min-h-screen bg-bg-primary text-text-primary font-mono transition-colors duration-slow">
+            <DotGrid />
+            <div className="relative" style={{ zIndex: 1 }}>
             <MetaUpdater />
             <Header />
 
@@ -134,6 +137,7 @@ function App() {
             <BackToTop />
             <KeyboardShortcuts />
             <ExternalLinkModal />
+            </div>
           </div>
           <Analytics />
         </Router>
