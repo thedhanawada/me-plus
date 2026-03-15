@@ -11,9 +11,20 @@ const DotGrid = () => {
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const animationRef = useRef<number>(0);
   const needsRedrawRef = useRef(true);
+  const isTouchDeviceRef = useRef(false);
   const { theme } = useTheme();
 
+  // Skip rendering entirely on touch-only devices and reduced motion
+  useEffect(() => {
+    isTouchDeviceRef.current = window.matchMedia('(pointer: coarse)').matches;
+  }, []);
+
+  const prefersReducedMotion = useRef(
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
   const draw = useCallback(() => {
+    if (isTouchDeviceRef.current || prefersReducedMotion.current) return;
     if (!needsRedrawRef.current) {
       animationRef.current = requestAnimationFrame(draw);
       return;
@@ -123,6 +134,9 @@ const DotGrid = () => {
     animationRef.current = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(animationRef.current);
   }, [draw]);
+
+  // Don't render canvas on touch-only devices or reduced-motion
+  if (isTouchDeviceRef.current || prefersReducedMotion.current) return null;
 
   return (
     <canvas
