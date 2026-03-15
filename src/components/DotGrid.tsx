@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { useTheme } from '../hooks';
+import { useTheme, useSettings } from '../hooks';
 
 const DOT_SPACING = 32;
 const DOT_BASE_RADIUS = 1;
@@ -13,6 +13,7 @@ const DotGrid = () => {
   const needsRedrawRef = useRef(true);
   const isTouchDeviceRef = useRef(false);
   const { theme } = useTheme();
+  const { settings } = useSettings();
 
   // Skip rendering entirely on touch-only devices and reduced motion
   useEffect(() => {
@@ -24,7 +25,7 @@ const DotGrid = () => {
   );
 
   const draw = useCallback(() => {
-    if (isTouchDeviceRef.current || prefersReducedMotion.current) return;
+    if (!settings.showDotGrid || isTouchDeviceRef.current || prefersReducedMotion.current) return;
     if (!needsRedrawRef.current) {
       animationRef.current = requestAnimationFrame(draw);
       return;
@@ -90,7 +91,7 @@ const DotGrid = () => {
     ctx.restore();
     needsRedrawRef.current = false;
     animationRef.current = requestAnimationFrame(draw);
-  }, [theme]);
+  }, [theme, settings.showDotGrid]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -135,8 +136,8 @@ const DotGrid = () => {
     return () => cancelAnimationFrame(animationRef.current);
   }, [draw]);
 
-  // Don't render canvas on touch-only devices or reduced-motion
-  if (isTouchDeviceRef.current || prefersReducedMotion.current) return null;
+  // Don't render canvas when disabled, on touch devices, or reduced-motion
+  if (!settings.showDotGrid || isTouchDeviceRef.current || prefersReducedMotion.current) return null;
 
   return (
     <canvas
