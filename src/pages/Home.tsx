@@ -155,7 +155,10 @@ const Home = () => {
           </p>
           <p
             className="mt-6 text-3xl sm:text-4xl text-text-secondary"
-            style={{ fontFamily: "'Caveat', cursive" }}
+            style={{
+              fontFamily: "'Caveat', cursive",
+              transform: 'rotate(-3deg) translateX(10px)',
+            }}
           >
             NRDhanawada
           </p>
