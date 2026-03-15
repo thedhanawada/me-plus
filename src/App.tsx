@@ -10,6 +10,7 @@ import BackToTop from './components/BackToTop';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 import ExternalLinkModal from './components/ExternalLinkModal';
 import DotGrid from './components/DotGrid';
+import Breadcrumb from './components/Breadcrumb';
 
 const Home = lazy(() => import('./pages/Home'));
 const Watchlist = lazy(() => import('./pages/Watch'));
@@ -118,6 +119,7 @@ function App() {
             <div className="relative" style={{ zIndex: 1 }}>
             <MetaUpdater />
             <Header />
+            <Breadcrumb />
 
             <Suspense fallback={<PageLoader />}>
               <Routes>
