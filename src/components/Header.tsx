@@ -109,14 +109,6 @@ const Header = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <HoverLink
-                href="https://github.com/thedhanawada/me-plus"
-                external
-                className="px-3 py-1.5 text-sm"
-              >
-                [src]
-              </HoverLink>
-
               <SettingsPanel />
               <ThemeToggle />
             </div>
@@ -177,14 +169,6 @@ const Header = () => {
                     animate={prefersReducedMotion ? {} : { opacity: 1 }}
                     transition={prefersReducedMotion ? {} : { delay: 0.25 }}
                   >
-                    <HoverLink
-                      href="https://github.com/thedhanawada/me-plus"
-                      external
-                      className="text-sm text-text-muted hover:text-text-secondary px-0 py-0"
-                    >
-                      [src]
-                    </HoverLink>
-
                     <div className="flex items-center gap-4">
                       <SettingsPanel />
                       <ThemeToggle />

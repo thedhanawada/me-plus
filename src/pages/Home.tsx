@@ -63,14 +63,6 @@ const Home = () => {
               </HoverLink>
             ))}
 
-            <HoverLink
-              href="https://github.com/thedhanawada/me-plus"
-              external
-              className="px-3 py-1.5 text-sm"
-            >
-              [src]
-            </HoverLink>
-
             <SettingsPanel />
             <ThemeToggle />
           </div>

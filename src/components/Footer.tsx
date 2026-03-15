@@ -11,6 +11,9 @@ const Footer = () => {
           <HoverLink href="mailto:nirmal@dhanawada.org">
             [email]
           </HoverLink>
+          <HoverLink href="https://github.com/thedhanawada/me-plus" external>
+            [src]
+          </HoverLink>
         </div>
         <p className="text-xs text-text-muted mb-4">
           All views and opinions expressed here are my own and do not represent those of my employer.
