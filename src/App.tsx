@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from './context/ThemeContext';
 import { ExternalLinkProvider } from './context/ExternalLinkContext';
+import { SettingsProvider } from './context/SettingsContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -136,6 +137,7 @@ const AnimatedRoutes = () => {
 function App() {
   return (
     <ThemeProvider>
+      <SettingsProvider>
       <ExternalLinkProvider>
         <Router>
           <div className="min-h-screen bg-bg-primary text-text-primary font-mono transition-colors duration-slow">
@@ -156,6 +158,7 @@ function App() {
           <Analytics />
         </Router>
       </ExternalLinkProvider>
+      </SettingsProvider>
     </ThemeProvider>
   );
 }
