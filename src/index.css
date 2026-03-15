@@ -106,6 +106,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hide scrollbar for timeline */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Theme transition effect */
 html.theme-transitioning,
 html.theme-transitioning * {
