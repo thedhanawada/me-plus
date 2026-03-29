@@ -6,6 +6,7 @@ export interface ExperienceHighlight {
 export interface Experience {
   title: string;
   company: string;
+  companyUrl?: string;
   location: string;
   period: string;
   award?: string;
@@ -26,6 +27,7 @@ export const experiences: Experience[] = [
   {
     title: 'Solutions Architect',
     company: 'MTC FutureReady',
+    companyUrl: 'https://mtcfr.org',
     location: 'Sydney, NSW',
     period: '2022.02 - Present',
     award: 'MTC Applause Award (2022)',
@@ -59,6 +61,7 @@ export const experiences: Experience[] = [
   {
     title: 'Research Placement Student',
     company: 'Walter and Eliza Hall Institute of Medical Research',
+    companyUrl: 'https://www.wehi.edu.au',
     location: 'Melbourne, AU',
     period: '2021.07 - 2021.10',
     highlights: [
@@ -83,6 +86,7 @@ export const experiences: Experience[] = [
   {
     title: 'Senior Technology Analyst',
     company: "Victoria's Secret & Co.",
+    companyUrl: 'https://www.victoriassecretandco.com',
     location: 'Bangalore, IN',
     period: '2016.10 - 2020.02',
     award: 'Individual Achievement Award',
@@ -104,6 +108,7 @@ export const experiences: Experience[] = [
   {
     title: 'Assistant System Engineer',
     company: 'Tata Consultancy Services',
+    companyUrl: 'https://www.tcs.com',
     location: 'Chennai, IN',
     period: '2015.06 - 2016.10',
     award: 'Star of the Learners Group',

@@ -215,7 +215,15 @@ const About = () => {
                         )}
                       </div>
                       <h3 className="text-xl font-bold">{exp.title}</h3>
-                      <p className="text-text-secondary">{exp.company}</p>
+                      <p className="text-text-secondary">
+                        {exp.companyUrl ? (
+                          <HoverLink href={exp.companyUrl} external ariaLabel={`Visit ${exp.company} website`}>
+                            {exp.company}
+                          </HoverLink>
+                        ) : (
+                          exp.company
+                        )}
+                      </p>
                     </div>
 
                     <div className="border-l-2 border-border-secondary pl-6 space-y-6">
