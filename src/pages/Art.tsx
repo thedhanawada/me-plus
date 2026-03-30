@@ -24,7 +24,7 @@ const PhotoTile = ({
   return (
     <motion.button
       onClick={onClick}
-      className="relative overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-inset group"
+      className="relative overflow-hidden rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-inset group"
       style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
       aria-label={`View photo: ${photo.alt}`}
       initial={{ opacity: 0 }}
@@ -48,14 +48,17 @@ const PhotoTile = ({
         fetchFormat="auto"
         onLoad={() => setLoaded(true)}
       />
-      {/* Subtle hover vignette */}
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none" />
+      {/* Hover vignette + caption */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <p className="text-white/90 text-xs font-mono leading-snug">{photo.alt}</p>
+      </div>
     </motion.button>
   );
 };
 
 // ---------------------------------------------------------------------------
-// Lightbox — full-screen photo viewer with animated transitions
+// Lightbox — full-screen photo viewer with swipe + crossfade
 // ---------------------------------------------------------------------------
 const Lightbox = ({
   photo,
@@ -77,6 +80,11 @@ const Lightbox = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const preloadControllerRef = useRef<AbortController | null>(null);
+
+  // Touch/swipe state
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const touchDeltaRef = useRef(0);
+  const isSwiping = useRef(false);
 
   // Reset loaded state when photo changes
   useEffect(() => {
@@ -133,9 +141,47 @@ const Lightbox = ({
     };
   }, []);
 
+  // Touch handlers for swipe
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    touchDeltaRef.current = 0;
+    isSwiping.current = false;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    const deltaX = e.touches[0].clientX - touchStartRef.current.x;
+    const deltaY = e.touches[0].clientY - touchStartRef.current.y;
+
+    // Only count as swipe if horizontal movement is dominant
+    if (!isSwiping.current && Math.abs(deltaX) > 10) {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        isSwiping.current = true;
+      }
+    }
+
+    if (isSwiping.current) {
+      e.preventDefault();
+      touchDeltaRef.current = deltaX;
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (isSwiping.current) {
+      const threshold = 50;
+      if (touchDeltaRef.current > threshold) {
+        onPrev();
+      } else if (touchDeltaRef.current < -threshold) {
+        onNext();
+      }
+    }
+    touchStartRef.current = null;
+    touchDeltaRef.current = 0;
+    isSwiping.current = false;
+  }, [onPrev, onNext]);
+
   // Preload adjacent images
   useEffect(() => {
-    // Cancel previous preload requests
     if (preloadControllerRef.current) {
       preloadControllerRef.current.abort();
     }
@@ -167,6 +213,9 @@ const Lightbox = ({
       className="fixed inset-0 flex items-center justify-center"
       style={{ zIndex: 'var(--z-lightbox)' }}
       onClick={onClose}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       tabIndex={-1}
       role="dialog"
       aria-modal="true"
@@ -178,7 +227,7 @@ const Lightbox = ({
     >
       {/* Backdrop */}
       <motion.div
-        className="absolute inset-0 bg-bg-inverted/95"
+        className="absolute inset-0 bg-bg-inverted/95 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -206,7 +255,7 @@ const Lightbox = ({
       {/* Previous */}
       <button
         onClick={(e) => { e.stopPropagation(); onPrev(); }}
-        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-3 text-white/30 hover:text-white transition-colors z-10"
+        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-3 text-white/30 hover:text-white transition-colors z-10 hidden md:block"
         aria-label="Previous photo"
       >
         <ChevronLeft size={28} />
@@ -215,7 +264,7 @@ const Lightbox = ({
       {/* Next */}
       <button
         onClick={(e) => { e.stopPropagation(); onNext(); }}
-        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-3 text-white/30 hover:text-white transition-colors z-10"
+        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-3 text-white/30 hover:text-white transition-colors z-10 hidden md:block"
         aria-label="Next photo"
       >
         <ChevronRight size={28} />
@@ -237,19 +286,19 @@ const Lightbox = ({
             }}
           />
         )}
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="popLayout">
           <motion.div
             key={photo.id}
             initial={{ opacity: 0 }}
             animate={{ opacity: loaded ? 1 : 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
           >
             <CloudinaryImage
               cloudName={cloudName}
               publicId={photo.id}
               alt={photo.alt}
-              className="max-w-[90vw] max-h-[85vh] object-contain"
+              className="max-w-[90vw] max-h-[85vh] object-contain rounded"
               width="1600"
               quality="auto"
               fetchFormat="auto"
@@ -300,7 +349,7 @@ const Art = () => {
   return (
     <>
       <main id="main-content" className="transition-colors duration-slow">
-        {/* Minimal header */}
+        {/* Header */}
         <div className="max-w-container mx-auto px-page-x pt-page-y pb-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -313,18 +362,21 @@ const Art = () => {
             <p className="text-text-secondary text-lg">
               Photos I took. Nothing professional — just things that caught my eye.
             </p>
+            <p className="text-text-muted text-sm mt-2 font-mono">
+              {photos.length} photos
+            </p>
           </motion.div>
         </div>
 
-        {/* Favorites section */}
-        <div className="max-w-container mx-auto px-page-x pb-8">
+        {/* Favorites section — larger tiles */}
+        <div className="max-w-container mx-auto px-page-x pb-4">
           <p className="text-xs font-mono text-text-muted mb-4 uppercase tracking-wider">
             Favorites
           </p>
         </div>
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-1 px-1 sm:px-1">
+        <div className="columns-1 sm:columns-2 gap-2 px-2 sm:px-2">
           {favorites.map((photo, index) => (
-            <div key={photo.id} className="break-inside-avoid mb-1">
+            <div key={photo.id} className="break-inside-avoid mb-2">
               <PhotoTile
                 photo={photo}
                 index={index}
@@ -342,10 +394,10 @@ const Art = () => {
           </p>
         </div>
 
-        {/* Collection grid */}
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-1 px-1 pb-page-y">
+        {/* Collection grid — more breathing room */}
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-2 px-2 pb-page-y">
           {collection.map((photo, index) => (
-            <div key={photo.id} className="break-inside-avoid mb-1">
+            <div key={photo.id} className="break-inside-avoid mb-2">
               <PhotoTile
                 photo={photo}
                 index={index}
