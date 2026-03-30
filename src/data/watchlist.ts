@@ -33,10 +33,10 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 672, type: 'movie', category: 'favorite' },   // Harry Potter Chamber of Secrets
   { id: 70523, type: 'tv', category: 'favorite' },    // Dark
   { id: 72844, type: 'tv', category: 'favorite' },    // The Haunting of Hill House
-  { id: 63675, type: 'movie', category: 'favorite' },
-  { id: 26910, type: 'movie', category: 'favorite' },
-  { id: 7508, type: 'movie', category: 'favorite' },
-  { id: 268660, type: 'movie', category: 'favorite' },
+  { id: 63675, type: 'movie', category: 'favorite' },  // Mozhi
+  { id: 26910, type: 'movie', category: 'favorite' },  // Anbe Sivam
+  { id: 7508, type: 'movie', category: 'favorite' },   // Taare Zameen Par
+  { id: 268660, type: 'movie', category: 'favorite' }, // Bangalore Days
   { id: 550, type: 'movie', category: 'favorite' },   // Fight Club
   { id: 198277, type: 'movie', category: 'favorite' },// Begin Again
   { id: 438631, type: 'movie', category: 'favorite' },// Dune

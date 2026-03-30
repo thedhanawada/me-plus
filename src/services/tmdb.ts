@@ -27,7 +27,7 @@ interface CacheData {
 }
 
 export const isApiKeyConfigured = (): boolean => {
-  return true;
+  return typeof window !== 'undefined';
 };
 
 const getCachedData = (): Media[] | null => {
