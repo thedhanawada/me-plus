@@ -41,7 +41,7 @@ const PhotoTile = ({
         alt={photo.alt}
         className={`w-full h-full object-cover transition-all duration-500 ${
           loaded ? 'opacity-100' : 'opacity-0'
-        } group-hover:scale-[1.03] group-focus-visible:scale-[1.03]`}
+        }`}
         loading="lazy"
         width="600"
         quality="auto"
