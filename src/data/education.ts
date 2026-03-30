@@ -1,5 +1,6 @@
 export interface Education {
   university: string;
+  universityUrl?: string;
   location: string;
   period: string;
   degree: string;
@@ -11,6 +12,7 @@ export interface Education {
 export const education: Education[] = [
   {
     university: 'University of Melbourne',
+    universityUrl: 'https://www.unimelb.edu.au',
     location: 'Melbourne, AU',
     period: '2020 - 2021',
     degree: "Master's",
@@ -24,6 +26,7 @@ export const education: Education[] = [
   },
   {
     university: 'Pondicherry University',
+    universityUrl: 'https://www.pondiuni.edu.in',
     location: 'Pondicherry, IN',
     period: '2011 - 2015',
     degree: "Bachelor's",

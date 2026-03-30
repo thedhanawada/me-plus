@@ -130,7 +130,15 @@ const About = () => {
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                     <div>
-                      <h3 className="text-xl font-semibold">{edu.university}</h3>
+                      <h3 className="text-xl font-semibold">
+                        {edu.universityUrl ? (
+                          <HoverLink href={edu.universityUrl} external ariaLabel={`Visit ${edu.university} website`}>
+                            {edu.university}
+                          </HoverLink>
+                        ) : (
+                          edu.university
+                        )}
+                      </h3>
                       <p className="text-text-secondary">{edu.degree} - {edu.program}</p>
                     </div>
                     <div className="text-sm text-text-tertiary space-y-1 md:text-right mt-2 md:mt-0">
