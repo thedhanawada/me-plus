@@ -132,7 +132,7 @@ const About = () => {
                     <div>
                       <h3 className="text-xl font-semibold">
                         {edu.universityUrl ? (
-                          <HoverLink href={edu.universityUrl} external ariaLabel={`Visit ${edu.university} website`}>
+                          <HoverLink href={edu.universityUrl} external className="px-0 py-0" ariaLabel={`Visit ${edu.university} website`}>
                             {edu.university}
                           </HoverLink>
                         ) : (
@@ -225,7 +225,7 @@ const About = () => {
                       <h3 className="text-xl font-bold">{exp.title}</h3>
                       <p className="text-text-secondary">
                         {exp.companyUrl ? (
-                          <HoverLink href={exp.companyUrl} external ariaLabel={`Visit ${exp.company} website`}>
+                          <HoverLink href={exp.companyUrl} external className="px-0 py-0" ariaLabel={`Visit ${exp.company} website`}>
                             {exp.company}
                           </HoverLink>
                         ) : (
