@@ -148,7 +148,7 @@ const Home = () => {
             latest
           </motion.p>
 
-          <div className="space-y-1.5 mb-12">
+          <div className="space-y-1 mb-12">
             {LATEST.map((entry) => {
               const i = lineIndex++;
               return (
@@ -158,16 +158,15 @@ const Home = () => {
                   initial="hidden"
                   animate="visible"
                   custom={i}
+                  className="flex items-baseline gap-3"
                 >
-                  <Link
+                  <span className="text-text-muted select-none shrink-0 font-mono text-sm sm:text-base">~</span>
+                  <HoverLink
                     to={entry.to}
-                    className="group flex items-baseline gap-3 font-mono text-sm sm:text-base py-0.5"
+                    className="px-2 py-1 text-sm sm:text-base"
                   >
-                    <span className="text-text-muted select-none shrink-0">~</span>
-                    <span className="text-text-secondary group-hover:text-text-primary transition-colors duration-fast">
-                      {entry.text}
-                    </span>
-                  </Link>
+                    {entry.text}
+                  </HoverLink>
                 </motion.div>
               );
             })}
@@ -184,7 +183,7 @@ const Home = () => {
             previously
           </motion.p>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             {PREVIOUSLY.map((entry) => {
               const i = lineIndex++;
               return (
@@ -194,16 +193,15 @@ const Home = () => {
                   initial="hidden"
                   animate="visible"
                   custom={i}
+                  className="flex items-baseline gap-3"
                 >
-                  <Link
+                  <span className="text-text-muted select-none shrink-0 font-mono text-sm sm:text-base">~</span>
+                  <HoverLink
                     to={entry.to}
-                    className="group flex items-baseline gap-3 font-mono text-sm sm:text-base py-0.5"
+                    className="px-2 py-1 text-sm sm:text-base"
                   >
-                    <span className="text-text-muted select-none shrink-0">~</span>
-                    <span className="text-text-tertiary group-hover:text-text-primary transition-colors duration-fast">
-                      {entry.text}
-                    </span>
-                  </Link>
+                    {entry.text}
+                  </HoverLink>
                 </motion.div>
               );
             })}
