@@ -6,6 +6,8 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 71712, type: 'tv', category: 'current' },   // The Good Doctor
   { id: 250307, type: 'tv', category: 'current' },  // The Pitt
   { id: 197067, type: 'tv', category: 'current' },  // Extraordinary Attorney Woo
+  { id: 87917, type: 'tv', category: 'current' },   // For All Mankind
+  { id: 61692, type: 'tv', category: 'current' },   // Fresh Off the Boat
 
   // Waiting for Next Season
   { id: 125988, type: 'tv', category: 'waiting' },  // Silo
