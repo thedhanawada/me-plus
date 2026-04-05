@@ -243,7 +243,14 @@ const Home = () => {
               className="w-full h-auto rounded-lg"
             />
             <figcaption className="mt-3 font-mono text-xs text-text-muted text-right">
-              "Hello, World" — Artemis II, April 2026
+              <HoverLink
+                href="https://www.nasa.gov/image-article/hello-world/"
+                external
+                className="px-1 py-0.5 text-xs"
+              >
+                "Hello, World"
+              </HoverLink>
+              {' '}— Artemis II, April 2026
               <br />
               <span className="text-text-muted/60">NASA/Reid Wiseman</span>
             </figcaption>
