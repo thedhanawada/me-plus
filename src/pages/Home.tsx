@@ -12,8 +12,28 @@ const NAV_ITEMS = [
   { name: 'tv', path: '/tv' },
 ] as const;
 
-const CLOUDINARY_BASE = 'https://res.cloudinary.com/dyntcx472/image/upload';
-const PHOTO_ID = 'IMG_3973_wvbdt9';
+const LATEST = [
+  { text: 'solutions architect @ mtc futureready', to: '/about', section: 'work' },
+  { text: 'first principles in system design', to: '/notes/first-principles-in-system-design', section: 'note' },
+  { text: 'forceCalendar — sf calendar engine', to: '/about', hash: '#projects', section: 'project' },
+  { text: '42 photographs', to: '/art', section: 'art' },
+  { text: 'watching: for all mankind, the pitt, silo', to: '/tv', section: 'tv' },
+] as const;
+
+const PREVIOUSLY = [
+  { text: 'research placement @ wehi', to: '/about' },
+  { text: 'senior tech analyst @ victoria\'s secret & co.', to: '/about' },
+  { text: 'master\'s (hons) @ university of melbourne', to: '/about' },
+] as const;
+
+const line = {
+  hidden: { opacity: 0, x: -8 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.3, delay: i * 0.05, ease: 'easeOut' },
+  }),
+};
 
 const Home = () => {
   const location = useLocation();
@@ -37,6 +57,8 @@ const Home = () => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
+
+  let lineIndex = 0;
 
   return (
     <main id="main-content" className="relative min-h-screen flex flex-col">
@@ -112,48 +134,98 @@ const Home = () => {
         </AnimatePresence>
       </nav>
 
-      {/* Center content: photo + dedication */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6">
-        {/* Photo with edge fade */}
-        <motion.div
-          className="relative w-full max-w-2xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-        >
-          <img
-            src={`${CLOUDINARY_BASE}/q_auto,f_auto,w_1200/${PHOTO_ID}`}
-            alt=""
-            className="w-full h-auto"
-            style={{
-              maskImage: 'linear-gradient(to bottom, transparent, black 12%, black 88%, transparent)',
-              WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 12%, black 88%, transparent)',
-            }}
-            loading="eager"
-          />
-        </motion.div>
-
-        {/* Dedication */}
-        <motion.div
-          className="text-center mt-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-        >
-          <p className="font-mono text-sm sm:text-base text-text-secondary italic tracking-wide">
-            To Amma, Naana, Swathi, Gayatri and Suku.
-          </p>
-          <p
-            className="mt-6 text-5xl sm:text-6xl text-text-secondary select-none"
-            style={{
-              fontFamily: "'Herr Von Muellerhoff', cursive",
-              transform: 'rotate(-2deg)',
-              letterSpacing: '-0.02em',
-            }}
+      {/* Main content */}
+      <div className="flex-1 flex items-center px-4 sm:px-6 md:px-12 lg:px-16 pb-16">
+        <div className="w-full max-w-2xl">
+          {/* Latest */}
+          <motion.p
+            className="font-mono text-xs text-text-muted uppercase tracking-widest mb-4"
+            variants={line}
+            initial="hidden"
+            animate="visible"
+            custom={lineIndex++}
           >
-            N.R.Dhanawada
-          </p>
-        </motion.div>
+            latest
+          </motion.p>
+
+          <div className="space-y-1.5 mb-12">
+            {LATEST.map((entry) => {
+              const i = lineIndex++;
+              return (
+                <motion.div
+                  key={entry.text}
+                  variants={line}
+                  initial="hidden"
+                  animate="visible"
+                  custom={i}
+                >
+                  <Link
+                    to={entry.to}
+                    className="group flex items-baseline gap-3 font-mono text-sm sm:text-base py-0.5"
+                  >
+                    <span className="text-text-muted select-none shrink-0">~</span>
+                    <span className="text-text-secondary group-hover:text-text-primary transition-colors duration-fast">
+                      {entry.text}
+                    </span>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Previously */}
+          <motion.p
+            className="font-mono text-xs text-text-muted uppercase tracking-widest mb-4"
+            variants={line}
+            initial="hidden"
+            animate="visible"
+            custom={lineIndex++}
+          >
+            previously
+          </motion.p>
+
+          <div className="space-y-1.5">
+            {PREVIOUSLY.map((entry) => {
+              const i = lineIndex++;
+              return (
+                <motion.div
+                  key={entry.text}
+                  variants={line}
+                  initial="hidden"
+                  animate="visible"
+                  custom={i}
+                >
+                  <Link
+                    to={entry.to}
+                    className="group flex items-baseline gap-3 font-mono text-sm sm:text-base py-0.5"
+                  >
+                    <span className="text-text-muted select-none shrink-0">~</span>
+                    <span className="text-text-tertiary group-hover:text-text-primary transition-colors duration-fast">
+                      {entry.text}
+                    </span>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Source */}
+          <motion.div
+            className="mt-12 pt-8 border-t border-border-primary"
+            variants={line}
+            initial="hidden"
+            animate="visible"
+            custom={lineIndex++}
+          >
+            <HoverLink
+              href="https://github.com/thedhanawada"
+              external
+              className="font-mono text-sm text-text-muted hover:text-text-primary"
+            >
+              src — github.com/thedhanawada
+            </HoverLink>
+          </motion.div>
+        </div>
       </div>
     </main>
   );
