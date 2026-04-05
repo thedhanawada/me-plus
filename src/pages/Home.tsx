@@ -207,9 +207,9 @@ const Home = () => {
             })}
           </div>
 
-          {/* Source */}
+          {/* Source + Colophon */}
           <motion.div
-            className="mt-12 pt-8 border-t border-border-primary"
+            className="mt-12 pt-8 border-t border-border-primary flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-4"
             variants={line}
             initial="hidden"
             animate="visible"
@@ -222,6 +222,9 @@ const Home = () => {
             >
               src — github.com/thedhanawada
             </HoverLink>
+            <p className="font-mono text-xs text-text-muted">
+              react + vite + tailwind · vercel
+            </p>
           </motion.div>
         </div>
       </div>
