@@ -136,7 +136,8 @@ const Home = () => {
 
       {/* Main content */}
       <div className="flex-1 flex items-center px-4 sm:px-6 md:px-12 lg:px-16 pb-16">
-        <div className="w-full max-w-2xl">
+        <div className="w-full flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+        <div className="w-full lg:max-w-2xl shrink-0">
           {/* Latest */}
           <motion.p
             className="font-mono text-xs text-text-muted uppercase tracking-widest mb-4"
@@ -226,6 +227,28 @@ const Home = () => {
               react + vite + tailwind · vercel
             </p>
           </motion.div>
+        </div>
+
+        {/* Earth — Artemis II */}
+        <motion.div
+          className="hidden lg:flex flex-1 items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5, delay: 0.6, ease: 'easeOut' }}
+        >
+          <figure className="relative max-w-md xl:max-w-lg">
+            <img
+              src="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_1200/art002e000192_yso465"
+              alt="Earth photographed from the Orion spacecraft window during Artemis II, April 2026"
+              className="w-full h-auto rounded-lg"
+            />
+            <figcaption className="mt-3 font-mono text-xs text-text-muted text-right">
+              "Hello, World" — Artemis II, April 2026
+              <br />
+              <span className="text-text-muted/60">NASA/Reid Wiseman</span>
+            </figcaption>
+          </figure>
+        </motion.div>
         </div>
       </div>
     </main>
