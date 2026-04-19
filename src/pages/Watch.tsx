@@ -159,9 +159,6 @@ const Watchlist = () => {
             <h1 className="text-fluid-4xl font-bold mb-6 leading-tight">
               TV
             </h1>
-            <p className="text-base text-text-secondary leading-relaxed mb-2">
-              Not everything I watch — just the ones that stuck.
-            </p>
             <p className="text-sm text-text-tertiary mb-8">
               Data from{' '}
               <HoverLink href="https://www.themoviedb.org/" external>

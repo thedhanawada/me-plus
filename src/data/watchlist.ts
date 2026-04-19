@@ -2,16 +2,15 @@ import type { MediaEntry } from '../services/tmdb';
 
 export const WATCHLIST_MEDIA: MediaEntry[] = [
   // Currently Watching
-  { id: 61859, type: 'tv', category: 'current' },   // The Night Manager
   { id: 71712, type: 'tv', category: 'current' },   // The Good Doctor
-  { id: 250307, type: 'tv', category: 'current' },  // The Pitt
+  { id: 124364, type: 'tv', category: 'current' },  // FROM
   { id: 197067, type: 'tv', category: 'current' },  // Extraordinary Attorney Woo
   { id: 87917, type: 'tv', category: 'current' },   // For All Mankind
   { id: 61692, type: 'tv', category: 'current' },   // Fresh Off the Boat
 
   // Waiting for Next Season
   { id: 125988, type: 'tv', category: 'waiting' },  // Silo
-  { id: 124364, type: 'tv', category: 'waiting' },  // FROM
+  { id: 250307, type: 'tv', category: 'waiting' },  // The Pitt
   { id: 95396, type: 'tv', category: 'waiting' },   // Severance
 
   // Dinner & Lunch Rewatch Shows
@@ -25,7 +24,8 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 1424, type: 'tv', category: 'rewatch' },    // Orange Is the New Black
   { id: 64010, type: 'tv', category: 'rewatch' },    // Reply 1988
 
-  // All-time Favorites
+  // Favourites
+  { id: 61859, type: 'tv', category: 'favorite' },    // The Night Manager
   { id: 120, type: 'movie', category: 'favorite' },   // LOTR: Fellowship
   { id: 121, type: 'movie', category: 'favorite' },   // LOTR: Two Towers
   { id: 122, type: 'movie', category: 'favorite' },   // LOTR: Return of the King
@@ -53,5 +53,5 @@ export const WATCHLIST_SECTIONS = [
   { key: 'current', title: 'Currently Watching' },
   { key: 'rewatch', title: 'Dinner & Lunch Rewatch Shows' },
   { key: 'waiting', title: 'Waiting for Next Season' },
-  { key: 'favorite', title: 'All Time Favorites' },
+  { key: 'favorite', title: 'Favourites' },
 ] as const;
