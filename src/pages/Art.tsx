@@ -359,9 +359,6 @@ const Art = () => {
             <h1 className="text-fluid-4xl font-bold mb-4 leading-tight">
               Art
             </h1>
-            <p className="text-text-secondary text-lg">
-              Photos I took. Nothing professional — just things that caught my eye.
-            </p>
             <p className="text-text-muted text-sm mt-2 font-mono">
               {photos.length} photos
             </p>
