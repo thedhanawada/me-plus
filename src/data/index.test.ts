@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import {
-  whatIDo,
-  philosophy,
   education,
   featuredProject,
   products,
@@ -14,24 +12,6 @@ import {
 } from './index';
 
 describe('Data exports', () => {
-  describe('home data', () => {
-    it('should have whatIDo items with title and description', () => {
-      expect(whatIDo.length).toBeGreaterThan(0);
-      whatIDo.forEach(item => {
-        expect(item).toHaveProperty('title');
-        expect(item).toHaveProperty('description');
-      });
-    });
-
-    it('should have philosophy items with title and description', () => {
-      expect(philosophy.length).toBeGreaterThan(0);
-      philosophy.forEach(item => {
-        expect(item).toHaveProperty('title');
-        expect(item).toHaveProperty('description');
-      });
-    });
-  });
-
   describe('education data', () => {
     it('should have education entries with required fields', () => {
       expect(education.length).toBeGreaterThan(0);

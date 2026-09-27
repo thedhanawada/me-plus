@@ -59,9 +59,7 @@ const NAV = [
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/fonts/jetbrains-mono-latin-v24.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Apply the theme before first paint: a saved choice wins, otherwise follow the system. -->
     <script is:inline>
@@ -75,9 +73,14 @@ const NAV = [
   </head>
 
   <body class="min-h-screen bg-bg-primary text-text-primary">
+    <!-- Hidden until focused: lets keyboard and screen-reader users jump past the nav -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-3 focus:py-2 focus:bg-bg-inverted focus:text-text-inverted font-mono text-sm"
+    >Skip to content</a>
     <div class="font-mono text-[15px] leading-relaxed text-text-secondary">
       <div class="mx-auto max-w-[calc(72ch+22rem+6rem)] px-4 sm:px-8 py-10 sm:py-16">
-        <nav class="flex flex-wrap gap-x-5 gap-y-1 text-sm mb-16" aria-label="Site">
+        <nav class="flex flex-wrap gap-x-5 gap-y-3 text-sm mb-16" aria-label="Site">
           {NAV.map((item) =>
             item.name === section ? (
               <span aria-current="page" class="font-bold text-text-primary">{item.name}</span>
