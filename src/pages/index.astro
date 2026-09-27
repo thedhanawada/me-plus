@@ -8,6 +8,7 @@ import {
   experiences,
   education,
   featuredProject,
+  products,
   contributions,
   archivedProjects,
   publications,
@@ -44,6 +45,11 @@ const tagline = featuredProject.tagline.charAt(0).toLowerCase() + featuredProjec
     {city(vs.location)} ({years(vs.period)}), and {tcs.company} in {city(tcs.location)}{' '}
     ({years(tcs.period)}). <a href="/about" class={link}>The long version.</a>
   </p>
+
+  <H2>Projects</H2>
+  {products.map((p) => (
+    <p class="mb-4"><Ext href={p.url}>{p.name}</Ext>: {p.tagline.charAt(0).toLowerCase() + p.tagline.slice(1)}{' '}{p.description}</p>
+  ))}
 
   <H2>Code</H2>
   <p>

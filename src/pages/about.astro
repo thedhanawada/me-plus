@@ -4,7 +4,7 @@ import Ext from '../components/Ext.astro';
 import H2 from '../components/H2.astro';
 import SideH from '../components/SideH.astro';
 import { link, monthRange } from '../lib/ui';
-import { education, experiences, publications, featuredProject, contributions, archivedProjects } from '../data';
+import { education, experiences, publications, featuredProject, products, contributions, archivedProjects } from '../data';
 
 const SECTIONS = [
   { id: 'work', label: 'Work' },
@@ -70,6 +70,16 @@ const SECTIONS = [
   ))}
 
   <H2 id="projects">Projects</H2>
+  {products.map((p) => (
+    <section class="mb-10">
+      <h3 class="text-text-primary">
+        <span class="font-bold">{p.name}</span>: {p.tagline}
+      </h3>
+      <p class="mt-3">{p.description}</p>
+      <p class="mt-3"><Ext href={p.url}>{p.url.replace(/^https:\/\//, '')}</Ext></p>
+    </section>
+  ))}
+
   <h3 class="text-text-primary">
     <span class="font-bold">{featuredProject.name}</span>: {featuredProject.tagline}
   </h3>
