@@ -3,14 +3,41 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/lab", "destination": "/about", "permanent": true },
-    { "source": "/work", "destination": "/about", "permanent": true }
+    {
+      "source": "/lab",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/work",
+      "destination": "/about",
+      "permanent": true
+    }
   ],
   "headers": [
     {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "dev.dhanawada.org" }],
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+      "has": [
+        {
+          "type": "host",
+          "value": "dev.dhanawada.org"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ]
 }
