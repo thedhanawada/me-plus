@@ -1,19 +1,9 @@
 import { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from './context/ThemeContext';
-import { ExternalLinkProvider } from './context/ExternalLinkContext';
-import { SettingsProvider } from './context/SettingsContext';
 import ErrorBoundary from './components/ErrorBoundary';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import BackToTop from './components/BackToTop';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
-import ExternalLinkModal from './components/ExternalLinkModal';
-import DotGrid from './components/DotGrid';
-import Breadcrumb from './components/Breadcrumb';
-import PageTransition from './components/PageTransition';
 
 function lazyWithRetry(importFn: () => Promise<{ default: React.ComponentType }>) {
   return lazy(() =>
@@ -33,9 +23,7 @@ const NotePost = lazyWithRetry(() => import('./pages/NotePost'));
 const NotFound = lazyWithRetry(() => import('./pages/NotFound'));
 
 const PageLoader = () => (
-  <div className="flex justify-center items-center min-h-[50vh]">
-    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-text-primary"></div>
-  </div>
+  <p className="font-mono text-[15px] text-text-muted px-4 sm:px-8 py-16 max-w-[calc(72ch+22rem+6rem)] mx-auto">Loading…</p>
 );
 
 const BASE_URL = 'https://dhanawada.org';
@@ -60,7 +48,7 @@ const PAGE_META: Record<string, PageMeta> = {
     description: 'What I\'m watching, rewatching, and waiting for.',
   },
   '/art': {
-    title: 'N.R Dhanawada - Photography',
+    title: 'N.R Dhanawada - Photographs',
     description: 'A collection of photographs.',
   },
   '/notes': {
@@ -111,74 +99,33 @@ const MetaUpdater = () => {
   return null;
 };
 
-// The landing page is a clean, editorial layout — no dot grid behind it
-const Backdrop = () => {
-  const { pathname } = useLocation();
-  return pathname === '/' ? null : <DotGrid />;
-};
-
-const AppShell = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
-  const isHome = location.pathname === '/';
-
-  if (isHome) {
-    return <>{children}</>;
-  }
-
-  return (
-    <>
-      <Header />
-      <Breadcrumb />
-      {children}
-      <Footer />
-    </>
-  );
-};
-
-const AnimatedRoutes = () => {
-  const location = useLocation();
-
-  return (
-    <AnimatePresence mode="wait">
-      <Suspense fallback={<PageLoader />} key={location.pathname}>
-        <Routes location={location}>
-          <Route path="/" element={<ErrorBoundary><Home /></ErrorBoundary>} />
-          <Route path="/about" element={<PageTransition><ErrorBoundary><About /></ErrorBoundary></PageTransition>} />
-          <Route path="/tv" element={<PageTransition><ErrorBoundary><Watchlist /></ErrorBoundary></PageTransition>} />
-          <Route path="/lab" element={<Navigate to="/about" replace />} />
-          <Route path="/work" element={<Navigate to="/about" replace />} />
-          <Route path="/art" element={<PageTransition><ErrorBoundary><Art /></ErrorBoundary></PageTransition>} />
-          <Route path="/notes" element={<PageTransition><ErrorBoundary><Notes /></ErrorBoundary></PageTransition>} />
-          <Route path="/notes/:slug" element={<PageTransition><ErrorBoundary><NotePost /></ErrorBoundary></PageTransition>} />
-          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-        </Routes>
-      </Suspense>
-    </AnimatePresence>
-  );
-};
+const AppRoutes = () => (
+  <Suspense fallback={<PageLoader />}>
+    <Routes>
+      <Route path="/" element={<ErrorBoundary><Home /></ErrorBoundary>} />
+      <Route path="/about" element={<ErrorBoundary><About /></ErrorBoundary>} />
+      <Route path="/tv" element={<ErrorBoundary><Watchlist /></ErrorBoundary>} />
+      <Route path="/lab" element={<Navigate to="/about" replace />} />
+      <Route path="/work" element={<Navigate to="/about" replace />} />
+      <Route path="/art" element={<ErrorBoundary><Art /></ErrorBoundary>} />
+      <Route path="/notes" element={<ErrorBoundary><Notes /></ErrorBoundary>} />
+      <Route path="/notes/:slug" element={<ErrorBoundary><NotePost /></ErrorBoundary>} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </Suspense>
+);
 
 function App() {
   return (
     <ThemeProvider>
-      <SettingsProvider>
-      <ExternalLinkProvider>
-        <Router>
-          <div className="min-h-screen bg-bg-primary text-text-primary font-mono transition-colors duration-slow">
-            <Backdrop />
-            <div className="relative" style={{ zIndex: 1 }}>
-            <MetaUpdater />
-            <AppShell>
-              <AnimatedRoutes />
-            </AppShell>
-            <BackToTop />
-            <KeyboardShortcuts />
-            <ExternalLinkModal />
-            </div>
-          </div>
-          <Analytics />
-        </Router>
-      </ExternalLinkProvider>
-      </SettingsProvider>
+      <Router>
+        <div className="min-h-screen bg-bg-primary text-text-primary">
+          <MetaUpdater />
+          <AppRoutes />
+          <KeyboardShortcuts />
+        </div>
+        <Analytics />
+      </Router>
     </ThemeProvider>
   );
 }

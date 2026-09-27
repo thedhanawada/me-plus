@@ -300,17 +300,18 @@ html.theme-transitioning::after {
   margin-bottom: 1.25rem;
 }
 
-/* Links */
+/* Links — plain blue, purple once visited, same as the rest of the site */
 .prose-note a {
-  color: rgb(var(--color-text-primary));
+  color: #1d4ed8;               /* blue-700 */
   text-decoration: underline;
   text-underline-offset: 2px;
-  transition: color var(--transition-fast) var(--transition-easing);
 }
 
-.prose-note a:hover {
-  color: rgb(var(--color-accent));
-}
+.prose-note a:visited { color: #7e22ce; }   /* purple-700 */
+.prose-note a:hover { text-decoration-thickness: 2px; }
+
+.dark .prose-note a { color: #60a5fa; }          /* blue-400 */
+.dark .prose-note a:visited { color: #c084fc; }  /* purple-400 */
 
 /* Strong and emphasis */
 .prose-note strong {
@@ -354,15 +355,13 @@ html.theme-transitioning::after {
   font-size: 0.875em;
   color: rgb(var(--color-text-primary));
   background: rgb(var(--color-bg-secondary));
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
+  padding: 0.1em 0.3em;
 }
 
 /* Code blocks */
 .prose-note pre {
   background: rgb(var(--color-bg-secondary));
   border: 1px solid rgb(var(--color-border-primary));
-  border-radius: 0.5rem;
   padding: 1rem 1.25rem;
   overflow-x: auto;
   margin-top: 1.5rem;
