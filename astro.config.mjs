@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // Every page is built to plain HTML at deploy time; no client framework.
 export default defineConfig({
@@ -9,4 +10,5 @@ export default defineConfig({
   devToolbar: { enabled: false },
   // Code blocks use the site's own plain styling (see .prose-note in global.css), in both themes
   markdown: { syntaxHighlight: false },
+  integrations: [sitemap()],
 });

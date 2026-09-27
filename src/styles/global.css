@@ -25,7 +25,7 @@
     --color-text-primary: 17 24 39;            /* gray-900 */
     --color-text-secondary: 75 85 99;          /* gray-600 */
     --color-text-tertiary: 107 114 128;        /* gray-500 */
-    --color-text-muted: 156 163 175;           /* gray-400 */
+    --color-text-muted: 107 114 128;           /* gray-500: 4.8:1 on white (WCAG AA) */
     --color-text-inverted: 255 255 255;        /* white */
 
     /* Border colors */
@@ -83,7 +83,7 @@
     --color-text-primary: 243 244 246;         /* gray-100 */
     --color-text-secondary: 209 213 219;       /* gray-300 */
     --color-text-tertiary: 156 163 175;        /* gray-400 */
-    --color-text-muted: 107 114 128;           /* gray-500 */
+    --color-text-muted: 156 163 175;           /* gray-400: 7.0:1 on gray-900 (WCAG AA) */
     --color-text-inverted: 17 24 39;           /* gray-900 */
 
     /* Border colors */
