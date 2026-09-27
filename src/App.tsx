@@ -111,6 +111,12 @@ const MetaUpdater = () => {
   return null;
 };
 
+// The landing page is a clean, editorial layout — no dot grid behind it
+const Backdrop = () => {
+  const { pathname } = useLocation();
+  return pathname === '/' ? null : <DotGrid />;
+};
+
 const AppShell = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -158,7 +164,7 @@ function App() {
       <ExternalLinkProvider>
         <Router>
           <div className="min-h-screen bg-bg-primary text-text-primary font-mono transition-colors duration-slow">
-            <DotGrid />
+            <Backdrop />
             <div className="relative" style={{ zIndex: 1 }}>
             <MetaUpdater />
             <AppShell>

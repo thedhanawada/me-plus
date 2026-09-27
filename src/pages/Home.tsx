@@ -3,9 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import HoverLink from '../components/HoverLink';
 import ThemeToggle from '../components/ThemeToggle';
-import SettingsPanel from '../components/SettingsPanel';
-import TerminalPrompt from '../components/TerminalPrompt';
-import { useTheme } from '../hooks';
 import {
   experiences,
   education,
@@ -16,19 +13,19 @@ import {
 } from '../data';
 
 const NAV_ITEMS = [
-  { name: 'about', path: '/about' },
-  { name: 'notes', path: '/notes' },
-  { name: 'art', path: '/art' },
-  { name: 'tv', path: '/tv' },
+  { name: 'About', path: '/about' },
+  { name: 'Notes', path: '/notes' },
+  { name: 'Art', path: '/art' },
+  { name: 'TV', path: '/tv' },
 ] as const;
 
-const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-// "2016.10 - 2020.02" → "2016–20", "2021.07 - 2021.10" → "2021", "2022.02 - Present" → "2022–now"
+// "2016.10 - 2020.02" → "2016–20", "2021.07 - 2021.10" → "2021", "2022.02 - Present" → "Since 2022"
 const shortPeriod = (period: string) => {
-  const [start, end] = period.split(' - ').map((p) => p.trim());
+  const [start, end] = period.split(/\s+-\s+/);
   const from = start.slice(0, 4);
-  if (/present/i.test(end)) return `${from}–now`;
+  if (/present/i.test(end)) return `Since ${from}`;
   const to = end.slice(0, 4);
   return from === to ? from : `${from}–${to.slice(2)}`;
 };
@@ -39,177 +36,101 @@ const favouritePhotos = photos.filter((p) => p.favorite).length;
 const [currentRole, wehi, victoriasSecret] = experiences;
 const [melbourne] = education;
 
-interface Entry {
-  kind: string;
-  text: string;
+interface IndexEntry {
+  label: string;
+  title: string;
+  detail: string;
   meta: string;
   to: string;
 }
 
-const NOW: Entry[] = [
+const INDEX: IndexEntry[] = [
   {
-    kind: 'work',
-    text: `${currentRole.title} @ ${currentRole.company}`.toLowerCase(),
+    label: 'Work',
+    title: currentRole.title,
+    detail: `${currentRole.company}, ${currentRole.location.split(',')[0]}`,
     meta: shortPeriod(currentRole.period),
     to: '/about',
   },
   ...(latestPost
     ? [{
-        kind: 'note',
-        text: latestPost.title.toLowerCase(),
+        label: 'Writing',
+        title: latestPost.title,
+        detail: latestPost.summary,
         meta: `${MONTHS[Number(latestPost.date.slice(5, 7)) - 1]} ${latestPost.date.slice(0, 4)}`,
         to: `/notes/${latestPost.slug}`,
       }]
     : []),
   {
-    kind: 'project',
-    text: `${featuredProject.name} — salesforce calendar engine`,
+    label: 'Building',
+    title: featuredProject.name,
+    detail: featuredProject.tagline,
     meta: `v${featuredProject.packages[0].version}`,
     to: '/about',
   },
   {
-    kind: 'art',
-    text: `${photos.length} photographs`,
-    meta: `${favouritePhotos} favourites`,
+    label: 'Looking',
+    title: 'Photographs',
+    detail: `${photos.length} in the collection, ${favouritePhotos} of them favourites.`,
+    meta: `${photos.length}`,
     to: '/art',
   },
-  {
-    kind: 'tv',
-    text: `watching ${watching.slice(0, 2).map((m) => m.title).join(', ')}${watching.length > 2 ? ` +${watching.length - 2}` : ''}`,
-    meta: `${watching.length} shows`,
-    to: '/tv',
-  },
+  ...(watching.length
+    ? [{
+        label: 'Watching',
+        title: watching[0].title!,
+        detail: watching.length > 1
+          ? `Also ${watching.slice(1, 3).map((m) => m.title).join(', ')}${watching.length > 3 ? `, and ${watching.length - 3} more` : ''}.`
+          : 'On the list right now.',
+        meta: `${watching.length} shows`,
+        to: '/tv',
+      }]
+    : []),
 ];
 
-const HISTORY: Entry[] = [
-  { kind: 'research', text: 'research placement @ wehi', meta: shortPeriod(wehi.period), to: '/about' },
-  { kind: 'study', text: `master's (hons) @ ${melbourne.university.toLowerCase()}`, meta: melbourne.period.replace(/ - (\d\d)(\d\d)$/, '–$2'), to: '/about' },
-  { kind: 'work', text: `senior tech analyst @ ${victoriasSecret.company.toLowerCase()}`, meta: shortPeriod(victoriasSecret.period), to: '/about' },
+const PREVIOUSLY = [
+  { role: 'Research placement', org: 'WEHI', when: shortPeriod(wehi.period) },
+  { role: "Master's (Hons)", org: melbourne.university, when: melbourne.period.replace(/\s+-\s+\d\d(\d\d)$/, '–$1') },
+  { role: 'Senior Technology Analyst', org: victoriasSecret.company, when: shortPeriod(victoriasSecret.period) },
 ];
 
-const INTRO_KEY = 'home-intro-played';
-const WHOAMI = 'whoami';
-
-const introAlreadyPlayed = () => {
-  try {
-    return sessionStorage.getItem(INTRO_KEY) === '1';
-  } catch {
-    return false;
-  }
-};
-
-// Local time where I am, e.g. "14:32 AEST"
-const useSydneyTime = () => {
-  const format = () =>
-    new Intl.DateTimeFormat('en-AU', {
-      timeZone: 'Australia/Sydney',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-      timeZoneName: 'short',
-    }).format(new Date());
-
-  const [time, setTime] = useState(format);
-  useEffect(() => {
-    const id = setInterval(() => setTime(format()), 15_000);
-    return () => clearInterval(id);
-  }, []);
-  return time;
-};
-
-/** One `ls -l` style row: kind · name · meta. The whole row is the link. */
-const Row = ({ entry }: { entry: Entry }) => (
-  <li>
+const IndexRow = ({ entry, n }: { entry: IndexEntry; n: number }) => (
+  <li className="border-t border-border-primary last:border-b">
     <Link
       to={entry.to}
-      className="group relative block px-2 -mx-2 py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+      className="group grid grid-cols-[2rem_1fr_auto] sm:grid-cols-[2.5rem_6.5rem_1fr_auto] gap-x-4 items-baseline py-5 focus:outline-none focus-visible:bg-hover-bg"
     >
-      {/* Sweep highlight, same motion as HoverLink. Kept outside the grid so it spans the full row */}
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 bg-bg-inverted scale-x-0 origin-left transition-transform duration-default ease-theme group-hover:scale-x-100 group-focus-visible:scale-x-100 motion-reduce:transition-none"
-      />
-      <span className="relative grid grid-cols-[4.5rem_1fr] sm:grid-cols-[5.5rem_1fr_auto] items-baseline gap-x-4">
-        <span className="relative text-xs sm:text-sm text-text-muted group-hover:text-text-inverted/60 group-focus-visible:text-text-inverted/60 transition-colors duration-fast">
-          {entry.kind}
+      <span className="font-mono text-xs text-text-muted tabular-nums transition-colors duration-default group-hover:text-text-primary">
+        {String(n).padStart(2, '0')}
+      </span>
+      <span className="hidden sm:block font-mono text-[0.7rem] uppercase tracking-[0.14em] text-text-muted">
+        {entry.label}
+      </span>
+      <span className="min-w-0">
+        <span className="sm:hidden block font-mono text-[0.65rem] uppercase tracking-[0.14em] text-text-muted mb-1">
+          {entry.label}
         </span>
-        <span className="relative text-sm sm:text-base text-text-primary group-hover:text-text-inverted group-focus-visible:text-text-inverted transition-colors duration-fast">
-          {entry.text}
-          <span aria-hidden="true" className="inline-block ml-2 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 transition-all duration-default">
+        <span className="block font-serif text-xl sm:text-2xl leading-snug text-text-primary transition-transform duration-default ease-theme group-hover:translate-x-1.5 motion-reduce:transform-none">
+          {entry.title}
+          <span aria-hidden="true" className="inline-block ml-2 text-base text-text-muted opacity-0 transition-opacity duration-default group-hover:opacity-100 group-focus-visible:opacity-100">
             →
           </span>
         </span>
-        <span className="relative col-start-2 sm:col-start-auto text-xs sm:text-sm text-text-muted tabular-nums sm:text-right group-hover:text-text-inverted/60 group-focus-visible:text-text-inverted/60 transition-colors duration-fast">
-          {entry.meta}
+        <span className="block mt-1 font-serif italic text-sm sm:text-base text-text-tertiary leading-snug transition-transform duration-default ease-theme group-hover:translate-x-1.5 motion-reduce:transform-none">
+          {entry.detail}
         </span>
+      </span>
+      <span className="font-mono text-xs text-text-muted tabular-nums text-right whitespace-nowrap">
+        {entry.meta}
       </span>
     </Link>
   </li>
 );
 
-const Command = ({ children }: { children: string }) => (
-  <p className="font-mono text-xs sm:text-sm text-text-muted mb-3">
-    <span className="text-prompt select-none">$ </span>
-    {children}
-  </p>
-);
-
-const EarthPhoto = ({ className = '' }: { className?: string }) => (
-  <figure className={className}>
-    <img
-      src="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_1200/art002e000192_yso465"
-      alt="Earth photographed from the Orion spacecraft window during Artemis II, April 2026"
-      className="w-full h-auto rounded-lg"
-    />
-    <figcaption className="mt-3 font-mono text-xs text-text-muted flex justify-between gap-4">
-      <span>art002e000192.jpg</span>
-      <span className="text-right">
-        <HoverLink href="https://www.nasa.gov/image-article/hello-world/" external className="px-1 py-0.5 text-xs">
-          "Hello, World"
-        </HoverLink>
-        {' '}· artemis ii · nasa/reid wiseman
-      </span>
-    </figcaption>
-  </figure>
-);
-
-const StatusLine = () => {
-  const { theme } = useTheme();
-  const time = useSydneyTime();
-
-  return (
-    <div className="hidden md:flex fixed bottom-0 inset-x-0 z-10 items-stretch font-mono text-xs border-t border-border-primary bg-bg-primary/90 backdrop-blur-sm">
-      <span className="px-3 py-1.5 bg-bg-inverted text-text-inverted font-bold tracking-wider">NORMAL</span>
-      <span className="px-3 py-1.5 text-text-secondary border-r border-border-primary">~/</span>
-      <span className="flex-1" />
-      <span className="px-3 py-1.5 text-text-muted"><kbd className="text-text-secondary">/</kbd> command</span>
-      <span className="px-3 py-1.5 text-text-muted"><kbd className="text-text-secondary">?</kbd> shortcuts</span>
-      <span className="px-3 py-1.5 text-text-muted border-l border-border-primary">{theme}</span>
-      <span className="px-3 py-1.5 text-text-muted border-l border-border-primary">sydney {time.toLowerCase()}</span>
-      <HoverLink href="https://github.com/thedhanawada/me-plus" external className="px-3 py-1.5 text-xs border-l border-border-primary">
-        src ↗
-      </HoverLink>
-    </div>
-  );
-};
-
 const Home = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
-  const skipIntro = reduceMotion || introAlreadyPlayed();
-  const [typed, setTyped] = useState(skipIntro ? WHOAMI.length : 0);
-  const introDone = typed >= WHOAMI.length;
-  const time = useSydneyTime();
-
-  useEffect(() => {
-    if (introDone) {
-      try { sessionStorage.setItem(INTRO_KEY, '1'); } catch { /* private mode */ }
-      return;
-    }
-    const id = setTimeout(() => setTyped((t) => t + 1), typed === 0 ? 450 : 90);
-    return () => clearTimeout(id);
-  }, [typed, introDone]);
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
@@ -224,42 +145,38 @@ const Home = () => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [mobileMenuOpen]);
 
-  // Everything below the intro fades in, line by line, once `whoami` has finished typing
-  const reveal = (i: number) => ({
-    initial: skipIntro ? false : { opacity: 0, y: 6 },
-    animate: introDone ? { opacity: 1, y: 0 } : undefined,
-    transition: { duration: 0.35, delay: skipIntro ? 0 : i * 0.06, ease: 'easeOut' as const },
+  const rise = (i: number) => ({
+    initial: reduceMotion ? false : { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] as const },
   });
 
   return (
-    <main id="main-content" className="relative min-h-screen flex flex-col font-mono md:pb-10">
-      {/* Top navigation */}
+    <main id="main-content" className="relative min-h-screen flex flex-col">
       <nav className="relative z-10 px-4 sm:px-6 md:px-12 lg:px-16 py-6">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-sm text-text-secondary hover:text-text-primary transition-colors">
-            <span className="text-prompt">~</span>/dhanawada
+          <Link to="/" className="font-mono text-xs uppercase tracking-[0.18em] text-text-secondary hover:text-text-primary transition-colors">
+            Dhanawada
           </Link>
 
           <div className="hidden lg:flex items-center space-x-6">
             {NAV_ITEMS.map((item) => (
               <HoverLink key={item.name} to={item.path} active={location.pathname === item.path} className="px-3 py-1.5 text-sm">
-                [{item.name}]
+                {item.name}
               </HoverLink>
             ))}
-            <SettingsPanel />
             <ThemeToggle />
           </div>
 
           <div className="lg:hidden flex items-center gap-4">
-            <SettingsPanel />
             <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="text-text-secondary hover:text-text-primary text-sm transition-colors duration-slow focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
+              className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors duration-slow focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2 focus:ring-offset-bg-primary"
             >
-              {mobileMenuOpen ? '[close]' : '[menu]'}
+              {mobileMenuOpen ? 'Close' : 'Menu'}
             </button>
           </div>
         </div>
@@ -276,8 +193,8 @@ const Home = () => {
               <div className="space-y-4">
                 {NAV_ITEMS.map((item, index) => (
                   <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.05 }}>
-                    <Link to={item.path} className="block text-lg text-text-secondary hover:text-text-primary transition-colors duration-slow">
-                      [{item.name}]
+                    <Link to={item.path} className="block font-serif text-2xl text-text-secondary hover:text-text-primary transition-colors duration-slow">
+                      {item.name}
                     </Link>
                   </motion.div>
                 ))}
@@ -287,69 +204,74 @@ const Home = () => {
         </AnimatePresence>
       </nav>
 
-      <div className="flex-1 flex items-center px-4 sm:px-6 md:px-12 lg:px-16 pt-4 pb-16">
-        <div className="w-full grid lg:grid-cols-[minmax(0,42rem)_minmax(0,1fr)] gap-12 lg:gap-16 items-center">
+      <div className="flex-1 px-4 sm:px-6 md:px-12 lg:px-16 pt-8 sm:pt-16 pb-16">
+        <div className="grid lg:grid-cols-[minmax(0,40rem)_minmax(0,1fr)] gap-16 lg:gap-24 items-start">
           <div className="min-w-0">
-            {/* whoami */}
-            <p className="text-xs sm:text-sm text-text-muted mb-4" aria-label="whoami">
-              <span className="text-prompt select-none">$ </span>
-              <span aria-hidden="true">{WHOAMI.slice(0, typed)}</span>
-              {!introDone && <span className="terminal-cursor ml-0.5" aria-hidden="true" />}
-            </p>
-
-            <motion.header {...reveal(0)} className="mb-12">
-              <h1 className="text-fluid-5xl font-extrabold tracking-tighter leading-none text-text-primary">
+            <motion.header {...rise(0)}>
+              <h1 className="font-serif font-normal text-[clamp(3rem,2rem+5vw,5.5rem)] leading-[0.95] tracking-[-0.02em] text-text-primary">
                 N.R. Dhanawada
               </h1>
-              <p className="mt-5 max-w-xl text-pretty text-sm sm:text-base leading-relaxed text-text-secondary">
-                Solutions architect. I build the service delivery platforms that
-                programs, and the people running them, depend on every day.
-              </p>
-              <p className="mt-4 text-xs sm:text-sm text-text-muted">
-                sydney, au <span className="mx-1.5">·</span> {time.toLowerCase()}
+              <p className="mt-8 max-w-lg font-serif text-xl sm:text-2xl leading-snug text-text-secondary text-pretty">
+                Solutions architect in Sydney. I build the platforms that programs, and the
+                people running them, depend on every day.
               </p>
             </motion.header>
 
-            <motion.section {...reveal(1)} className="mb-10" aria-label="Now">
-              <Command>ls -l ~/now</Command>
-              <ul>
-                {NOW.map((entry) => <Row key={entry.kind} entry={entry} />)}
+            <motion.ol {...rise(1)} className="mt-14 sm:mt-20" aria-label="Currently">
+              {INDEX.map((entry, i) => <IndexRow key={entry.label} entry={entry} n={i + 1} />)}
+            </motion.ol>
+
+            <motion.section {...rise(2)} className="mt-10" aria-labelledby="previously-heading">
+              <h2 id="previously-heading" className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-text-muted mb-4">
+                Previously
+              </h2>
+              <ul className="space-y-2">
+                {PREVIOUSLY.map((p) => (
+                  <li key={p.org}>
+                    <Link to="/about" className="group flex items-baseline gap-4 focus:outline-none focus-visible:underline">
+                      <span className="font-serif text-base sm:text-lg text-text-secondary group-hover:text-text-primary transition-colors">
+                        {p.role}, <span className="italic">{p.org}</span>
+                      </span>
+                      <span aria-hidden="true" className="flex-1 border-b border-dotted border-border-secondary translate-y-[-0.3em]" />
+                      <span className="font-mono text-xs text-text-muted tabular-nums whitespace-nowrap">{p.when}</span>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </motion.section>
-
-            <motion.section {...reveal(2)} className="mb-10" aria-label="Previously">
-              <Command>tail ~/history.log</Command>
-              <ul>
-                {HISTORY.map((entry) => <Row key={entry.text} entry={entry} />)}
-              </ul>
-            </motion.section>
-
-            <motion.div {...reveal(3)} className="pt-6 border-t border-border-primary">
-              <TerminalPrompt />
-            </motion.div>
-
-            {/* Colophon — on desktop this lives in the status line */}
-            <motion.p {...reveal(4)} className="md:hidden mt-10 text-xs text-text-muted">
-              react + vite + tailwind · vercel ·{' '}
-              <HoverLink href="https://github.com/thedhanawada/me-plus" external className="px-1 py-0.5 text-xs">
-                src ↗
-              </HoverLink>
-            </motion.p>
           </div>
 
-          {/* Earth — Artemis II. Beside the text on desktop, below it on smaller screens */}
-          <motion.div
-            className="min-w-0 flex justify-center"
-            initial={skipIntro ? false : { opacity: 0 }}
-            animate={introDone ? { opacity: 1 } : undefined}
-            transition={{ duration: 1.2, delay: skipIntro ? 0 : 0.4, ease: 'easeOut' }}
+          <motion.figure
+            className="min-w-0 max-w-md lg:max-w-none lg:sticky lg:top-16"
+            initial={reduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.4, delay: 0.5, ease: 'easeOut' }}
           >
-            <EarthPhoto className="w-full max-w-sm lg:max-w-md xl:max-w-lg" />
-          </motion.div>
+            <img
+              src="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_1200/art002e000192_yso465"
+              alt="Earth photographed from the Orion spacecraft window during Artemis II, April 2026"
+              className="w-full h-auto"
+            />
+            <figcaption className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 font-serif text-sm leading-snug text-text-tertiary">
+              <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-text-muted pt-0.5">Plate I</span>
+              <span>
+                <HoverLink href="https://www.nasa.gov/image-article/hello-world/" external className="px-1 -mx-1 py-0.5 !font-serif italic text-sm">
+                  “Hello, World.”
+                </HoverLink>{' '}
+                Earth from the Orion spacecraft, Artemis II, April 2026.
+                <span className="block mt-1 font-mono text-[0.7rem] text-text-muted">NASA / Reid Wiseman</span>
+              </span>
+            </figcaption>
+          </motion.figure>
         </div>
       </div>
 
-      <StatusLine />
+      <footer className="px-4 sm:px-6 md:px-12 lg:px-16 py-8 border-t border-border-primary flex flex-col sm:flex-row sm:justify-between gap-2 font-mono text-[0.7rem] text-text-muted">
+        <span>Set in Newsreader and JetBrains Mono. Built with React, hosted on Vercel.</span>
+        <HoverLink href="https://github.com/thedhanawada/me-plus" external className="px-1 -mx-1 py-0.5 text-[0.7rem] self-start">
+          Source ↗
+        </HoverLink>
+      </footer>
     </main>
   );
 };

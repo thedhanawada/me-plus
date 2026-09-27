@@ -35,7 +35,6 @@ export default {
 
         // Accent tokens
         'accent': 'rgb(var(--color-accent) / <alpha-value>)',
-        'prompt': 'rgb(var(--color-prompt) / <alpha-value>)',
       },
 
       /* Spacing tokens */
@@ -68,6 +67,7 @@ export default {
       fontFamily: {
         display: ['Space Grotesk', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
+        serif: ['Newsreader', 'Iowan Old Style', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
 
