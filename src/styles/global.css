@@ -16,8 +16,8 @@
 /* ============================================
    DESIGN TOKENS - CSS Custom Properties
    ============================================
-   Centralized design system for consistent theming.
-   All color, spacing, and timing values defined here.
+   Theme colours, as RGB channels so Tailwind can apply opacity.
+   Light values here; dark overrides under .dark below.
    ============================================ */
 
 @layer base {
@@ -48,38 +48,8 @@
     --color-hover-bg: 243 244 246;             /* gray-100 */
     --color-focus-ring: 156 163 175;           /* gray-400 */
 
-    /* Accent (selection, loader) */
+    /* Accent (text selection) */
     --color-accent: 59 130 246;                /* blue-500 */
-    --color-loader: 52 152 219;                /* custom blue */
-
-    /* ===================
-       SPACING TOKENS
-       =================== */
-    --spacing-page-x: 1.5rem;                  /* 24px - px-6 */
-    --spacing-page-y: 4rem;                    /* 64px - py-16 */
-    --spacing-section: 4rem;                   /* 64px - space-y-16 */
-    --spacing-content: 2rem;                   /* 32px - gap-8 */
-    --spacing-element: 1rem;                   /* 16px - gap-4 */
-
-    /* ===================
-       LAYOUT TOKENS
-       =================== */
-    --container-max-width: 68rem;              /* ~1088px */
-
-    /* ===================
-       TRANSITION TOKENS
-       =================== */
-    --transition-fast: 200ms;
-    --transition-default: 300ms;
-    --transition-slow: 500ms;
-    --transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
-
-    /* ===================
-       Z-INDEX SCALE
-       =================== */
-    --z-sticky-header: 50;
-    --z-modal: 100;
-    --z-lightbox: 120;
   }
 
   /* Dark mode overrides */
@@ -117,153 +87,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Hide scrollbar for timeline */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Theme transition effect */
-html.theme-transitioning,
-html.theme-transitioning * {
-  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease !important;
-}
-
-html.theme-transitioning::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgb(var(--color-bg-primary));
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9999;
-  animation: theme-fade 0.5s ease;
-}
-
-@keyframes theme-fade {
-  0% { opacity: 0.15; }
-  100% { opacity: 0; }
-}
-
 /* Clean selection */
 ::selection {
-  background: rgb(59 130 246 / 0.2);
-}
-
-/* Loader animation */
-.loader {
-  border: 2px solid #f3f3f3;
-  border-top: 2px solid #3498db;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Fade-in animation */
-.fade-in {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ============================================
-   SKELETON LOADING ANIMATIONS
-   ============================================ */
-
-/* Shimmer effect for skeleton screens */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.skeleton-shimmer {
-  background: linear-gradient(
-    90deg,
-    rgb(var(--color-bg-tertiary)) 0%,
-    rgb(var(--color-bg-secondary)) 50%,
-    rgb(var(--color-bg-tertiary)) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
-/* ============================================
-   ENHANCED CARD INTERACTIONS
-   ============================================ */
-
-/* Card with lift effect on hover */
-.card-interactive {
-  transition: transform var(--transition-default) var(--transition-easing),
-              box-shadow var(--transition-default) var(--transition-easing);
-}
-
-.card-interactive:hover {
-  transform: translateY(-4px);
-}
-
-/* Card shadow levels */
-.card-shadow {
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  transition: box-shadow var(--transition-default) var(--transition-easing);
-}
-
-.card-shadow:hover {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-
-.dark .card-shadow {
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
-}
-
-.dark .card-shadow:hover {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-}
-
-/* ============================================
-   SCROLL PROGRESS INDICATOR
-   ============================================ */
-
-.scroll-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(var(--color-bg-inverted));
-  transform-origin: left;
-  z-index: 10;
-  transition: opacity var(--transition-fast) var(--transition-easing);
-}
-
-.scroll-progress::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 100px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgb(var(--color-bg-inverted) / 0.3)
-  );
+  background: rgb(var(--color-accent) / 0.2);
 }
 
 /* ============================================
