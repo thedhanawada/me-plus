@@ -133,15 +133,14 @@ const SECTIONS = [
 
   <Fragment slot="sidebar">
     <SideH>On this page</SideH>
-    <ul>
-      {SECTIONS.map((s) => <li><a href={`#${s.id}`} class={link}>{s.label}</a></li>)}
+    <ul class="space-y-1">
+      {SECTIONS.map((s) => <li class="py-0.5"><a href={`#${s.id}`} class={link}>{s.label}</a></li>)}
     </ul>
 
     <SideH>Elsewhere</SideH>
-    <p>
-      <a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org</a>
-      <br />
-      <Ext href="https://github.com/thedhanawada">github.com/thedhanawada</Ext>
-    </p>
+    <ul class="space-y-1">
+      <li class="py-0.5"><a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org</a></li>
+      <li class="py-0.5"><Ext href="https://github.com/thedhanawada">github.com/thedhanawada</Ext></li>
+    </ul>
   </Fragment>
 </Plain>

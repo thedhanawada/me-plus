@@ -54,9 +54,9 @@ const sections = WATCHLIST_SECTIONS.map((section) => ({
 
   <Fragment slot="sidebar">
     <SideH>Sections</SideH>
-    <ul>
+    <ul class="space-y-1">
       {WATCHLIST_SECTIONS.map((s) => (
-        <li>
+        <li class="py-0.5">
           <a href={`#${s.key}`} class={link}>{s.title}</a>{' '}
           <span class="text-text-muted">({WATCHLIST_MEDIA.filter((m) => m.category === s.key).length})</span>
         </li>
