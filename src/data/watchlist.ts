@@ -1,4 +1,9 @@
-import type { MediaEntry } from '../services/tmdb';
+export interface MediaEntry {
+  id: number;
+  type: 'movie' | 'tv';
+  category: 'current' | 'waiting' | 'rewatch' | 'favorite';
+  title?: string;
+}
 
 export const WATCHLIST_MEDIA: MediaEntry[] = [
   // Currently Watching

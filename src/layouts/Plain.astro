@@ -1,0 +1,167 @@
+---
+import Analytics from '@vercel/analytics/astro';
+import '../styles/global.css';
+import { link } from '../lib/ui';
+
+interface Props {
+  /** Shown after "N.R Dhanawada - " in the tab; omit on the home page. */
+  title?: string;
+  description?: string;
+  /** Which nav item to show as the current page. */
+  section?: 'home' | 'about' | 'notes' | 'photos' | 'tv';
+  /** Let the main column use the full page width (photos). */
+  wide?: boolean;
+}
+
+const DEFAULT_DESCRIPTION =
+  'Solutions Architect specializing in platform engineering, enterprise architecture, and building systems that help organizations serve people better.';
+
+const { title, description = DEFAULT_DESCRIPTION, section, wide = false } = Astro.props;
+const fullTitle = title ? `N.R Dhanawada - ${title}` : 'N.R Dhanawada';
+const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/', Astro.site).href;
+const hasSidebar = Astro.slots.has('sidebar');
+const builtOn = new Date().toISOString().slice(0, 10);
+
+const NAV = [
+  { name: 'home', path: '/' },
+  { name: 'about', path: '/about' },
+  { name: 'notes', path: '/notes' },
+  { name: 'photos', path: '/art' },
+  { name: 'tv', path: '/tv' },
+] as const;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="N.R Dhanawada" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="N.R Dhanawada" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- Apply the theme before first paint: a saved choice wins, otherwise follow the system. -->
+    <script is:inline>
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (e) {}
+        var dark = saved === 'dark' || (saved !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-bg-primary text-text-primary">
+    <div class="font-mono text-[15px] leading-relaxed text-text-secondary">
+      <div class="mx-auto max-w-[calc(72ch+22rem+6rem)] px-4 sm:px-8 py-10 sm:py-16">
+        <nav class="flex flex-wrap gap-x-5 gap-y-1 text-sm mb-16" aria-label="Site">
+          {NAV.map((item) =>
+            item.name === section ? (
+              <span aria-current="page" class="font-bold text-text-primary">{item.name}</span>
+            ) : (
+              <a href={item.path} class={link}>{item.name}</a>
+            )
+          )}
+          <button
+            id="theme-toggle"
+            type="button"
+            class="ml-auto text-text-muted hover:text-text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+          >
+            <span class="dark:hidden">lights off</span><span class="hidden dark:inline">lights on</span>
+          </button>
+        </nav>
+
+        {hasSidebar ? (
+          <div class="lg:grid lg:grid-cols-[minmax(0,72ch)_22rem] lg:gap-x-12">
+            <main id="main-content" class="min-w-0"><slot /></main>
+            <aside class="mt-16 lg:mt-0 pt-10 lg:pt-0 border-t lg:border-t-0 lg:border-l border-border-primary lg:pl-12 text-sm">
+              <slot name="sidebar" />
+            </aside>
+          </div>
+        ) : (
+          <main id="main-content" class={wide ? '' : 'max-w-[72ch]'}><slot /></main>
+        )}
+
+        <footer class="mt-16 pt-6 border-t border-border-primary text-sm text-text-muted">
+          Last built {builtOn}. This site used to be a React app. It isn't any more; it's plain
+          HTML, built with Astro. <a href="https://github.com/thedhanawada/me-plus" target="_blank" rel="noopener noreferrer" class={link}>Source</a>.
+        </footer>
+      </div>
+    </div>
+
+    <dialog
+      id="shortcuts"
+      class="font-mono text-sm bg-bg-primary text-text-secondary border border-border-strong p-6 max-w-sm w-[calc(100%-2rem)] backdrop:bg-black/50"
+    >
+      <h2 class="font-bold text-text-primary mb-4">Keyboard shortcuts</h2>
+      <dl class="grid grid-cols-[3rem_1fr] gap-y-1">
+        <dt class="text-text-primary">1–5</dt><dd>home, about, notes, photos, tv</dd>
+        <dt class="text-text-primary">t</dt><dd>lights on / off</dd>
+        <dt class="text-text-primary">?</dt><dd>this list</dd>
+        <dt class="text-text-primary">esc</dt><dd>close it</dd>
+      </dl>
+      <form method="dialog" class="mt-6">
+        <button class={link}>close</button>
+      </form>
+    </dialog>
+
+    <Analytics />
+  </body>
+</html>
+
+<script>
+  const root = document.documentElement;
+  const media = matchMedia('(prefers-color-scheme: dark)');
+
+  const savedTheme = () => {
+    try { return localStorage.getItem('theme'); } catch { return null; }
+  };
+
+  // Clicking is the only thing that saves a preference. Until then, follow the system.
+  const toggleTheme = () => {
+    const dark = root.classList.toggle('dark');
+    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch { /* private mode */ }
+  };
+
+  media.addEventListener('change', (e) => {
+    if (!savedTheme()) root.classList.toggle('dark', e.matches);
+  });
+
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+
+  const PAGES = ['/', '/about', '/notes', '/art', '/tv'];
+  const dialog = document.getElementById('shortcuts') as HTMLDialogElement | null;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const t = e.target as HTMLElement;
+    if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement || t.isContentEditable) return;
+    if (document.querySelector('dialog[open]:not(#shortcuts)')) return; // e.g. the photo viewer
+
+    const n = Number(e.key);
+    if (n >= 1 && n <= PAGES.length) {
+      if (location.pathname !== PAGES[n - 1]) location.href = PAGES[n - 1];
+    } else if (e.key === 't') {
+      toggleTheme();
+    } else if (e.key === '?') {
+      e.preventDefault();
+      if (dialog && !dialog.open) dialog.showModal();
+    }
+  });
+</script>
