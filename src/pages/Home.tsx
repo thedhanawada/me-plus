@@ -79,6 +79,22 @@ const Home = () => {
             <Link to="/about" className={link}>The long version.</Link>
           </p>
 
+          <figure className="mt-12">
+            <img
+              src="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_1200/art002e000192_yso465"
+              alt="Earth photographed from the Orion spacecraft window during Artemis II, April 2026"
+              width={1200}
+              height={800}
+              loading="lazy"
+              className="w-full h-auto"
+            />
+            <figcaption className="mt-2 text-sm text-text-muted">
+              <Ext href="https://www.nasa.gov/image-article/hello-world/">"Hello, World"</Ext>. Earth
+              from Orion, Artemis II, April 2026. Photo: NASA/Reid Wiseman. Not mine, but it's
+              the best picture of where everyone's code runs.
+            </figcaption>
+          </figure>
+
           <H2>Code</H2>
           <p>
             <Ext href={featuredProject.links.github}>{featuredProject.name}</Ext>: {featuredProject.tagline.charAt(0).toLowerCase() + featuredProject.tagline.slice(1)}
