@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Image as CloudinaryImage } from 'cloudinary-react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { photos, type Photo } from '../data';
-import Skeleton from '../components/Skeleton';
+import PlainPage, { link } from '../components/Plain';
 import { CLOUDINARY_CLOUD_NAME } from '../env';
 
 // ---------------------------------------------------------------------------
@@ -11,51 +10,30 @@ import { CLOUDINARY_CLOUD_NAME } from '../env';
 // ---------------------------------------------------------------------------
 const PhotoTile = ({
   photo,
-  index,
   onClick,
 }: {
   photo: Photo;
-  index: number;
   onClick: () => void;
-}) => {
-  const [loaded, setLoaded] = useState(false);
-  const cloudName = CLOUDINARY_CLOUD_NAME;
-
-  return (
-    <motion.button
-      onClick={onClick}
-      className="relative overflow-hidden rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-inset group"
-      style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
-      aria-label={`View photo: ${photo.alt}`}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.3) }}
-    >
-      {!loaded && (
-        <Skeleton className="absolute inset-0 w-full h-full !rounded-none" />
-      )}
-      <CloudinaryImage
-        cloudName={cloudName}
-        publicId={photo.id}
-        alt={photo.alt}
-        className={`w-full h-full object-cover transition-all duration-500 ${
-          loaded ? 'opacity-100' : 'opacity-0'
-        }`}
-        loading="lazy"
-        width="600"
-        quality="auto"
-        fetchFormat="auto"
-        onLoad={() => setLoaded(true)}
-      />
-      {/* Hover vignette + caption */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <p className="text-white/90 text-xs font-mono leading-snug">{photo.alt}</p>
-      </div>
-    </motion.button>
-  );
-};
+}) => (
+  <button
+    onClick={onClick}
+    className="block w-full bg-bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+    style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
+    aria-label={`View photo: ${photo.alt}`}
+    title={photo.alt}
+  >
+    <CloudinaryImage
+      cloudName={CLOUDINARY_CLOUD_NAME}
+      publicId={photo.id}
+      alt={photo.alt}
+      className="w-full h-full object-cover"
+      loading="lazy"
+      width="600"
+      quality="auto"
+      fetchFormat="auto"
+    />
+  </button>
+);
 
 // ---------------------------------------------------------------------------
 // Lightbox — full-screen photo viewer with swipe + crossfade
@@ -225,64 +203,42 @@ const Lightbox = ({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
     >
-      {/* Backdrop */}
-      <motion.div
-        className="absolute inset-0 bg-bg-inverted/95 backdrop-blur-sm"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      />
+      {/* Backdrop — always black, whatever the theme */}
+      <div className="absolute inset-0 bg-black" />
 
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors z-10"
-        aria-label="Close photo viewer"
-      >
-        <X size={24} />
-      </button>
-
-      {/* Counter */}
-      <div className="absolute top-4 left-4 text-white/40 text-sm font-mono z-10">
-        {currentIndex + 1} / {total}
+      <div className="absolute top-0 inset-x-0 flex justify-between p-4 font-mono text-sm text-white/60 z-10">
+        <span>{currentIndex + 1} / {total}</span>
+        <button onClick={onClose} className="hover:text-white underline underline-offset-2" aria-label="Close photo viewer">
+          close (esc)
+        </button>
       </div>
 
-      {/* Alt text caption */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-xs font-mono z-10 max-w-[80vw] text-center">
-        {photo.alt}
+      <div
+        className="absolute bottom-0 inset-x-0 flex justify-between items-baseline gap-4 p-4 font-mono text-sm text-white/60 z-10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button onClick={onPrev} className="hover:text-white underline underline-offset-2 shrink-0" aria-label="Previous photo">
+          ← prev
+        </button>
+        <span className="text-xs text-white/40 text-center truncate">{photo.alt}</span>
+        <button onClick={onNext} className="hover:text-white underline underline-offset-2 shrink-0" aria-label="Next photo">
+          next →
+        </button>
       </div>
-
-      {/* Previous */}
-      <button
-        onClick={(e) => { e.stopPropagation(); onPrev(); }}
-        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 p-3 text-white/30 hover:text-white transition-colors z-10 hidden md:block"
-        aria-label="Previous photo"
-      >
-        <ChevronLeft size={28} />
-      </button>
-
-      {/* Next */}
-      <button
-        onClick={(e) => { e.stopPropagation(); onNext(); }}
-        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 p-3 text-white/30 hover:text-white transition-colors z-10 hidden md:block"
-        aria-label="Next photo"
-      >
-        <ChevronRight size={28} />
-      </button>
 
       {/* Image container */}
       <div
-        className="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center z-[5]"
+        className="relative max-w-[90vw] max-h-[80vh] flex items-center justify-center z-[5]"
         onClick={(e) => e.stopPropagation()}
       >
         {!loaded && (
           <div
-            className="bg-white/5 animate-pulse rounded"
+            className="bg-white/5"
             style={{
               width: Math.min(photo.width, 1600),
               maxWidth: '90vw',
               aspectRatio: `${photo.width} / ${photo.height}`,
-              maxHeight: '85vh',
+              maxHeight: '80vh',
             }}
           />
         )}
@@ -298,7 +254,7 @@ const Lightbox = ({
               cloudName={cloudName}
               publicId={photo.id}
               alt={photo.alt}
-              className="max-w-[90vw] max-h-[85vh] object-contain rounded"
+              className="max-w-[90vw] max-h-[80vh] object-contain"
               width="1600"
               quality="auto"
               fetchFormat="auto"
@@ -335,77 +291,42 @@ const Art = () => {
 
   if (!cloudName) {
     return (
-      <main
-        id="main-content"
-        className="max-w-container mx-auto px-page-x py-page-y transition-colors duration-slow"
-      >
-        <div className="text-red-600 dark:text-red-400 text-center">
-          <p>Configuration error: Cloudinary cloud name is not configured.</p>
-        </div>
-      </main>
+      <PlainPage>
+        <h1 className="text-2xl font-bold text-text-primary mb-6">Photographs</h1>
+        <p>The photos can't load: VITE_CLOUDINARY_CLOUD_NAME isn't set for this build.</p>
+      </PlainPage>
     );
   }
 
+  const open = (photo: Photo) => setSelectedIndex(photos.indexOf(photo));
+
   return (
     <>
-      <main id="main-content" className="transition-colors duration-slow">
-        {/* Header */}
-        <div className="max-w-container mx-auto px-page-x pt-page-y pb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h1 className="text-fluid-4xl font-bold mb-4 leading-tight">
-              Art
-            </h1>
-            <p className="text-text-muted text-sm mt-2 font-mono">
-              {photos.length} photos
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Favorites section — larger tiles */}
-        <div className="max-w-container mx-auto px-page-x pb-4">
-          <p className="text-xs font-mono text-text-muted mb-4 uppercase tracking-wider">
-            Favorites
+      <PlainPage wide>
+        <div className="max-w-[72ch]">
+          <h1 className="text-2xl font-bold text-text-primary mb-6">Photographs</h1>
+          <p>
+            {photos.length} of them. Click one to see it larger; the arrow
+            keys work from there, and so does swiping. Or <a href="#all" className={link}>skip to the rest</a>.
           </p>
+          <h2 className="font-bold text-text-primary mt-12 mb-4">Favourites</h2>
         </div>
-        <div className="columns-1 sm:columns-2 gap-2 px-2 sm:px-2">
-          {favorites.map((photo, index) => (
-            <div key={photo.id} className="break-inside-avoid mb-2">
-              <PhotoTile
-                photo={photo}
-                index={index}
-                onClick={() => setSelectedIndex(photos.indexOf(photo))}
-              />
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-start">
+          {favorites.map((photo) => (
+            <PhotoTile key={photo.id} photo={photo} onClick={() => open(photo)} />
           ))}
         </div>
 
-        {/* Divider */}
-        <div className="max-w-container mx-auto px-page-x py-8">
-          <div className="border-t border-border-primary" />
-          <p className="text-xs font-mono text-text-muted mt-4 uppercase tracking-wider">
-            Everything else
-          </p>
-        </div>
-
-        {/* Collection grid — more breathing room */}
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-2 px-2 pb-page-y">
-          {collection.map((photo, index) => (
+        <h2 id="all" className="font-bold text-text-primary mt-12 mb-4 scroll-mt-8">Everything else</h2>
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-2">
+          {collection.map((photo) => (
             <div key={photo.id} className="break-inside-avoid mb-2">
-              <PhotoTile
-                photo={photo}
-                index={index}
-                onClick={() => setSelectedIndex(photos.indexOf(photo))}
-              />
+              <PhotoTile photo={photo} onClick={() => open(photo)} />
             </div>
           ))}
         </div>
-      </main>
+      </PlainPage>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {selectedIndex !== null && (
           <Lightbox

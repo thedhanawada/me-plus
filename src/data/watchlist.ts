@@ -2,11 +2,11 @@ import type { MediaEntry } from '../services/tmdb';
 
 export const WATCHLIST_MEDIA: MediaEntry[] = [
   // Currently Watching
-  { id: 71712, type: 'tv', category: 'current' },   // The Good Doctor
-  { id: 124364, type: 'tv', category: 'current' },  // FROM
-  { id: 197067, type: 'tv', category: 'current' },  // Extraordinary Attorney Woo
-  { id: 87917, type: 'tv', category: 'current' },   // For All Mankind
-  { id: 61692, type: 'tv', category: 'current' },   // Fresh Off the Boat
+  { id: 71712, type: 'tv', category: 'current', title: 'The Good Doctor' },
+  { id: 124364, type: 'tv', category: 'current', title: 'FROM' },
+  { id: 197067, type: 'tv', category: 'current', title: 'Extraordinary Attorney Woo' },
+  { id: 87917, type: 'tv', category: 'current', title: 'For All Mankind' },
+  { id: 61692, type: 'tv', category: 'current', title: 'Fresh Off the Boat' },
 
   // Waiting for Next Season
   { id: 125988, type: 'tv', category: 'waiting' },  // Silo
