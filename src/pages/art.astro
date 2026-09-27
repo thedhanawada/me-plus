@@ -9,6 +9,13 @@ if (!cloud) console.warn('[art] VITE_CLOUDINARY_CLOUD_NAME is not set; the photo
 const url = (p: Photo, width: number) =>
   `https://res.cloudinary.com/${cloud}/image/upload/w_${width},q_auto,f_auto/${p.id}`;
 
+// Let the browser pick a thumbnail close to its displayed width. Capped at 600 px,
+// the size every thumbnail used to be, so no screen downloads more than before.
+const srcset = (p: Photo, widths: number[]) => widths.map((w) => `${url(p, w)} ${w}w`).join(', ');
+// Page content is at most ~1030 px wide: favourites are 3 across, the rest 2–4 columns
+const FAV_SIZES = '(min-width: 1100px) 340px, (min-width: 640px) 32vw, 100vw';
+const REST_SIZES = '(min-width: 1100px) 255px, (min-width: 1024px) 24vw, (min-width: 768px) 32vw, 48vw';
+
 const favourites = photos.filter((p) => p.favorite);
 const rest = photos.filter((p) => !p.favorite);
 ---
@@ -30,9 +37,9 @@ const rest = photos.filter((p) => !p.favorite);
     <Fragment>
       <h2 class="font-bold text-text-primary mt-12 mb-4">Favourites</h2>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-start">
-        {favourites.map((p) => (
+        {favourites.map((p, i) => (
           <button class="photo block w-full bg-bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-full={url(p, 1600)} data-alt={p.alt} title={p.alt} aria-label={`View photo: ${p.alt}`}>
-            <img src={url(p, 600)} alt={p.alt} width={p.width} height={p.height} loading="lazy" class="w-full h-auto" />
+            <img src={url(p, 600)} srcset={srcset(p, [300, 600])} sizes={FAV_SIZES} alt={p.alt} width={p.width} height={p.height} fetchpriority={i === 0 ? 'high' : 'auto'} class="w-full h-auto" />
           </button>
         ))}
       </div>
@@ -41,7 +48,7 @@ const rest = photos.filter((p) => !p.favorite);
       <div class="columns-2 md:columns-3 lg:columns-4 gap-2">
         {rest.map((p) => (
           <button class="photo block w-full mb-2 break-inside-avoid bg-bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-full={url(p, 1600)} data-alt={p.alt} title={p.alt} aria-label={`View photo: ${p.alt}`}>
-            <img src={url(p, 600)} alt={p.alt} width={p.width} height={p.height} loading="lazy" class="w-full h-auto" />
+            <img src={url(p, 600)} srcset={srcset(p, [300, 600])} sizes={REST_SIZES} alt={p.alt} width={p.width} height={p.height} loading="lazy" class="w-full h-auto" />
           </button>
         ))}
       </div>
