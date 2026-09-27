@@ -1,0 +1,137 @@
+---
+import Plain from '../layouts/Plain.astro';
+import Ext from '../components/Ext.astro';
+import H2 from '../components/H2.astro';
+import SideH from '../components/SideH.astro';
+import { link, monthRange } from '../lib/ui';
+import { education, experiences, publications, featuredProject, contributions, archivedProjects } from '../data';
+
+const SECTIONS = [
+  { id: 'work', label: 'Work' },
+  { id: 'education', label: 'Education' },
+  { id: 'publications', label: 'Publications' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'contributions', label: 'Contributions' },
+  { id: 'older', label: 'Older projects' },
+];
+---
+
+<Plain section="about" title="About" description="Background, education, and professional journey of N.R Dhanawada.">
+  <h1 class="text-2xl font-bold text-text-primary mb-6">About</h1>
+  <p>
+    I work at a non-profit that delivers employment and skills programs like Workforce
+    Australia, SEE and SEA across Australia. I design and build the platforms our teams
+    use to run them: data warehouses, ETL pipelines, reporting, CRM, custom internal tools.
+  </p>
+
+  <H2 id="work">Work</H2>
+  {experiences.map((exp) => (
+    <section class="mb-10">
+      <h3 class="text-text-primary">
+        <span class="font-bold">{exp.title}</span>,{' '}
+        {exp.companyUrl ? <Ext href={exp.companyUrl}>{exp.company}</Ext> : exp.company}
+      </h3>
+      <p class="text-sm text-text-muted">
+        {exp.location} · {monthRange(exp.period)}{exp.award && ` · ${exp.award}`}
+      </p>
+      {exp.highlights.map((h) => (
+        <p class="mt-3"><span class="text-text-primary">{h.title}.</span> {h.description}</p>
+      ))}
+    </section>
+  ))}
+
+  <H2 id="education">Education</H2>
+  {education.map((edu) => (
+    <section class="mb-8">
+      <h3 class="text-text-primary">
+        <span class="font-bold">{edu.degree}, {edu.program}</span>
+        <br />
+        {edu.universityUrl ? <Ext href={edu.universityUrl}>{edu.university}</Ext> : edu.university}
+      </h3>
+      <p class="text-sm text-text-muted">{edu.location} · {edu.period.replace(' - ', '–')}</p>
+      {edu.achievements && edu.achievements.length > 0 && (
+        <ul class="mt-3 list-disc pl-6 marker:text-text-muted">
+          {edu.achievements.map((a) => <li>{a}</li>)}
+        </ul>
+      )}
+      {edu.courses.length > 0 && <p class="mt-3">Courses: {edu.courses.join(', ')}.</p>}
+    </section>
+  ))}
+
+  <H2 id="publications">Publications</H2>
+  {publications.map((pub) => (
+    <section class="mb-8">
+      <h3><Ext href={pub.link}>{pub.title}</Ext></h3>
+      <p class="mt-1">{pub.authors.join(', ')}.</p>
+      <p class="text-sm text-text-muted">
+        {pub.conference}. {pub.date}, article {pub.articleNo}, pp. {pub.pages}.
+      </p>
+    </section>
+  ))}
+
+  <H2 id="projects">Projects</H2>
+  <h3 class="text-text-primary">
+    <span class="font-bold">{featuredProject.name}</span>: {featuredProject.tagline}
+  </h3>
+  <p class="mt-3">{featuredProject.description}</p>
+  <ul class="mt-3 space-y-1">
+    {featuredProject.packages.map((pkg) => (
+      <li>
+        <Ext href={`https://www.npmjs.com/package/${pkg.name}`}>{pkg.name}</Ext>{' '}
+        <span class="text-text-muted">{pkg.version}</span>
+        <span class="block text-sm text-text-muted">{pkg.summary}</span>
+      </li>
+    ))}
+  </ul>
+  <p class="mt-3">
+    Built with {featuredProject.tech.join(', ')}.{' '}
+    <Ext href={featuredProject.links.github}>GitHub</Ext>{featuredProject.links.npm && <Fragment>, <Ext href={featuredProject.links.npm}>npm</Ext></Fragment>}.
+  </p>
+
+  <H2 id="contributions">Contributions</H2>
+  <ul class="space-y-2">
+    {contributions.map((c) => (
+      <li>
+        <Ext href={c.url}>{c.title}</Ext>
+        <span class="block text-sm text-text-muted">{c.org}/{c.repo}, {c.status}</span>
+      </li>
+    ))}
+  </ul>
+
+  <H2 id="older">Older projects</H2>
+  <ul class="space-y-3">
+    {archivedProjects.map((p) => {
+      const links = [
+        ['live', p.links.live],
+        ['github', p.links.github],
+        ['npm', p.links.npm],
+        ['firefox', p.links.firefox],
+      ].filter((l): l is [string, string] => Boolean(l[1]));
+      return (
+        <li>
+          <span class="text-text-primary">{p.title}</span>{' '}
+          <span class="text-sm text-text-muted">({p.type})</span>. {p.description}
+          <span class="block text-sm">
+            {links.map(([label, href], i) => (
+              <Fragment>{i > 0 && ' · '}<Ext href={href}>{label}</Ext></Fragment>
+            ))}
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+
+  <Fragment slot="sidebar">
+    <SideH>On this page</SideH>
+    <ul>
+      {SECTIONS.map((s) => <li><a href={`#${s.id}`} class={link}>{s.label}</a></li>)}
+    </ul>
+
+    <SideH>Elsewhere</SideH>
+    <p>
+      <a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org</a>
+      <br />
+      <Ext href="https://github.com/thedhanawada">github.com/thedhanawada</Ext>
+    </p>
+  </Fragment>
+</Plain>

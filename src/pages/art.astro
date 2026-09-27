@@ -1,0 +1,137 @@
+---
+import Plain from '../layouts/Plain.astro';
+import { link } from '../lib/ui';
+import { photos, type Photo } from '../data';
+
+const cloud = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME ?? process.env.VITE_CLOUDINARY_CLOUD_NAME;
+if (!cloud) console.warn('[art] VITE_CLOUDINARY_CLOUD_NAME is not set; the photos page will say so.');
+
+const url = (p: Photo, width: number) =>
+  `https://res.cloudinary.com/${cloud}/image/upload/w_${width},q_auto,f_auto/${p.id}`;
+
+const favourites = photos.filter((p) => p.favorite);
+const rest = photos.filter((p) => !p.favorite);
+---
+
+<Plain section="photos" title="Photographs" description="A collection of photographs." wide>
+  <div class="max-w-[72ch]">
+    <h1 class="text-2xl font-bold text-text-primary mb-6">Photographs</h1>
+    {cloud ? (
+      <p>
+        {photos.length} of them. Click one to see it larger; the arrow keys work from there, and so
+        does swiping. Or <a href="#all" class={link}>skip to the rest</a>.
+      </p>
+    ) : (
+      <p>The photos can't load: VITE_CLOUDINARY_CLOUD_NAME wasn't set when this site was built.</p>
+    )}
+  </div>
+
+  {cloud && (
+    <Fragment>
+      <h2 class="font-bold text-text-primary mt-12 mb-4">Favourites</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-start">
+        {favourites.map((p) => (
+          <button class="photo block w-full bg-bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-full={url(p, 1600)} data-alt={p.alt} title={p.alt} aria-label={`View photo: ${p.alt}`}>
+            <img src={url(p, 600)} alt={p.alt} width={p.width} height={p.height} loading="lazy" class="w-full h-auto" />
+          </button>
+        ))}
+      </div>
+
+      <h2 id="all" class="font-bold text-text-primary mt-12 mb-4 scroll-mt-8">Everything else</h2>
+      <div class="columns-2 md:columns-3 lg:columns-4 gap-2">
+        {rest.map((p) => (
+          <button class="photo block w-full mb-2 break-inside-avoid bg-bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-full={url(p, 1600)} data-alt={p.alt} title={p.alt} aria-label={`View photo: ${p.alt}`}>
+            <img src={url(p, 600)} alt={p.alt} width={p.width} height={p.height} loading="lazy" class="w-full h-auto" />
+          </button>
+        ))}
+      </div>
+    </Fragment>
+  )}
+
+  <!-- Full-screen viewer. Always black, whatever the theme. -->
+  <dialog
+    id="viewer"
+    aria-label="Photo viewer"
+    class="fixed inset-0 m-0 p-0 w-screen h-[100dvh] max-w-none max-h-none bg-black text-white/60 font-mono text-sm backdrop:bg-black"
+  >
+    <div class="absolute top-0 inset-x-0 flex justify-between p-4 z-10">
+      <span id="viewer-count"></span>
+      <button id="viewer-close" class="hover:text-white underline underline-offset-2">close (esc)</button>
+    </div>
+    <div id="viewer-stage" class="absolute inset-0 flex items-center justify-center py-14 px-2">
+      <img id="viewer-img" alt="" class="max-w-[90vw] max-h-full object-contain transition-opacity duration-200" />
+    </div>
+    <div class="absolute bottom-0 inset-x-0 flex justify-between items-baseline gap-4 p-4 z-10">
+      <button id="viewer-prev" class="hover:text-white underline underline-offset-2 shrink-0">← prev</button>
+      <span id="viewer-caption" class="text-xs text-white/40 text-center truncate"></span>
+      <button id="viewer-next" class="hover:text-white underline underline-offset-2 shrink-0">next →</button>
+    </div>
+  </dialog>
+</Plain>
+
+<script>
+  const tiles = [...document.querySelectorAll<HTMLButtonElement>('button.photo')];
+  const viewer = document.getElementById('viewer') as HTMLDialogElement;
+  const img = document.getElementById('viewer-img') as HTMLImageElement;
+  const count = document.getElementById('viewer-count')!;
+  const caption = document.getElementById('viewer-caption')!;
+  let current = 0;
+
+  const preload = (i: number) => {
+    const t = tiles[(i + tiles.length) % tiles.length];
+    if (t) new Image().src = t.dataset.full!;
+  };
+
+  const show = (i: number) => {
+    current = (i + tiles.length) % tiles.length;
+    const t = tiles[current];
+    img.style.opacity = '0';
+    img.onload = () => { img.style.opacity = '1'; };
+    img.src = t.dataset.full!;
+    img.alt = t.dataset.alt ?? '';
+    caption.textContent = t.dataset.alt ?? '';
+    count.textContent = `${current + 1} / ${tiles.length}`;
+    preload(current + 1);
+    preload(current - 1);
+  };
+
+  tiles.forEach((t, i) =>
+    t.addEventListener('click', () => {
+      show(i);
+      document.body.style.overflow = 'hidden';
+      viewer.showModal();
+    })
+  );
+
+  viewer.addEventListener('close', () => {
+    document.body.style.overflow = '';
+    tiles[current]?.focus();
+  });
+
+  document.getElementById('viewer-close')!.addEventListener('click', () => viewer.close());
+  document.getElementById('viewer-prev')!.addEventListener('click', () => show(current - 1));
+  document.getElementById('viewer-next')!.addEventListener('click', () => show(current + 1));
+
+  // Clicking the black space around the photo closes it
+  document.getElementById('viewer-stage')!.addEventListener('click', (e) => {
+    if (e.target !== img) viewer.close();
+  });
+
+  viewer.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  // Swipe left/right on touch screens
+  let startX = 0;
+  let startY = 0;
+  viewer.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  viewer.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(current + (dx < 0 ? 1 : -1));
+  });
+</script>

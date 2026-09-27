@@ -1,0 +1,72 @@
+---
+import Plain from '../layouts/Plain.astro';
+import Ext from '../components/Ext.astro';
+import H2 from '../components/H2.astro';
+import SideH from '../components/SideH.astro';
+import { link } from '../lib/ui';
+import { fetchWatchlist } from '../lib/tmdb';
+import { WATCHLIST_MEDIA, WATCHLIST_SECTIONS } from '../data';
+
+const media = await fetchWatchlist(WATCHLIST_MEDIA);
+
+const sections = WATCHLIST_SECTIONS.map((section) => ({
+  ...section,
+  items: WATCHLIST_MEDIA.filter((m) => m.category === section.key)
+    .map((m) => media?.get(m.id))
+    .filter((m) => m !== undefined),
+})).filter((s) => s.items.length > 0);
+---
+
+<Plain section="tv" title="TV" description="What I'm watching, rewatching, and waiting for.">
+  <h1 class="text-2xl font-bold text-text-primary mb-6">TV</h1>
+  <p>What I'm watching, rewatching over dinner, and waiting on.</p>
+
+  {sections.length === 0 ? (
+    <p class="mt-12 text-text-muted">
+      The list couldn't be fetched from TMDB when this page was built. It'll be back on the next deploy.
+    </p>
+  ) : (
+    sections.map((section) => (
+      <section>
+        <H2 id={section.key}>{section.title}</H2>
+        <ul class="space-y-3">
+          {section.items.map((item) => (
+            <li class="grid grid-cols-[2.5rem_1fr] gap-x-4 items-center">
+              {item.poster ? (
+                <img src={item.poster} alt="" width="40" height="60" loading="lazy" class="w-10 h-[60px] object-cover bg-bg-secondary" />
+              ) : (
+                <span class="w-10 h-[60px] bg-bg-secondary" aria-hidden="true" />
+              )}
+              <span>
+                <Ext href={`https://www.themoviedb.org/${item.type}/${item.id}`}>{item.title}</Ext>
+                <span class="block text-sm text-text-muted">
+                  {[item.year, item.type === 'tv' ? 'series' : 'film', item.rating ? `${item.rating.toFixed(1)}/10` : null]
+                    .filter(Boolean)
+                    .join(' · ')}
+                </span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  )}
+
+  <Fragment slot="sidebar">
+    <SideH>Sections</SideH>
+    <ul>
+      {WATCHLIST_SECTIONS.map((s) => (
+        <li>
+          <a href={`#${s.key}`} class={link}>{s.title}</a>{' '}
+          <span class="text-text-muted">({WATCHLIST_MEDIA.filter((m) => m.category === s.key).length})</span>
+        </li>
+      ))}
+    </ul>
+
+    <SideH>Where this comes from</SideH>
+    <p>
+      Titles, posters, years and ratings from <Ext href="https://www.themoviedb.org/">TMDB</Ext>,
+      fetched when the site was last built. The opinions are mine.
+    </p>
+  </Fragment>
+</Plain>
