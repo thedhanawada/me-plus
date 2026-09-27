@@ -52,7 +52,7 @@ const rest = photos.filter((p) => !p.favorite);
   <dialog
     id="viewer"
     aria-label="Photo viewer"
-    class="fixed inset-0 m-0 p-0 w-screen h-[100dvh] max-w-none max-h-none bg-black text-white/60 font-mono text-sm backdrop:bg-black"
+    class="fixed inset-0 m-0 p-0 w-screen h-[100dvh] max-w-none max-h-none bg-black text-white/80 font-mono text-sm backdrop:bg-black"
   >
     <div class="absolute top-0 inset-x-0 flex justify-between p-4 z-10">
       <span id="viewer-count"></span>
@@ -63,7 +63,7 @@ const rest = photos.filter((p) => !p.favorite);
     </div>
     <div class="absolute bottom-0 inset-x-0 flex justify-between items-baseline gap-4 p-4 z-10">
       <button id="viewer-prev" class="hover:text-white underline underline-offset-2 shrink-0">← prev</button>
-      <span id="viewer-caption" class="text-xs text-white/40 text-center truncate"></span>
+      <span id="viewer-caption" class="text-xs text-white/70 text-center truncate"></span>
       <button id="viewer-next" class="hover:text-white underline underline-offset-2 shrink-0">next →</button>
     </div>
   </dialog>
