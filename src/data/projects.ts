@@ -16,6 +16,24 @@ export interface FeaturedProject {
   tech: string[];
 }
 
+// Products I run — live sites rather than code repositories
+export interface Product {
+  name: string;
+  url: string;
+  tagline: string;
+  description: string;
+}
+
+export const products: Product[] = [
+  {
+    name: 'ServiceCite',
+    url: 'https://www.servicecite.org',
+    tagline: 'An independent, source-cited reference for Australian employment services guidelines.',
+    description:
+      'Search, read and cite the public Workforce Australia and IEA guidelines. Every passage shows the source version and effective date, and links to the official publication. It is a place to find the source, not a substitute for it.',
+  },
+];
+
 // Open source contributions to other projects
 export interface Contribution {
   org: string;

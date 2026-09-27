@@ -4,6 +4,7 @@ import {
   philosophy,
   education,
   featuredProject,
+  products,
   contributions,
   archivedProjects,
   experiences,
@@ -54,6 +55,14 @@ describe('Data exports', () => {
       expect(featuredProject).toHaveProperty('links');
       expect(featuredProject).toHaveProperty('tech');
       expect(featuredProject.packages.length).toBeGreaterThan(0);
+    });
+
+    it('should have products with a live https url', () => {
+      expect(products.length).toBeGreaterThan(0);
+      products.forEach((p) => {
+        expect(p.name).toBeTruthy();
+        expect(p.url).toMatch(/^https:\/\//);
+      });
     });
 
     it('should have contributions with required fields', () => {
