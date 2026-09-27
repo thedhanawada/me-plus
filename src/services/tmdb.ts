@@ -19,6 +19,7 @@ export interface MediaEntry {
   id: number;
   type: 'movie' | 'tv';
   category: 'current' | 'waiting' | 'rewatch' | 'favorite';
+  title?: string;
 }
 
 interface CacheData {
