@@ -5,12 +5,11 @@ import { link } from '../lib/ui';
 ---
 
 <Plain title="Not found" description="There's nothing at this address.">
-  <PageHeader eyebrow="404 / Not found" title="Nothing here.">The address is missing. The rest of the site is still here.</PageHeader>
+  <PageHeader title="Page not found" />
   <p>
-    There's nothing at <code id="missing-path" class="text-text-primary">this address</code>. Maybe it
-    moved, maybe it never existed. Either way, it's not here.
+    There’s no page at <code id="missing-path" class="text-text-primary">this address</code>.
   </p>
-  <p class="mt-4">Try the <a href="/" class={link}>home page</a>, <a href="/projects" class={link}>projects</a>, or <a href="/notes" class={link}>notes</a>.</p>
+  <p class="mt-4"><a href="/" class={link}>Home</a></p>
 </Plain>
 
 <script>

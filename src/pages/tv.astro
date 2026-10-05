@@ -19,7 +19,7 @@ const sections = WATCHLIST_SECTIONS.map((section) => ({
 ---
 
 <Plain section="tv" title="TV" description="What I'm watching, rewatching, and waiting for.">
-  <PageHeader eyebrow="Off the clock / Watchlist" title="On screen.">What I'm watching, rewatching over dinner, and waiting on.</PageHeader>
+  <PageHeader title="TV">What I'm watching, rewatching over dinner, and waiting on.</PageHeader>
 
   {sections.length === 0 ? (
     <p class="mt-12 text-text-muted">
@@ -63,9 +63,9 @@ const sections = WATCHLIST_SECTIONS.map((section) => ({
       ))}
     </ul>
 
-    <SideH>Where this comes from</SideH>
+    <SideH>Source</SideH>
     <p>
-      The list is maintained here. <Ext href="https://www.themoviedb.org/">TMDB</Ext> supplies title details, posters, years and ratings when the site is built. If those details are unavailable, the local titles stay on the list. Ratings are TMDB community scores, not my ratings.
+      Title details and posters from <Ext href="https://www.themoviedb.org/">TMDB</Ext>. Ratings are TMDB community scores.
     </p>
   </Fragment>
 </Plain>

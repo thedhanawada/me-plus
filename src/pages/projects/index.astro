@@ -8,29 +8,14 @@ import { featuredProject, products, contributions, archivedProjects } from '../.
 
 const serviceCite = products.find((product) => product.name === 'ServiceCite')!;
 const selectedProjects = [
-  { number: '01', name: featuredProject.name, tagline: featuredProject.tagline, meta: 'Open-source library · Salesforce', href: '/projects/forcecalendar' },
-  { number: '02', name: serviceCite.name, tagline: serviceCite.tagline, meta: 'Independent reference · Australian employment services', href: '/projects/servicecite' },
+  { name: featuredProject.name, description: featuredProject.tagline, href: '/projects/forcecalendar' },
+  { name: serviceCite.name, description: serviceCite.tagline, href: '/projects/servicecite' },
 ];
 ---
 
-<Plain section="projects" title="Projects" description="Selected projects, open-source contributions, and earlier work by N.R. Dhanawada.">
-  <PageHeader eyebrow="Selected work / Open source" title="Useful things, built carefully.">
-    <p>A calendar library for Salesforce. A source-cited reference for employment services. Contributions to the tools other people build.</p>
-  </PageHeader>
-
-  <section aria-label="Selected projects">
-    {selectedProjects.map((project) => (
-      <a href={project.href} class="project-row">
-        <span class="row-number" aria-hidden="true">{project.number}</span>
-        <div>
-          <h2>{project.name}</h2>
-          <p>{project.tagline}</p>
-          <span class="row-meta">{project.meta}</span>
-        </div>
-        <span class="row-arrow" aria-hidden="true">↗</span>
-      </a>
-    ))}
-  </section>
+<Plain section="projects" title="Projects" description="Projects and open-source contributions by N.R. Dhanawada.">
+  <PageHeader title="Projects" />
+  <section aria-label="Projects">{selectedProjects.map(project => <article class="project-row"><h2><a href={project.href} class={link}>{project.name}</a></h2><p>{project.description}</p></article>)}</section>
 
   <H2 id="contributions">Contributions</H2>
   <ul class="space-y-6">
@@ -53,7 +38,7 @@ const selectedProjects = [
       ].filter((item): item is [string, string] => Boolean(item[1]));
       return (
         <li>
-          <h3 class="font-semibold text-text-primary">{project.title} <span class="row-meta">/ {project.type}</span></h3>
+          <h3 class="font-semibold text-text-primary">{project.title} </h3>
           <p class="mt-2 text-text-secondary">{project.description}</p>
           <p class="mt-2 text-sm">
             {projectLinks.map(([label, href], index) => (
@@ -65,16 +50,4 @@ const selectedProjects = [
     })}
   </ul>
 
-  <Fragment slot="sidebar">
-    <h2 class="aside-heading">On this page</h2>
-    <ul class="space-y-3">
-      <li><a href="#contributions" class={link}>Contributions</a></li>
-      <li><a href="#archive" class={link}>Earlier projects</a></li>
-    </ul>
-    <h2 class="aside-heading">Explore</h2>
-    <ul class="space-y-3">
-      <li><a href="/projects/forcecalendar" class={link}>forceCalendar</a></li>
-      <li><a href="/projects/servicecite" class={link}>ServiceCite</a></li>
-    </ul>
-  </Fragment>
 </Plain>

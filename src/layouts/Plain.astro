@@ -4,7 +4,7 @@ import '../styles/global.css';
 import { link } from '../lib/ui';
 
 interface Props {
-  /** Shown after "N.R Dhanawada - " in the tab; omit on the home page. */
+  /** Shown after "N.R. Dhanawada - " in the tab; omit on the home page. */
   title?: string;
   description?: string;
   /** Which nav item to show as the current page. */
@@ -14,13 +14,12 @@ interface Props {
 }
 
 const DEFAULT_DESCRIPTION =
-  'Solutions Architect specializing in platform engineering, enterprise architecture, and building systems that help organizations serve people better.';
+  'The personal website of N.R. Dhanawada. Notes, photographs, projects, and work.';
 
 const { title, description = DEFAULT_DESCRIPTION, section, wide = false } = Astro.props;
-const fullTitle = title ? `N.R Dhanawada - ${title}` : 'N.R Dhanawada';
+const fullTitle = title ? `N.R. Dhanawada - ${title}` : 'N.R. Dhanawada';
 const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/', Astro.site).href;
 const hasSidebar = Astro.slots.has('sidebar');
-const builtOn = new Date().toISOString().slice(0, 10);
 const shareImage = new URL('/og.png', Astro.site).href;
 
 const NAV = [
@@ -40,14 +39,14 @@ const NAV = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="author" content="N.R Dhanawada" />
+    <meta name="author" content="N.R. Dhanawada" />
     <link rel="canonical" href={canonical} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content="N.R Dhanawada" />
+    <meta property="og:site_name" content="N.R. Dhanawada" />
     <meta property="og:image" content={shareImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -56,7 +55,7 @@ const NAV = [
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={shareImage} />
-    <link rel="alternate" type="application/rss+xml" title="N.R Dhanawada - Notes" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="N.R. Dhanawada - Notes" href="/rss.xml" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -81,7 +80,7 @@ const NAV = [
     >Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
-        <a href="/" class="wordmark" aria-label="N.R. Dhanawada, home">N.R. Dhanawada<span class="wordmark-dot">.</span></a>
+        <a href="/" class="wordmark" aria-label="N.R. Dhanawada, home">N.R. Dhanawada</a>
         <nav class="site-nav" aria-label="Site">{NAV.map((item) => <a href={item.path} aria-current={item.name === section ? 'page' : undefined}>{item.name}</a>)}</nav>
         <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle colour theme" aria-pressed="false"><span class="dark:hidden">Dark</span><span class="hidden dark:inline">Light</span></button>
       </header>
@@ -90,9 +89,8 @@ const NAV = [
         {hasSidebar && <aside class="page-aside"><slot name="sidebar" /></aside>}
       </div>
       <footer class="site-footer">
-        <div><a href="/" class="footer-name">N.R. Dhanawada</a><span>Sydney, Australia</span></div>
-        <div><a href="mailto:nirmal@dhanawada.org" class={link}>Email</a><a href="https://github.com/thedhanawada/me-plus" target="_blank" rel="noopener noreferrer" class={link}>Source ↗</a><a href="/rss.xml" class={link}>RSS</a><button id="shortcuts-toggle" type="button">Keyboard shortcuts</button></div>
-        <p class="build-note">Plain HTML. Built with Astro. Last built {builtOn}.</p>
+        <div><a href="mailto:nirmal@dhanawada.org" class={link}>Email</a><a href="https://github.com/thedhanawada/me-plus" target="_blank" rel="noopener noreferrer" class={link}>Source</a><a href="/rss.xml" class={link}>RSS</a><button id="shortcuts-toggle" type="button">Keyboard shortcuts</button></div>
+        <p class="footer-disclaimer">The projects and opinions on this site are my own and do not represent my employer or my family.</p>
       </footer>
     </div>
 

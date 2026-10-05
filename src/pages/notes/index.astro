@@ -8,9 +8,9 @@ const sortedPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date));
 ---
 
 <Plain section="notes" title="Notes" description="Thinking out loud about systems, code, and building things.">
-  <PageHeader eyebrow="Notes / writing" title="Thinking in public.">About systems, code, and building things. Occasional notes, without a publishing schedule.</PageHeader>
-  <p class="text-sm"><a href="/rss.xml" class={link}>Subscribe via RSS ↗</a></p>
+  <PageHeader title="Notes" />
+  <p class="text-sm"><a href="/rss.xml" class={link}>RSS feed</a></p>
   <ul class="mt-8">{sortedPosts.map((post) => (
-    <li class="note-row"><time datetime={post.date}>{post.date}</time><div><h2><a href={`/notes/${post.slug}`}>{post.title}</a></h2><p>{post.summary}</p><div class="row-meta">{post.tags.join(' / ')}</div></div></li>
+    <li class="note-row"><time datetime={post.date}>{post.date}</time><div><h2><a href={`/notes/${post.slug}`} class={link}>{post.title}</a></h2><p>{post.summary}</p></div></li>
   ))}</ul>
 </Plain>

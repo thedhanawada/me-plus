@@ -1,7 +1,6 @@
 ---
 import PageHeader from '../components/PageHeader.astro';
 import Plain from '../layouts/Plain.astro';
-import { link } from '../lib/ui';
 import { photos, type Photo } from '../data';
 
 const cloud = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME ?? process.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -22,8 +21,8 @@ const rest = photos.filter((p) => !p.favorite);
 ---
 
 <Plain section="photos" title="Photographs" description="A collection of photographs." wide>
-  <div class="gallery-head"><PageHeader eyebrow="Photo journal / Selected frames" title="A different way of looking.">Streets, people, light, and small details. A collection of photographs.</PageHeader><span class="gallery-count">{photos.length} frames</span></div>
-  {cloud ? <p class="text-sm text-text-muted">Open a photograph to look closer. Use the arrow keys or swipe to move through the collection. <a href="#all" class={link}>Browse all →</a></p> : <p>Photographs are temporarily unavailable.</p>}
+  <div class="gallery-head"><PageHeader title="Photographs" /><span class="gallery-count">{photos.length} photographs</span></div>
+  {cloud ? <p class="text-sm text-text-muted">Click a photograph to enlarge it. Use the arrow keys or swipe to move between photographs.</p> : <p>Photographs are temporarily unavailable.</p>}
 
   {cloud && (
     <Fragment>
@@ -36,7 +35,7 @@ const rest = photos.filter((p) => !p.favorite);
         ))}
       </div>
 
-      <h2 id="all" class="section-heading">Everything else</h2>
+      <h2 id="all" class="section-heading">More photographs</h2>
       <div class="gallery-rest">
         {rest.map((p) => (
           <figure><button class="photo block w-full break-inside-avoid bg-bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-full={url(p, 1600)} data-alt={p.alt} title={p.alt} aria-label={`View photo: ${p.alt}`}>

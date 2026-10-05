@@ -1,4 +1,4 @@
-// Plain links, the way links used to look: underlined, blue, purple once visited.
+// Shared styling for inline text links.
 export const link = 'text-link';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
