@@ -1,0 +1,16 @@
+---
+import Plain from '../../layouts/Plain.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Ext from '../../components/Ext.astro';
+import { link } from '../../lib/ui';
+import { products } from '../../data/projects';
+const project = products.find(p => p.name === 'ServiceCite')!;
+---
+<Plain section="projects" title={project.name} description={project.tagline}>
+  <PageHeader title={project.name} />
+  <p class="mb-5">ServiceCite is an independent reference for public Workforce Australia and IEA guidelines.</p>
+  <p class="mb-5">It lets you search, read, and cite passages. Each passage includes its source version, effective date, and a link to the official publication.</p>
+  <p>It is a place to find the source, not a substitute for it.</p>
+  <p class="mt-8"><Ext href={project.url}>servicecite.org</Ext></p>
+  <p class="mt-12"><a href="/projects" class={link}>← Projects</a></p>
+</Plain>

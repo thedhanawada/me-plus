@@ -2,7 +2,7 @@ export interface MediaEntry {
   id: number;
   type: 'movie' | 'tv';
   category: 'current' | 'waiting' | 'rewatch' | 'favorite';
-  title?: string;
+  title: string;
 }
 
 export const WATCHLIST_MEDIA: MediaEntry[] = [
@@ -14,44 +14,44 @@ export const WATCHLIST_MEDIA: MediaEntry[] = [
   { id: 61692, type: 'tv', category: 'current', title: 'Fresh Off the Boat' },
 
   // Waiting for Next Season
-  { id: 125988, type: 'tv', category: 'waiting' },  // Silo
-  { id: 250307, type: 'tv', category: 'waiting' },  // The Pitt
-  { id: 95396, type: 'tv', category: 'waiting' },   // Severance
+  { id: 125988, type: 'tv', category: 'waiting', title: 'Silo' },
+  { id: 250307, type: 'tv', category: 'waiting', title: 'The Pitt' },
+  { id: 95396, type: 'tv', category: 'waiting', title: 'Severance' },
 
   // Dinner & Lunch Rewatch Shows
-  { id: 1421, type: 'tv', category: 'rewatch' },    // Modern Family
-  { id: 62649, type: 'tv', category: 'rewatch' },   // Superstore
-  { id: 1418, type: 'tv', category: 'rewatch' },    // TBBT
-  { id: 49011, type: 'tv', category: 'rewatch' },   // Mom
-  { id: 2691, type: 'tv', category: 'rewatch' },    // Two and a Half Men
-  { id: 1668, type: 'tv', category: 'rewatch' },    // Friends
-  { id: 62320, type: 'tv', category: 'rewatch' },   // Grace and Frankie
-  { id: 1424, type: 'tv', category: 'rewatch' },    // Orange Is the New Black
-  { id: 64010, type: 'tv', category: 'rewatch' },    // Reply 1988
+  { id: 1421, type: 'tv', category: 'rewatch', title: 'Modern Family' },
+  { id: 62649, type: 'tv', category: 'rewatch', title: 'Superstore' },
+  { id: 1418, type: 'tv', category: 'rewatch', title: 'The Big Bang Theory' },
+  { id: 49011, type: 'tv', category: 'rewatch', title: 'Mom' },
+  { id: 2691, type: 'tv', category: 'rewatch', title: 'Two and a Half Men' },
+  { id: 1668, type: 'tv', category: 'rewatch', title: 'Friends' },
+  { id: 62320, type: 'tv', category: 'rewatch', title: 'Grace and Frankie' },
+  { id: 1424, type: 'tv', category: 'rewatch', title: 'Orange Is the New Black' },
+  { id: 64010, type: 'tv', category: 'rewatch', title: 'Reply 1988' },
 
   // Favourites
-  { id: 61859, type: 'tv', category: 'favorite' },    // The Night Manager
-  { id: 120, type: 'movie', category: 'favorite' },   // LOTR: Fellowship
-  { id: 121, type: 'movie', category: 'favorite' },   // LOTR: Two Towers
-  { id: 122, type: 'movie', category: 'favorite' },   // LOTR: Return of the King
-  { id: 62560, type: 'tv', category: 'favorite' },    // Mr. Robot
-  { id: 4607, type: 'tv', category: 'favorite' },     // Lost
-  { id: 1100, type: 'tv', category: 'favorite' },     // HIMYM
-  { id: 672, type: 'movie', category: 'favorite' },   // Harry Potter Chamber of Secrets
-  { id: 70523, type: 'tv', category: 'favorite' },    // Dark
-  { id: 72844, type: 'tv', category: 'favorite' },    // The Haunting of Hill House
-  { id: 63675, type: 'movie', category: 'favorite' },  // Mozhi
-  { id: 26910, type: 'movie', category: 'favorite' },  // Anbe Sivam
-  { id: 7508, type: 'movie', category: 'favorite' },   // Taare Zameen Par
-  { id: 268660, type: 'movie', category: 'favorite' }, // Bangalore Days
-  { id: 550, type: 'movie', category: 'favorite' },   // Fight Club
-  { id: 198277, type: 'movie', category: 'favorite' },// Begin Again
-  { id: 438631, type: 'movie', category: 'favorite' },// Dune
-  { id: 693134, type: 'movie', category: 'favorite' },// Dune: Part Two
-  { id: 1233413, type: 'movie', category: 'favorite' },// Sinners
-  { id: 157336, type: 'movie', category: 'favorite' }, // Interstellar
-  { id: 46648, type: 'tv', category: 'favorite' },    // True Detective
-  { id: 71578, type: 'tv', category: 'favorite' },    // Atypical
+  { id: 61859, type: 'tv', category: 'favorite', title: 'The Night Manager' },
+  { id: 120, type: 'movie', category: 'favorite', title: 'The Lord of the Rings: The Fellowship of the Ring' },
+  { id: 121, type: 'movie', category: 'favorite', title: 'The Lord of the Rings: The Two Towers' },
+  { id: 122, type: 'movie', category: 'favorite', title: 'The Lord of the Rings: The Return of the King' },
+  { id: 62560, type: 'tv', category: 'favorite', title: 'Mr. Robot' },
+  { id: 4607, type: 'tv', category: 'favorite', title: 'Lost' },
+  { id: 1100, type: 'tv', category: 'favorite', title: 'How I Met Your Mother' },
+  { id: 672, type: 'movie', category: 'favorite', title: 'Harry Potter and the Chamber of Secrets' },
+  { id: 70523, type: 'tv', category: 'favorite', title: 'Dark' },
+  { id: 72844, type: 'tv', category: 'favorite', title: 'The Haunting of Hill House' },
+  { id: 63675, type: 'movie', category: 'favorite', title: 'Mozhi' },
+  { id: 26910, type: 'movie', category: 'favorite', title: 'Anbe Sivam' },
+  { id: 7508, type: 'movie', category: 'favorite', title: 'Taare Zameen Par' },
+  { id: 268660, type: 'movie', category: 'favorite', title: 'Bangalore Days' },
+  { id: 550, type: 'movie', category: 'favorite', title: 'Fight Club' },
+  { id: 198277, type: 'movie', category: 'favorite', title: 'Begin Again' },
+  { id: 438631, type: 'movie', category: 'favorite', title: 'Dune' },
+  { id: 693134, type: 'movie', category: 'favorite', title: 'Dune: Part Two' },
+  { id: 1233413, type: 'movie', category: 'favorite', title: 'Sinners' },
+  { id: 157336, type: 'movie', category: 'favorite', title: 'Interstellar' },
+  { id: 46648, type: 'tv', category: 'favorite', title: 'True Detective' },
+  { id: 71578, type: 'tv', category: 'favorite', title: 'Atypical' },
 ];
 
 export const WATCHLIST_SECTIONS = [

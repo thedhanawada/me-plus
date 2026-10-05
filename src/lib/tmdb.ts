@@ -1,8 +1,9 @@
 import type { MediaEntry } from '../data/watchlist';
 
-// Fetched once, at build time. The key never reaches the browser, and
-// the page ships as plain HTML. Ratings refresh on every deploy.
+// Build-time only: credentials and fetching never reach the browser.
 const API = 'https://api.themoviedb.org/3';
+const REQUEST_TIMEOUT_MS = 3_000;
+const CONCURRENCY = 4;
 export const POSTER = 'https://image.tmdb.org/t/p/w92';
 
 export interface Media {
@@ -14,33 +15,59 @@ export interface Media {
   rating: number | null;
 }
 
-const fetchOne = async (entry: MediaEntry, key: string): Promise<Media | null> => {
+const fallback = (entry: MediaEntry): Media => ({
+  id: entry.id,
+  type: entry.type,
+  title: entry.title,
+  year: null,
+  poster: null,
+  rating: null,
+});
+
+const fetchOne = async (entry: MediaEntry, key: string): Promise<Media> => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
-    const res = await fetch(`${API}/${entry.type}/${entry.id}?api_key=${key}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const d = await res.json();
-    const date: string | undefined = d.release_date || d.first_air_date;
+    const res = await fetch(`${API}/${entry.type}/${entry.id}?api_key=${encodeURIComponent(key)}`, {
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error('TMDB request failed');
+    const data: unknown = await res.json();
+    if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid TMDB response');
+    const d = data as Record<string, unknown>;
+    const title = entry.type === 'movie' ? d.title : d.name;
+    const date = entry.type === 'movie' ? d.release_date : d.first_air_date;
     return {
-      id: entry.id,
-      type: entry.type,
-      title: d.title || d.name || entry.title || 'Unknown',
-      year: date ? Number(date.slice(0, 4)) : null,
-      poster: d.poster_path ? `${POSTER}${d.poster_path}` : null,
-      rating: typeof d.vote_average === 'number' && d.vote_average > 0 ? d.vote_average : null,
+      ...fallback(entry),
+      title: typeof title === 'string' && title.trim() ? title : entry.title,
+      year: typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date) ? Number(date.slice(0, 4)) : null,
+      poster: typeof d.poster_path === 'string' && /^\/[\w.-]+$/.test(d.poster_path) ? `${POSTER}${d.poster_path}` : null,
+      rating: typeof d.vote_average === 'number' && Number.isFinite(d.vote_average) && d.vote_average > 0 && d.vote_average <= 10 ? d.vote_average : null,
     };
-  } catch (err) {
-    console.warn(`[tmdb] ${entry.type} ${entry.id}: ${(err as Error).message}`);
-    return null;
+  } catch {
+    // Do not log the exception: network errors can contain the credential-bearing URL.
+    console.warn(`[tmdb] ${entry.type} ${entry.id}: metadata unavailable; keeping the local title.`);
+    return fallback(entry);
+  } finally {
+    clearTimeout(timeout);
   }
 };
 
-/** Returns null when there's no API key, so the page can say so instead of failing the build. */
-export const fetchWatchlist = async (entries: MediaEntry[]): Promise<Map<number, Media> | null> => {
+/** Optional metadata must never remove the author's curated titles from the page. */
+export const fetchWatchlist = async (entries: MediaEntry[]): Promise<Map<number, Media>> => {
   const key = import.meta.env.TMDB_API_KEY ?? process.env.TMDB_API_KEY;
+  const results = entries.map(fallback);
   if (!key) {
-    console.warn('[tmdb] TMDB_API_KEY is not set; the TV page will be built without TMDB data.');
-    return null;
+    console.warn('[tmdb] TMDB_API_KEY is not set; using local watchlist titles.');
+  } else {
+    // Bound requests rather than sending the entire watchlist to TMDB at once.
+    let next = 0;
+    await Promise.all(Array.from({ length: Math.min(CONCURRENCY, entries.length) }, async () => {
+      while (next < entries.length) {
+        const index = next++;
+        results[index] = await fetchOne(entries[index], key);
+      }
+    }));
   }
-  const results = await Promise.all(entries.map((e) => fetchOne(e, key)));
-  return new Map(results.filter((m): m is Media => m !== null).map((m) => [m.id, m]));
+  return new Map(results.map((media) => [media.id, media]));
 };

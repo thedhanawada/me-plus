@@ -4,23 +4,22 @@ import '../styles/global.css';
 import { link } from '../lib/ui';
 
 interface Props {
-  /** Shown after "N.R Dhanawada - " in the tab; omit on the home page. */
+  /** Shown after "N.R. Dhanawada - " in the tab; omit on the home page. */
   title?: string;
   description?: string;
   /** Which nav item to show as the current page. */
-  section?: 'home' | 'about' | 'notes' | 'photos' | 'tv';
+  section?: 'home' | 'about' | 'notes' | 'photos' | 'tv' | 'projects';
   /** Let the main column use the full page width (photos). */
   wide?: boolean;
 }
 
 const DEFAULT_DESCRIPTION =
-  'Solutions Architect specializing in platform engineering, enterprise architecture, and building systems that help organizations serve people better.';
+  'The personal website of N.R. Dhanawada. Notes, photographs, projects, and work.';
 
 const { title, description = DEFAULT_DESCRIPTION, section, wide = false } = Astro.props;
-const fullTitle = title ? `N.R Dhanawada - ${title}` : 'N.R Dhanawada';
+const fullTitle = title ? `N.R. Dhanawada - ${title}` : 'N.R. Dhanawada';
 const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/', Astro.site).href;
 const hasSidebar = Astro.slots.has('sidebar');
-const builtOn = new Date().toISOString().slice(0, 10);
 const shareImage = new URL('/og.png', Astro.site).href;
 
 const NAV = [
@@ -29,6 +28,7 @@ const NAV = [
   { name: 'notes', path: '/notes' },
   { name: 'photos', path: '/art' },
   { name: 'tv', path: '/tv' },
+  { name: 'projects', path: '/projects' },
 ] as const;
 ---
 
@@ -39,14 +39,14 @@ const NAV = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="author" content="N.R Dhanawada" />
+    <meta name="author" content="N.R. Dhanawada" />
     <link rel="canonical" href={canonical} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content="N.R Dhanawada" />
+    <meta property="og:site_name" content="N.R. Dhanawada" />
     <meta property="og:image" content={shareImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -55,18 +55,18 @@ const NAV = [
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={shareImage} />
-    <link rel="alternate" type="application/rss+xml" title="N.R Dhanawada - Notes" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="N.R. Dhanawada - Notes" href="/rss.xml" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href="/fonts/jetbrains-mono-latin-v24.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Apply the theme before first paint: a saved choice wins, otherwise follow the system. -->
+    <!-- Start on white; retain an explicit reader-selected theme. -->
     <script is:inline>
       (function () {
         var saved = null;
         try { saved = localStorage.getItem('theme'); } catch (e) {}
-        var dark = saved === 'dark' || (saved !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        var dark = saved === 'dark';
         if (dark) document.documentElement.classList.add('dark');
       })();
     </script>
@@ -78,54 +78,38 @@ const NAV = [
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-3 focus:py-2 focus:bg-bg-inverted focus:text-text-inverted font-mono text-sm"
     >Skip to content</a>
-    <div class="font-mono text-[15px] leading-relaxed text-text-secondary">
-      <div class="mx-auto max-w-[calc(72ch+22rem+6rem)] px-4 sm:px-8 py-10 sm:py-16">
-        <nav class="flex flex-wrap gap-x-5 gap-y-3 text-sm mb-16" aria-label="Site">
-          {NAV.map((item) =>
-            item.name === section ? (
-              <span aria-current="page" class="font-bold text-text-primary">{item.name}</span>
-            ) : (
-              <a href={item.path} class={link}>{item.name}</a>
-            )
-          )}
-          <button
-            id="theme-toggle"
-            type="button"
-            class="ml-auto text-text-muted hover:text-text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
-          >
-            <span class="dark:hidden">lights off</span><span class="hidden dark:inline">lights on</span>
-          </button>
-        </nav>
-
-        {hasSidebar ? (
-          <div class="lg:grid lg:grid-cols-[minmax(0,72ch)_22rem] lg:gap-x-12">
-            <main id="main-content" class="min-w-0"><slot /></main>
-            <aside class="mt-16 lg:mt-0 pt-10 lg:pt-0 border-t lg:border-t-0 lg:border-l border-border-primary lg:pl-12 text-sm">
-              <slot name="sidebar" />
-            </aside>
-          </div>
-        ) : (
-          <main id="main-content" class={wide ? '' : 'max-w-[72ch]'}><slot /></main>
-        )}
-
-        <footer class="mt-16 pt-6 border-t border-border-primary text-sm text-text-muted">
-          Last built {builtOn}. Plain HTML, built with Astro.{' '}
-          <a href="https://github.com/thedhanawada/me-plus" target="_blank" rel="noopener noreferrer" class={link}>Source</a>.
-        </footer>
+    <div class="site-shell">
+      <header class="site-header">
+        <a href="/" class="wordmark" aria-label="N.R. Dhanawada, home">N.R. Dhanawada</a>
+        <nav class="site-nav" aria-label="Site">{NAV.map((item) => <a href={item.path} aria-current={item.name === section ? 'page' : undefined}>{item.name}</a>)}</nav>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to Dark theme"><span class="dark:hidden">Dark</span><span class="hidden dark:inline">Light</span></button>
+      </header>
+      <div class="site-content">
+      <div class:list={['page-layout', { 'with-sidebar': hasSidebar, 'wide-layout': wide }]}>
+        <main id="main-content" tabindex="-1"><slot /></main>
+        {hasSidebar && <aside class="page-aside"><slot name="sidebar" /></aside>}
+      </div>
+      <footer class="site-footer">
+        <div><a href="mailto:nirmal@dhanawada.org" class={link}>Email</a><a href="https://github.com/thedhanawada/me-plus" target="_blank" rel="noopener noreferrer" class={link}>Source</a><a href="/rss.xml" class={link}>RSS</a><button id="shortcuts-toggle" type="button">Keyboard shortcuts</button></div>
+        <p class="footer-disclaimer">The projects and opinions on this site are my own and do not represent my employer or my family.</p>
+      </footer>
       </div>
     </div>
 
     <dialog
       id="shortcuts"
+      aria-labelledby="shortcuts-title"
       class="font-mono text-sm bg-bg-primary text-text-secondary border border-border-strong p-6 max-w-sm w-[calc(100%-2rem)] backdrop:bg-black/50"
     >
-      <h2 class="font-bold text-text-primary mb-4">Keyboard shortcuts</h2>
+      <h2 id="shortcuts-title" class="font-bold text-text-primary mb-4">Keyboard shortcuts</h2>
       <dl class="grid grid-cols-[3rem_1fr] gap-y-1">
         <dt class="text-text-primary">1–5</dt><dd>home, about, notes, photos, tv</dd>
+        <dt class="text-text-primary">6</dt><dd>projects</dd>
         <dt class="text-text-primary">t</dt><dd>lights on / off</dd>
         <dt class="text-text-primary">?</dt><dd>this list</dd>
         <dt class="text-text-primary">esc</dt><dd>close it</dd>
       </dl>
+      <label class="flex items-start gap-3 mt-6"><input id="shortcuts-enabled" type="checkbox" checked class="mt-1" /><span>Enable single-key shortcuts</span></label>
       <form method="dialog" class="mt-6">
         <button class={link}>close</button>
       </form>
@@ -137,33 +121,37 @@ const NAV = [
 
 <script>
   const root = document.documentElement;
-  const media = matchMedia('(prefers-color-scheme: dark)');
+  const themeButton = document.getElementById('theme-toggle');
+  const syncThemeButton = () => themeButton?.setAttribute('aria-label', root.classList.contains('dark') ? 'Switch to Light theme' : 'Switch to Dark theme');
+  syncThemeButton();
 
-  const savedTheme = () => {
-    try { return localStorage.getItem('theme'); } catch { return null; }
-  };
-
-  // Clicking is the only thing that saves a preference. Until then, follow the system.
+  // Theme changes are an explicit reader choice.
   const toggleTheme = () => {
     const dark = root.classList.toggle('dark');
+    syncThemeButton();
     try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch { /* private mode */ }
   };
 
-  media.addEventListener('change', (e) => {
-    if (!savedTheme()) root.classList.toggle('dark', e.matches);
-  });
 
   document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
 
-  const PAGES = ['/', '/about', '/notes', '/art', '/tv'];
+  const PAGES = ['/', '/about', '/notes', '/art', '/tv', '/projects'];
   const dialog = document.getElementById('shortcuts') as HTMLDialogElement | null;
 
+  const shortcutCheckbox = document.getElementById('shortcuts-enabled') as HTMLInputElement;
+  try { shortcutCheckbox.checked = localStorage.getItem('shortcuts') !== 'off'; } catch { /* private mode */ }
+  shortcutCheckbox.addEventListener('change', () => {
+    try { localStorage.setItem('shortcuts', shortcutCheckbox.checked ? 'on' : 'off'); } catch { /* private mode */ }
+  });
+  document.getElementById('shortcuts-toggle')?.addEventListener('click', () => dialog?.showModal());
+
   document.addEventListener('keydown', (e) => {
-    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.metaKey || e.ctrlKey || e.altKey || !shortcutCheckbox.checked) return;
     const t = e.target as HTMLElement;
     if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement || t.isContentEditable) return;
     if (document.querySelector('dialog[open]:not(#shortcuts)')) return; // e.g. the photo viewer
 
+    if (dialog?.open) return;
     const n = Number(e.key);
     if (n >= 1 && n <= PAGES.length) {
       if (location.pathname !== PAGES[n - 1]) location.href = PAGES[n - 1];
