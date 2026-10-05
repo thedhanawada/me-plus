@@ -12,12 +12,8 @@ const url = (p: Photo, width: number) =>
 // Let the browser pick a thumbnail close to its displayed width. Capped at 600 px,
 // the size every thumbnail used to be, so no screen downloads more than before.
 const srcset = (p: Photo, widths: number[]) => widths.map((w) => `${url(p, w)} ${w}w`).join(', ');
-// Page content is at most ~1030 px wide: favourites are 3 across, the rest 2–4 columns
-const FAV_SIZES = '(min-width: 1100px) 450px, (min-width: 761px) 40vw, 100vw';
-const REST_SIZES = '(min-width: 1100px) 370px, (min-width: 761px) 32vw, 48vw';
-
-const favourites = photos.filter((p) => p.favorite);
-const rest = photos.filter((p) => !p.favorite);
+// The contact sheet is three columns on desktop and two on small screens.
+const SIZES = '(min-width: 1100px) 280px, (min-width: 761px) 26vw, 46vw';
 ---
 
 <Plain section="photos" title="Photographs" description="A collection of photographs." wide>
@@ -26,21 +22,11 @@ const rest = photos.filter((p) => !p.favorite);
 
   {cloud && (
     <Fragment>
-      <h2 class="section-heading">Favourites</h2>
-      <div class="gallery-favourites">
-        {favourites.map((p, i) => (
-          <figure><button class="photo block w-full bg-bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-full={url(p, 1600)} data-alt={p.alt} title={p.alt} aria-label={`View photo: ${p.alt}`}>
-            <img src={url(p, 600)} srcset={srcset(p, [300, 600])} sizes={FAV_SIZES} alt={p.alt} width={p.width} height={p.height} fetchpriority={i === 0 ? 'high' : 'auto'} class="w-full h-auto" />
-          </button><figcaption class="photo-label">{p.alt}</figcaption></figure>
-        ))}
-      </div>
-
-      <h2 id="all" class="section-heading">More photographs</h2>
-      <div class="gallery-rest">
-        {rest.map((p) => (
-          <figure><button class="photo block w-full break-inside-avoid bg-bg-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring" data-full={url(p, 1600)} data-alt={p.alt} title={p.alt} aria-label={`View photo: ${p.alt}`}>
-            <img src={url(p, 600)} srcset={srcset(p, [300, 600])} sizes={REST_SIZES} alt={p.alt} width={p.width} height={p.height} loading="lazy" class="w-full h-auto" />
-          </button><figcaption class="photo-label">{p.alt}</figcaption></figure>
+      <div class="photo-grid">
+        {photos.map((p, i) => (
+          <button class="photo block w-full" data-full={url(p, 1600)} data-alt={p.alt} title={p.alt} aria-label={`View photo: ${p.alt}`}>
+            <img src={url(p, 600)} srcset={srcset(p, [300, 600])} sizes={SIZES} alt={p.alt} width={p.width} height={p.height} loading={i < 3 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} class="w-full h-auto" />
+          </button>
         ))}
       </div>
     </Fragment>

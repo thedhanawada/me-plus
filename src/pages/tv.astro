@@ -3,7 +3,6 @@ import PageHeader from '../components/PageHeader.astro';
 import Plain from '../layouts/Plain.astro';
 import Ext from '../components/Ext.astro';
 import H2 from '../components/H2.astro';
-import SideH from '../components/SideH.astro';
 import { link } from '../lib/ui';
 import { fetchWatchlist } from '../lib/tmdb';
 import { WATCHLIST_MEDIA, WATCHLIST_SECTIONS } from '../data';
@@ -20,6 +19,8 @@ const sections = WATCHLIST_SECTIONS.map((section) => ({
 
 <Plain section="tv" title="TV" description="What I'm watching, rewatching, and waiting for.">
   <PageHeader title="TV">What I'm watching, rewatching over dinner, and waiting on.</PageHeader>
+
+  <nav class="page-links" aria-label="Watchlist sections">{WATCHLIST_SECTIONS.map(s => <a href={`#${s.key}`} class={link}>{s.title}</a>)}</nav>
 
   {sections.length === 0 ? (
     <p class="mt-12 text-text-muted">
@@ -52,20 +53,5 @@ const sections = WATCHLIST_SECTIONS.map((section) => ({
     ))
   )}
 
-  <Fragment slot="sidebar">
-    <SideH>Sections</SideH>
-    <ul class="space-y-1">
-      {WATCHLIST_SECTIONS.map((s) => (
-        <li class="py-0.5">
-          <a href={`#${s.key}`} class={link}>{s.title}</a>{' '}
-          <span class="text-text-muted">({WATCHLIST_MEDIA.filter((m) => m.category === s.key).length})</span>
-        </li>
-      ))}
-    </ul>
-
-    <SideH>Source</SideH>
-    <p>
-      Title details and posters from <Ext href="https://www.themoviedb.org/">TMDB</Ext>. Ratings are TMDB community scores.
-    </p>
-  </Fragment>
+  <p class="source-note">Title details and posters from <Ext href="https://www.themoviedb.org/">TMDB</Ext>. Ratings are TMDB community scores.</p>
 </Plain>

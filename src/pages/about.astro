@@ -3,7 +3,6 @@ import Plain from '../layouts/Plain.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Ext from '../components/Ext.astro';
 import H2 from '../components/H2.astro';
-import SideH from '../components/SideH.astro';
 import { link, monthRange } from '../lib/ui';
 import { education, experiences, publications } from '../data';
 
@@ -18,9 +17,11 @@ const SECTIONS = [
   <PageHeader title="About" />
   <p>
     I work at a non-profit that delivers employment and skills programs like Workforce
-    Australia, SEE and SEA across Australia. I design and build the platforms our teams
-    use to run them: data warehouses, ETL pipelines, reporting, CRM, custom internal tools.
+    Australia, SEE and SEA across Australia. My work covers technology architecture across the organisation: data platforms,
+    integrations, reporting, CRM and internal tools. Salesforce is one of the platforms I work with.
   </p>
+
+  <nav class="page-links" aria-label="On this page">{SECTIONS.map(s => <a href={`#${s.id}`} class={link}>{s.label}</a>)}</nav>
 
   <H2 id="work">Work</H2>
   {experiences.map((exp) => (
@@ -67,16 +68,4 @@ const SECTIONS = [
     </section>
   ))}
 
-  <Fragment slot="sidebar">
-    <SideH>On this page</SideH>
-    <ul class="aside-nav">
-      {SECTIONS.map((s) => <li class="py-0.5"><a href={`#${s.id}`} class={link}>{s.label}</a></li>)}
-    </ul>
-
-    <SideH>Elsewhere</SideH>
-    <ul class="aside-nav">
-      <li class="py-0.5"><a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org</a></li>
-      <li class="py-0.5"><Ext href="https://github.com/thedhanawada">github.com/thedhanawada</Ext></li>
-    </ul>
-  </Fragment>
 </Plain>

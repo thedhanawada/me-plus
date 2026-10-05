@@ -24,7 +24,7 @@ const other = posts.find((p) => p.slug !== post.slug);
 
   <h1 class="article-title">{post.title}</h1><p class="article-summary">{post.summary}</p>
   <p class="article-meta"><time datetime={post.date}>{post.date}</time></p>
+  <details class="article-contents"><summary>Contents</summary><nav class="aside-nav" aria-label="Article contents">{headings.map(h => <a href={`#${h.slug}`} class={link}>{h.text}</a>)}</nav></details>
   <article class="prose-note mt-10 pt-6 border-t border-border-primary"><Content /></article>
   {other && <div class="mt-12 pt-6 border-t border-border-primary"><a href={`/notes/${other.slug}`} class={link}>{other.title}</a></div>}
-  <Fragment slot="sidebar"><h2 class="aside-heading">In this note</h2><nav class="aside-nav" aria-label="Article contents">{headings.map(h => <a href={`#${h.slug}`} class={link}>{h.text}</a>)}</nav><a href="/rss.xml" class={link}>RSS feed</a></Fragment>
 </Plain>

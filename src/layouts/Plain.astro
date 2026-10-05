@@ -24,11 +24,11 @@ const shareImage = new URL('/og.png', Astro.site).href;
 
 const NAV = [
   { name: 'home', path: '/' },
-  { name: 'projects', path: '/projects' },
   { name: 'about', path: '/about' },
   { name: 'notes', path: '/notes' },
   { name: 'photos', path: '/art' },
   { name: 'tv', path: '/tv' },
+  { name: 'projects', path: '/projects' },
 ] as const;
 ---
 
@@ -61,12 +61,12 @@ const NAV = [
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preload" href="/fonts/jetbrains-mono-latin-v24.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Apply the theme before first paint: a saved choice wins, otherwise follow the system. -->
+    <!-- Start on white; retain an explicit reader-selected theme. -->
     <script is:inline>
       (function () {
         var saved = null;
         try { saved = localStorage.getItem('theme'); } catch (e) {}
-        var dark = saved === 'dark' || (saved !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        var dark = saved === 'dark';
         if (dark) document.documentElement.classList.add('dark');
       })();
     </script>
@@ -82,8 +82,9 @@ const NAV = [
       <header class="site-header">
         <a href="/" class="wordmark" aria-label="N.R. Dhanawada, home">N.R. Dhanawada</a>
         <nav class="site-nav" aria-label="Site">{NAV.map((item) => <a href={item.path} aria-current={item.name === section ? 'page' : undefined}>{item.name}</a>)}</nav>
-        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle colour theme" aria-pressed="false"><span class="dark:hidden">Dark</span><span class="hidden dark:inline">Light</span></button>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to Dark theme"><span class="dark:hidden">Dark</span><span class="hidden dark:inline">Light</span></button>
       </header>
+      <div class="site-content">
       <div class:list={['page-layout', { 'with-sidebar': hasSidebar, 'wide-layout': wide }]}>
         <main id="main-content" tabindex="-1"><slot /></main>
         {hasSidebar && <aside class="page-aside"><slot name="sidebar" /></aside>}
@@ -92,6 +93,7 @@ const NAV = [
         <div><a href="mailto:nirmal@dhanawada.org" class={link}>Email</a><a href="https://github.com/thedhanawada/me-plus" target="_blank" rel="noopener noreferrer" class={link}>Source</a><a href="/rss.xml" class={link}>RSS</a><button id="shortcuts-toggle" type="button">Keyboard shortcuts</button></div>
         <p class="footer-disclaimer">The projects and opinions on this site are my own and do not represent my employer or my family.</p>
       </footer>
+      </div>
     </div>
 
     <dialog
@@ -119,26 +121,17 @@ const NAV = [
 
 <script>
   const root = document.documentElement;
-  const media = matchMedia('(prefers-color-scheme: dark)');
-
-  const savedTheme = () => {
-    try { return localStorage.getItem('theme'); } catch { return null; }
-  };
-
   const themeButton = document.getElementById('theme-toggle');
-  const syncThemeButton = () => themeButton?.setAttribute('aria-pressed', String(root.classList.contains('dark')));
+  const syncThemeButton = () => themeButton?.setAttribute('aria-label', root.classList.contains('dark') ? 'Switch to Light theme' : 'Switch to Dark theme');
   syncThemeButton();
 
-  // Clicking is the only thing that saves a preference. Until then, follow the system.
+  // Theme changes are an explicit reader choice.
   const toggleTheme = () => {
     const dark = root.classList.toggle('dark');
     syncThemeButton();
     try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch { /* private mode */ }
   };
 
-  media.addEventListener('change', (e) => {
-    if (!savedTheme()) { root.classList.toggle('dark', e.matches); syncThemeButton(); }
-  });
 
   document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
 
