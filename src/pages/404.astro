@@ -1,15 +1,16 @@
 ---
+import PageHeader from '../components/PageHeader.astro';
 import Plain from '../layouts/Plain.astro';
 import { link } from '../lib/ui';
 ---
 
 <Plain title="Not found" description="There's nothing at this address.">
-  <h1 class="text-2xl font-bold text-text-primary mb-6">404</h1>
+  <PageHeader eyebrow="404 / Not found" title="Nothing here.">The address is missing. The rest of the site is still here.</PageHeader>
   <p>
     There's nothing at <code id="missing-path" class="text-text-primary">this address</code>. Maybe it
     moved, maybe it never existed. Either way, it's not here.
   </p>
-  <p class="mt-4">Try the <a href="/" class={link}>home page</a>.</p>
+  <p class="mt-4">Try the <a href="/" class={link}>home page</a>, <a href="/projects" class={link}>projects</a>, or <a href="/notes" class={link}>notes</a>.</p>
 </Plain>
 
 <script>

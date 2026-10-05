@@ -1,5 +1,6 @@
 ---
 import Plain from '../layouts/Plain.astro';
+import PageHeader from '../components/PageHeader.astro';
 import Ext from '../components/Ext.astro';
 import H2 from '../components/H2.astro';
 import SideH from '../components/SideH.astro';
@@ -17,7 +18,7 @@ const SECTIONS = [
 ---
 
 <Plain section="about" title="About" description="Background, education, and professional journey of N.R Dhanawada.">
-  <h1 class="text-2xl font-bold text-text-primary mb-6">About</h1>
+  <PageHeader eyebrow="Background & practice" title="About">Systems, software, and the work of keeping them useful.</PageHeader>
   <p>
     I work at a non-profit that delivers employment and skills programs like Workforce
     Australia, SEE and SEA across Australia. I design and build the platforms our teams
@@ -26,7 +27,7 @@ const SECTIONS = [
 
   <H2 id="work">Work</H2>
   {experiences.map((exp) => (
-    <section class="mb-10">
+    <section class="career-entry">
       <h3 class="text-text-primary">
         <span class="font-bold">{exp.title}</span>,{' '}
         {exp.companyUrl ? <Ext href={exp.companyUrl}>{exp.company}</Ext> : exp.company}
@@ -42,7 +43,7 @@ const SECTIONS = [
 
   <H2 id="education">Education</H2>
   {education.map((edu) => (
-    <section class="mb-8">
+    <section class="career-entry">
       <h3 class="text-text-primary">
         <span class="font-bold">{edu.degree}, {edu.program}</span>
         <br />
@@ -60,7 +61,7 @@ const SECTIONS = [
 
   <H2 id="publications">Publications</H2>
   {publications.map((pub) => (
-    <section class="mb-8">
+    <section class="career-entry">
       <h3><Ext href={pub.link}>{pub.title}</Ext></h3>
       <p class="mt-1">{pub.authors.join(', ')}.</p>
       <p class="text-sm text-text-muted">
@@ -70,8 +71,9 @@ const SECTIONS = [
   ))}
 
   <H2 id="projects">Projects</H2>
+  <p class="mb-6"><a href="/projects" class={link}>Explore the project notes →</a></p>
   {products.map((p) => (
-    <section class="mb-10">
+    <section class="career-entry">
       <h3 class="text-text-primary">
         <span class="font-bold">{p.name}</span>: {p.tagline}
       </h3>
@@ -88,7 +90,7 @@ const SECTIONS = [
     {featuredProject.packages.map((pkg) => (
       <li>
         <Ext href={`https://www.npmjs.com/package/${pkg.name}`}>{pkg.name}</Ext>{' '}
-        <span class="text-text-muted">{pkg.version}</span>
+
         <span class="block text-sm text-text-muted">{pkg.summary}</span>
       </li>
     ))}
@@ -103,7 +105,7 @@ const SECTIONS = [
     {contributions.map((c) => (
       <li>
         <Ext href={c.url}>{c.title}</Ext>
-        <span class="block text-sm text-text-muted">{c.org}/{c.repo}, {c.status}</span>
+        <span class="block text-sm text-text-muted">{c.org}/{c.repo}</span>
       </li>
     ))}
   </ul>
@@ -133,12 +135,12 @@ const SECTIONS = [
 
   <Fragment slot="sidebar">
     <SideH>On this page</SideH>
-    <ul class="space-y-1">
+    <ul class="aside-nav">
       {SECTIONS.map((s) => <li class="py-0.5"><a href={`#${s.id}`} class={link}>{s.label}</a></li>)}
     </ul>
 
     <SideH>Elsewhere</SideH>
-    <ul class="space-y-1">
+    <ul class="aside-nav">
       <li class="py-0.5"><a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org</a></li>
       <li class="py-0.5"><Ext href="https://github.com/thedhanawada">github.com/thedhanawada</Ext></li>
     </ul>

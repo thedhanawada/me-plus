@@ -3,139 +3,31 @@ import Plain from '../layouts/Plain.astro';
 import Ext from '../components/Ext.astro';
 import H2 from '../components/H2.astro';
 import SideH from '../components/SideH.astro';
-import { link, years, yearRange } from '../lib/ui';
-import {
-  experiences,
-  education,
-  featuredProject,
-  products,
-  contributions,
-  archivedProjects,
-  publications,
-  photos,
-  posts,
-  WATCHLIST_MEDIA,
-} from '../data';
-
-const [mtc, wehi, vs, tcs] = experiences;
-const [melbourne] = education;
-const [paper] = publications;
-const sortedPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date));
-const watching = WATCHLIST_MEDIA.filter((m) => m.category === 'current' && m.title);
-const city = (location: string) => location.split(',')[0];
-const tagline = featuredProject.tagline.charAt(0).toLowerCase() + featuredProject.tagline.slice(1);
+import { link } from '../lib/ui';
+import { experiences, contributions, archivedProjects, publications, photos, posts, WATCHLIST_MEDIA } from '../data';
+const current = experiences.find((e) => /present/i.test(e.period));
+const sortedPosts = [...posts].sort((a,b) => b.date.localeCompare(a.date));
+const watching = WATCHLIST_MEDIA.filter((m) => m.category === 'current');
 ---
-
 <Plain section="home">
-  <h1 class="text-2xl font-bold text-text-primary mb-6">N.R. Dhanawada</h1>
-
-  <p>
-    I'm a solutions architect at {mtc.company} in {city(mtc.location)}. I design
-    the Salesforce side of government employment programs (SEE, Workforce Australia,
-    VET and the rest): the CRM architecture, the pipelines that load department data
-    into it, and the Lightning components over 500 staff use all day.
-  </p>
-  <p class="mt-4">
-    Mostly, I find why something is broken and fix it properly instead of patching
-    the symptom. It's not glamorous. It's what keeps things working on Monday morning.
-  </p>
-  <p class="mt-4">
-    Before this: a research placement at WEHI ({years(wehi.period)}), a master's at
-    the {melbourne.university} ({yearRange(melbourne.period)}), {vs.company} in{' '}
-    {city(vs.location)} ({years(vs.period)}), and {tcs.company} in {city(tcs.location)}{' '}
-    ({years(tcs.period)}). <a href="/about" class={link}>The long version.</a>
-  </p>
-
-  <H2>Projects</H2>
-  {products.map((p) => (
-    <p class="mb-4"><Ext href={p.url}>{p.name}</Ext>: {p.tagline.charAt(0).toLowerCase() + p.tagline.slice(1)}{' '}{p.description}</p>
-  ))}
-
-  <H2>Code</H2>
-  <p>
-    <Ext href={featuredProject.links.github}>{featuredProject.name}</Ext>: {tagline}{' '}
-    Zero dependencies, because Salesforce's Locker Service breaks most of them.
-  </p>
-  <ul class="mt-3 space-y-0.5">
-    {featuredProject.packages.map((pkg) => (
-      <li class="grid grid-cols-[1fr_auto] sm:grid-cols-[28ch_1fr] gap-x-4">
-        <Ext href={`https://www.npmjs.com/package/${pkg.name}`}>{pkg.name}</Ext>
-        <span class="text-text-muted tabular-nums">{pkg.version}</span>
-      </li>
-    ))}
-  </ul>
-
-  <p class="mt-6">Patches sent upstream:</p>
-  <ul class="mt-3 space-y-2">
-    {contributions.map((c) => (
-      <li>
-        <Ext href={c.url}>{c.title}</Ext>
-        <span class="block text-sm text-text-muted">
-          {c.org}/{c.repo}, <span class={c.status === 'merged' ? 'text-text-secondary' : ''}>{c.status}</span>
-        </span>
-      </li>
-    ))}
-  </ul>
-
-  <p class="mt-6">
-    Older, smaller things:{' '}
-    {archivedProjects.map((p, i) => (
-      <Fragment>
-        <Ext href={p.links.github ?? p.links.live ?? p.links.firefox ?? '#'}>{p.title}</Ext>{i < archivedProjects.length - 1 ? ', ' : '.'}
-      </Fragment>
-    ))}
-  </p>
-
-  <H2>Writing</H2>
-  <ul class="space-y-1">
-    {sortedPosts.map((post) => (
-      <li class="grid grid-cols-[6.5rem_1fr] gap-x-4">
-        <span class="text-text-muted tabular-nums">{post.date}</span>
-        <a href={`/notes/${post.slug}`} class={link}>{post.title}</a>
-      </li>
-    ))}
-  </ul>
-  {paper && (
-    <p class="mt-4">
-      And one paper, from {paper.date.split(' ')[1]}:{' '}
-      <Ext href={paper.link}>{paper.title}</Ext>. It was a survey. I was an undergraduate.
-    </p>
-  )}
-
+  <header class="home-hero"><p class="eyebrow">Solutions architect · Sydney</p><h1>N.R.<br />Dhanawada</h1><p class="intro-line">Understand the problem.<br />Build what holds up.</p></header>
+  <div class="home-copy">
+    <p>I'm a solutions architect{current && <> at {current.company}</>}. I design the Salesforce side of government employment programs: the CRM architecture, the data pipelines, and the Lightning components over 500 staff use all day.</p>
+    <p>Mostly, I find why something is broken and fix it properly instead of patching the symptom. It's what keeps things working on Monday morning.</p>
+    <p><a href="/about" class={link}>Background, work & education →</a></p>
+  </div>
+  <H2>Selected work</H2>
+  <article class="project-row"><span class="row-number">01</span><div><h3><a href="/projects/forcecalendar">forceCalendar</a></h3><p>A calendar engine and Web Components UI, built for the constraints of Salesforce. Pure JavaScript. Zero dependencies.</p><div class="row-meta">Open source · JavaScript · Web Components</div></div><a href="/projects/forcecalendar" class="row-arrow" aria-label="Read about forceCalendar">↗</a></article>
+  <article class="project-row"><span class="row-number">02</span><div><h3><a href="/projects/servicecite">ServiceCite</a></h3><p>An independent reference for Australian employment services guidelines. Search, read, and get back to the source.</p><div class="row-meta">Reference tool · Australian employment services</div></div><a href="/projects/servicecite" class="row-arrow" aria-label="Read about ServiceCite">↗</a></article>
+  <p class="mt-6"><a href="/projects" class={link}>All projects & upstream contributions →</a></p>
+  <H2>Notes</H2><ul>{sortedPosts.map(post => <li class="note-row"><time datetime={post.date}>{post.date}</time><div><h3><a href={`/notes/${post.slug}`}>{post.title}</a></h3><p>{post.summary}</p></div></li>)}</ul>
+  <H2>Elsewhere in the code</H2><ul class="space-y-4">{contributions.map(c => <li><Ext href={c.url}>{c.title}</Ext><span class="block row-meta">{c.org}/{c.repo}</span></li>)}</ul>
+  <p class="mt-6 text-sm text-text-muted">Older, smaller things: {archivedProjects.map((p,i) => <Fragment><Ext href={p.links.github ?? p.links.live ?? p.links.firefox ?? '#'}>{p.title}</Ext>{i < archivedProjects.length-1 ? ', ' : '.'}</Fragment>)}</p>
+  {publications[0] && <p class="mt-6 text-sm text-text-muted">And one undergraduate paper: <Ext href={publications[0].link}>{publications[0].title}</Ext>.</p>}
   <Fragment slot="sidebar">
-    <figure>
-      <img
-        src="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_800/art002e000192_yso465"
-        srcset="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_400/art002e000192_yso465 400w, https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_800/art002e000192_yso465 800w"
-        sizes="(min-width: 1024px) 352px, 100vw"
-        alt="Earth photographed from the Orion spacecraft window during Artemis II, April 2026"
-        width="800"
-        height="533"
-        class="w-full h-auto"
-      />
-      <figcaption class="mt-2 text-text-muted">
-        <Ext href="https://www.nasa.gov/image-article/hello-world/">"Hello, World"</Ext>. Earth
-        from Orion, Artemis II, April 2026. Photo: NASA/Reid Wiseman. Not mine, but it's
-        the best picture of where everyone's code runs.
-      </figcaption>
-    </figure>
-
-    <SideH>Watching</SideH>
-    <ul>
-      {watching.map((m) => <li>{m.title}</li>)}
-    </ul>
-    <p class="mt-1"><a href="/tv" class={link}>the whole list</a></p>
-
-    <SideH>Photographs</SideH>
-    <p>{photos.length} so far. <a href="/art" class={link}>Have a look</a>.</p>
-
-    <SideH>Contact</SideH>
-    <ul class="space-y-1">
-      <li class="py-0.5"><a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org</a></li>
-      <li class="py-0.5"><Ext href="https://github.com/thedhanawada">github.com/thedhanawada</Ext></li>
-    </ul>
-    <p class="mt-2 text-text-muted">
-      Code is easier to talk about than ideas, so if you have some, send it.
-    </p>
+    <figure><img src="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_800/art002e000192_yso465" alt="Earth photographed from the Orion spacecraft window during Artemis II, April 2026" width="800" height="533" class="w-full h-auto" /><figcaption class="mt-3"><Ext href="https://www.nasa.gov/image-article/hello-world/">Hello, World</Ext><br />Earth from Orion, Artemis II, April 2026. NASA/Reid Wiseman. Not mine, but it's the best picture of where everyone's code runs.</figcaption></figure>
+    <SideH>Away from the keyboard</SideH><p><a href="/art" class={link}>{photos.length} photographs →</a></p><p>Looking at light, streets, and the things in between.</p>
+    <SideH>Currently watching</SideH><ul class="space-y-1">{watching.map(m => <li>{m.title}</li>)}</ul><p><a href="/tv" class={link}>The watchlist →</a></p>
+    <SideH>Say hello</SideH><p><a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org</a></p><p><Ext href="https://github.com/thedhanawada">GitHub ↗</Ext></p><p>Code is easier to talk about than ideas, so if you have some, send it.</p>
   </Fragment>
 </Plain>

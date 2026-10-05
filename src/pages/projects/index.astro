@@ -1,0 +1,80 @@
+---
+import Plain from '../../layouts/Plain.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import H2 from '../../components/H2.astro';
+import Ext from '../../components/Ext.astro';
+import { link } from '../../lib/ui';
+import { featuredProject, products, contributions, archivedProjects } from '../../data/projects';
+
+const serviceCite = products.find((product) => product.name === 'ServiceCite')!;
+const selectedProjects = [
+  { number: '01', name: featuredProject.name, tagline: featuredProject.tagline, meta: 'Open-source library · Salesforce', href: '/projects/forcecalendar' },
+  { number: '02', name: serviceCite.name, tagline: serviceCite.tagline, meta: 'Independent reference · Australian employment services', href: '/projects/servicecite' },
+];
+---
+
+<Plain section="projects" title="Projects" description="Selected projects, open-source contributions, and earlier work by N.R. Dhanawada.">
+  <PageHeader eyebrow="Selected work / Open source" title="Useful things, built carefully.">
+    <p>A calendar library for Salesforce. A source-cited reference for employment services. Contributions to the tools other people build.</p>
+  </PageHeader>
+
+  <section aria-label="Selected projects">
+    {selectedProjects.map((project) => (
+      <a href={project.href} class="project-row">
+        <span class="row-number" aria-hidden="true">{project.number}</span>
+        <div>
+          <h2>{project.name}</h2>
+          <p>{project.tagline}</p>
+          <span class="row-meta">{project.meta}</span>
+        </div>
+        <span class="row-arrow" aria-hidden="true">↗</span>
+      </a>
+    ))}
+  </section>
+
+  <H2 id="contributions">Contributions</H2>
+  <ul class="space-y-6">
+    {contributions.map((contribution) => (
+      <li>
+        <Ext href={contribution.url}>{contribution.title}</Ext>
+        <p class="row-meta">{contribution.org}/{contribution.repo}</p>
+      </li>
+    ))}
+  </ul>
+
+  <H2 id="archive">Earlier projects</H2>
+  <ul class="space-y-7">
+    {archivedProjects.map((project) => {
+      const projectLinks = [
+        ['Website', project.links.live],
+        ['GitHub', project.links.github],
+        ['npm', project.links.npm],
+        ['Firefox', project.links.firefox],
+      ].filter((item): item is [string, string] => Boolean(item[1]));
+      return (
+        <li>
+          <h3 class="font-semibold text-text-primary">{project.title} <span class="row-meta">/ {project.type}</span></h3>
+          <p class="mt-2 text-text-secondary">{project.description}</p>
+          <p class="mt-2 text-sm">
+            {projectLinks.map(([label, href], index) => (
+              <Fragment>{index > 0 && ' · '}<Ext href={href}>{label}</Ext></Fragment>
+            ))}
+          </p>
+        </li>
+      );
+    })}
+  </ul>
+
+  <Fragment slot="sidebar">
+    <h2 class="aside-heading">On this page</h2>
+    <ul class="space-y-3">
+      <li><a href="#contributions" class={link}>Contributions</a></li>
+      <li><a href="#archive" class={link}>Earlier projects</a></li>
+    </ul>
+    <h2 class="aside-heading">Explore</h2>
+    <ul class="space-y-3">
+      <li><a href="/projects/forcecalendar" class={link}>forceCalendar</a></li>
+      <li><a href="/projects/servicecite" class={link}>ServiceCite</a></li>
+    </ul>
+  </Fragment>
+</Plain>

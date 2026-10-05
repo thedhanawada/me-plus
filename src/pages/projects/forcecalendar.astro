@@ -1,0 +1,61 @@
+---
+import Plain from '../../layouts/Plain.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import H2 from '../../components/H2.astro';
+import Ext from '../../components/Ext.astro';
+import { link } from '../../lib/ui';
+import { featuredProject as project } from '../../data/projects';
+---
+
+<Plain section="projects" title={project.name} description={project.tagline}>
+  <PageHeader eyebrow="01 / Open-source library" title={project.name}>
+    <p>{project.tagline}</p>
+  </PageHeader>
+
+  <div class="prose-note">
+    <H2>Built for the platform</H2>
+    <p>{project.description}</p>
+
+    <H2>Engine and interface</H2>
+    <p>
+      The core package is the calendar engine: pure JavaScript, zero dependencies,
+      and compatible with Salesforce Locker Service. It handles RFC 5545 recurrence,
+      timezone math, conflict detection, search, and ICS import and export.
+    </p>
+    <p>
+      The interface is a separate package of Web Components, with month, week, day,
+      and list views. The engine and the views are published as two packages.
+    </p>
+
+    <H2>Packages</H2>
+    <ul>
+      {project.packages.map((pkg) => (
+        <li>
+          <Ext href={`https://www.npmjs.com/package/${pkg.name}`}>{pkg.name}</Ext>
+          <span class="block">{pkg.summary}</span>
+        </li>
+      ))}
+    </ul>
+    <p>
+      The package registry is the source of truth for current releases. Visit the
+      package pages for published versions and <Ext href={project.links.github}>GitHub</Ext>
+      {' '}for the source.
+    </p>
+  </div>
+
+  <Fragment slot="sidebar">
+    <h2 class="aside-heading">Project details</h2>
+    <dl class="detail-facts">
+      <div><dt>Type</dt><dd>Open-source library</dd></div>
+      <div><dt>Platform</dt><dd>Salesforce</dd></div>
+      <div><dt>Technology</dt><dd>{project.tech.join(', ')}</dd></div>
+      <div><dt>Source</dt><dd><Ext href={project.links.github}>GitHub ↗</Ext></dd></div>
+      {project.links.npm && <div><dt>Packages</dt><dd><Ext href={project.links.npm}>npm ↗</Ext></dd></div>}
+    </dl>
+    <h2 class="aside-heading">Keep exploring</h2>
+    <ul class="space-y-3">
+      <li><a href="/projects/servicecite" class={link}>02 / ServiceCite →</a></li>
+      <li><a href="/projects" class={link}>All projects</a></li>
+    </ul>
+  </Fragment>
+</Plain>

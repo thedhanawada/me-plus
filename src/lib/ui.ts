@@ -1,6 +1,5 @@
 // Plain links, the way links used to look: underlined, blue, purple once visited.
-export const link =
-  'underline underline-offset-2 decoration-1 text-blue-700 visited:text-purple-700 dark:text-blue-400 dark:visited:text-purple-400 hover:decoration-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring';
+export const link = 'text-link';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 

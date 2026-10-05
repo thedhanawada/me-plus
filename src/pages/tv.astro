@@ -1,4 +1,5 @@
 ---
+import PageHeader from '../components/PageHeader.astro';
 import Plain from '../layouts/Plain.astro';
 import Ext from '../components/Ext.astro';
 import H2 from '../components/H2.astro';
@@ -12,34 +13,33 @@ const media = await fetchWatchlist(WATCHLIST_MEDIA);
 const sections = WATCHLIST_SECTIONS.map((section) => ({
   ...section,
   items: WATCHLIST_MEDIA.filter((m) => m.category === section.key)
-    .map((m) => media?.get(m.id))
+    .map((m) => media.get(m.id))
     .filter((m) => m !== undefined),
 })).filter((s) => s.items.length > 0);
 ---
 
 <Plain section="tv" title="TV" description="What I'm watching, rewatching, and waiting for.">
-  <h1 class="text-2xl font-bold text-text-primary mb-6">TV</h1>
-  <p>What I'm watching, rewatching over dinner, and waiting on.</p>
+  <PageHeader eyebrow="Off the clock / Watchlist" title="On screen.">What I'm watching, rewatching over dinner, and waiting on.</PageHeader>
 
   {sections.length === 0 ? (
     <p class="mt-12 text-text-muted">
-      The list couldn't be fetched from TMDB when this page was built. It'll be back on the next deploy.
+      No titles listed yet.
     </p>
   ) : (
     sections.map((section) => (
       <section>
         <H2 id={section.key}>{section.title}</H2>
-        <ul class="space-y-3">
+        <ul class="watch-list">
           {section.items.map((item) => (
-            <li class="grid grid-cols-[2.5rem_1fr] gap-x-4 items-center">
+            <li class="watch-item">
               {item.poster ? (
-                <img src={item.poster} alt="" width="40" height="60" loading="lazy" class="w-10 h-[60px] object-cover bg-bg-secondary" />
+                <img src={item.poster} alt="" width="54" height="81" loading="lazy" class="watch-poster" />
               ) : (
-                <span class="w-10 h-[60px] bg-bg-secondary" aria-hidden="true" />
+                <span class="watch-poster" aria-hidden="true" />
               )}
               <span>
                 <Ext href={`https://www.themoviedb.org/${item.type}/${item.id}`}>{item.title}</Ext>
-                <span class="block text-sm text-text-muted">
+                <span class="watch-meta">
                   {[item.year, item.type === 'tv' ? 'series' : 'film', item.rating ? `${item.rating.toFixed(1)}/10` : null]
                     .filter(Boolean)
                     .join(' · ')}
@@ -65,8 +65,7 @@ const sections = WATCHLIST_SECTIONS.map((section) => ({
 
     <SideH>Where this comes from</SideH>
     <p>
-      Titles, posters, years and ratings from <Ext href="https://www.themoviedb.org/">TMDB</Ext>,
-      fetched when the site was last built. The opinions are mine.
+      The list is maintained here. <Ext href="https://www.themoviedb.org/">TMDB</Ext> supplies title details, posters, years and ratings when the site is built. If those details are unavailable, the local titles stay on the list. Ratings are TMDB community scores, not my ratings.
     </p>
   </Fragment>
 </Plain>
