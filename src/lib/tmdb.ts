@@ -27,14 +27,21 @@ const fallback = (entry: MediaEntry): Media => ({
 const fetchOne = async (entry: MediaEntry, key: string): Promise<Media> => {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  let failure: 'network' | 'invalid-json' | 'invalid-schema' | `http-${number}` = 'network';
   try {
     const res = await fetch(`${API}/${entry.type}/${entry.id}?api_key=${encodeURIComponent(key)}`, {
       signal: controller.signal,
     });
-    if (!res.ok) throw new Error('TMDB request failed');
+    if (!res.ok) {
+      failure = `http-${res.status}`;
+      throw new Error('TMDB request failed');
+    }
+    failure = 'invalid-json';
     const data: unknown = await res.json();
+    failure = 'invalid-schema';
     if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('Invalid TMDB response');
     const d = data as Record<string, unknown>;
+    if (d.success === false) throw new Error('Invalid TMDB response');
     const title = entry.type === 'movie' ? d.title : d.name;
     const date = entry.type === 'movie' ? d.release_date : d.first_air_date;
     return {
@@ -46,7 +53,8 @@ const fetchOne = async (entry: MediaEntry, key: string): Promise<Media> => {
     };
   } catch {
     // Do not log the exception: network errors can contain the credential-bearing URL.
-    console.warn(`[tmdb] ${entry.type} ${entry.id}: metadata unavailable; keeping the local title.`);
+    const reason = controller.signal.aborted ? 'timeout' : failure;
+    console.warn(`[tmdb] ${entry.type} ${entry.id}: metadata unavailable (${reason}); keeping the local title.`);
     return fallback(entry);
   } finally {
     clearTimeout(timeout);
