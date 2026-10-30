@@ -1,34 +1,62 @@
 ---
 import Plain from '../layouts/Plain.astro';
 import Ext from '../components/Ext.astro';
-import H2 from '../components/H2.astro';
-import SideH from '../components/SideH.astro';
 import { link } from '../lib/ui';
 import { experiences, photos, posts, WATCHLIST_MEDIA } from '../data';
 const current = experiences.find((e) => /present/i.test(e.period));
 const sortedPosts = [...posts].sort((a,b) => b.date.localeCompare(a.date));
 const watching = WATCHLIST_MEDIA.filter((m) => m.category === 'current');
+const cloud = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME ?? process.env.VITE_CLOUDINARY_CLOUD_NAME;
 ---
 <Plain section="home" wide>
-  <div class="home-intro"><div>
-  <h1 class="home-title">N.R. Dhanawada</h1>
-  <div class="home-copy">
-    <p>I'm a solutions architect{current && <> at {current.company}</>} in Sydney. I work on technology architecture across the organisation, including data platforms, integrations, CRM and internal tools.</p>
-    <p>Mostly, I find why something is broken and fix it properly instead of patching the symptom. <a href="/about" class={link}>Work and education</a>.</p>
-  </div>
-  </div>
-    <figure><img src="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_1000/art002e000192_yso465" alt="Earth photographed from the Orion spacecraft window during Artemis II, April 2026" width="1000" height="666" class="w-full h-auto" /><figcaption class="mt-3"><Ext href="https://www.nasa.gov/image-article/hello-world/">Earth from Orion</Ext>, Artemis II, April 2026. NASA.</figcaption></figure>
-  </div>
-  <div class="home-sections"><div>
-  <H2>Notes</H2>
-  <ul>{sortedPosts.map(post => <li class="note-row"><time datetime={post.date}>{post.date}</time><div><h3><a href={`/notes/${post.slug}`} class={link}>{post.title}</a></h3><p>{post.summary}</p></div></li>)}</ul>
-  <H2>Projects</H2>
-  <article class="project-row"><h3><a href="/projects/forcecalendar" class={link}>forceCalendar</a></h3><p>A calendar engine and UI library for Salesforce.</p></article>
-  <article class="project-row"><h3><a href="/projects/servicecite" class={link}>ServiceCite</a></h3><p>An independent, source-cited reference for Australian employment services guidelines.</p></article>
-  <p class="mt-5"><a href="/projects" class={link}>Other projects and contributions</a></p>
-  </div><aside class="home-aside">
-    <SideH>Photographs</SideH><p><a href="/art" class={link}>{photos.length} photographs</a>.</p>
-    <SideH>Watching</SideH><ul class="space-y-1">{watching.map(m => <li>{m.title}</li>)}</ul><p><a href="/tv" class={link}>The full list</a></p>
-    <SideH>Contact</SideH><p><a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org</a></p><p><Ext href="https://github.com/thedhanawada">GitHub</Ext></p>
-  </aside></div>
+  <section class="home-hero" aria-labelledby="home-name">
+    <div class="hero-kicker"><span>A personal website</span><span>Sydney, Australia</span></div>
+    <h1 id="home-name" class="home-title"><span>N.R.</span> Dhanawada<span class="name-period">.</span></h1>
+    <div class="hero-grid">
+      <div class="home-copy">
+        <p class="hero-lead">I'm a solutions architect{current && <> at {current.company}</>} in Sydney.</p>
+        <p>I work on technology architecture across the organisation, including data platforms, integrations, CRM and internal tools.</p>
+        <p>Mostly, I find why something is broken and fix it properly instead of patching the symptom.</p>
+        <a href="/about" class="arrow-link">Work and education <span aria-hidden="true">↗</span></a>
+      </div>
+      <figure class="hero-image">
+        <img src="https://res.cloudinary.com/dyntcx472/image/upload/q_auto,f_auto,w_1000/art002e000192_yso465" alt="Earth photographed from the Orion spacecraft window during Artemis II, April 2026" width="1000" height="666" fetchpriority="high" />
+        <figcaption><span>01 / A little perspective</span><span><Ext href="https://www.nasa.gov/image-article/hello-world/">Earth from Orion</Ext> · NASA, April 2026</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="home-block" aria-labelledby="projects-title">
+    <div class="section-label"><span class="section-number">01</span><h2 id="projects-title">Things I've built</h2><a href="/projects">All projects <span aria-hidden="true">↗</span></a></div>
+    <div class="featured-projects">
+      <a class="project-feature" href="/projects/forcecalendar">
+        <div class="project-caption"><span>Open-source software</span><span aria-hidden="true">↗</span></div>
+        <h3>forceCalendar</h3>
+        <p>A calendar engine and UI library for Salesforce.</p>
+        <div class="calendar-diagram" aria-hidden="true"><div class="calendar-days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div><div class="calendar-cells">{Array.from({length:21},(_,i)=><span class:list={{'calendar-event':i===8||i===9,'calendar-event-light':i===16||i===17||i===18}}>{String(i+1).padStart(2,'0')}</span>)}</div></div>
+        <span class="project-foot">Engine / Interface / Salesforce</span>
+      </a>
+      <a class="project-feature" href="/projects/servicecite">
+        <div class="project-caption"><span>Public reference</span><span aria-hidden="true">↗</span></div>
+        <h3>ServiceCite</h3>
+        <p>An independent, source-cited reference for Australian employment services guidelines.</p>
+        <div class="citation-diagram" aria-hidden="true"><span class="citation-number">[1]</span><div><span>Find the passage.</span><span>Check the version.</span><span>Go to the source.</span></div></div>
+        <span class="project-foot">Workforce Australia / IEA</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="home-block" aria-labelledby="notes-title">
+    <div class="section-label"><span class="section-number">02</span><h2 id="notes-title">Notes along the way</h2><a href="/notes">All notes <span aria-hidden="true">↗</span></a></div>
+    <ul class="home-notes">{sortedPosts.map((post,index) => <li><span class="note-index" aria-hidden="true">{String(index+1).padStart(2,'0')}</span><div><h3><a href={`/notes/${post.slug}`}>{post.title}</a></h3><p>{post.summary}</p></div><time datetime={post.date}>{new Date(post.date+'T00:00:00Z').toLocaleDateString('en-AU',{month:'short',year:'numeric',timeZone:'UTC'})}</time></li>)}</ul>
+  </section>
+
+  <section class="home-block personal-block" aria-labelledby="elsewhere-title">
+    <div class="section-label"><span class="section-number">03</span><h2 id="elsewhere-title">Away from the work</h2></div>
+    <div class="personal-grid">
+      <div><h3 class="personal-title">Through the lens</h3><p>A collection of photographs.</p>{cloud && <a href="/art" class="photo-strip" aria-label="Explore the photographs">{photos.slice(0,3).map(p=><img src={`https://res.cloudinary.com/${cloud}/image/upload/w_400,q_auto,f_auto/${p.id}`} alt={p.alt} width={p.width} height={p.height} loading="lazy" />)}</a>}<a href="/art" class="arrow-link">{photos.length} photographs <span aria-hidden="true">↗</span></a></div>
+      <div class="watching-note"><span class="eyebrow">Currently watching</span><ul>{watching.map(m => <li>{m.title}</li>)}</ul><a href="/tv" class="arrow-link">The full watchlist <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
+  <div class="contact-line"><p>Say hello.</p><a href="mailto:nirmal@dhanawada.org" class={link}>nirmal@dhanawada.org <span aria-hidden="true">↗</span></a></div>
 </Plain>
