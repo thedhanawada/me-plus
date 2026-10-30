@@ -82,8 +82,8 @@ const NAV = [
     >Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
-        <a href="/" class="wordmark" aria-label="N.R. Dhanawada, home"><span class="wordmark-symbol" aria-hidden="true">nr.</span><span>N.R. Dhanawada<span class="wordmark-subtitle">Personal index</span></span></a>
-        <nav class="site-nav" aria-label="Site">{NAV.map((item) => <a href={item.path} aria-current={item.name === section ? 'page' : undefined}><span class="nav-number" aria-hidden="true">0{NAV.indexOf(item)+1}</span>{item.name}</a>)}</nav>
+        <a href="/" class="wordmark" aria-label="N.R. Dhanawada, home">N.R. Dhanawada</a>
+        <nav class="site-nav" aria-label="Site">{NAV.map((item) => <a href={item.path} aria-current={item.name === section ? 'page' : undefined}>{item.name}</a>)}</nav>
         <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to Dark theme"><span class="dark:hidden">Dark</span><span class="hidden dark:inline">Light</span></button>
       </header>
       <div class="site-content">
@@ -93,7 +93,6 @@ const NAV = [
       </div>
       <footer class="site-footer">
         <div><a href="mailto:nirmal@dhanawada.org" class={link}>Email</a><a href="https://github.com/thedhanawada/me-plus" target="_blank" rel="noopener noreferrer" class={link}>Source</a><a href="/rss.xml" class={link}>RSS</a><button id="shortcuts-toggle" type="button">Keyboard shortcuts</button></div>
-        <p class="footer-signature">N.R. Dhanawada <span>· Sydney, Australia</span></p>
         <p class="footer-disclaimer">The projects and opinions on this site are my own and do not represent my employer or my family.</p>
       </footer>
       </div>
